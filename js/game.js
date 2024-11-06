@@ -7,7 +7,7 @@ function render() {
     if (gameState === 'titleScreen') {
         renderTitleScreen();
     } else if (gameState === 'playScreen') {
-        renderPlayScreen(); // Affiche l'écran de jeu si l'état est playScreen
+        renderPlayScreen(); 
     }
 }
 
