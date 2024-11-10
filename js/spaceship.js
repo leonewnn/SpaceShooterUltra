@@ -18,7 +18,7 @@ missileImg.src = `images/spaceship/missile.png`; // Charger l'image du missile u
 
 function drawSpaceShip(pos) {
     let spaceship = spaceships[currentFrame]; // Image actuelle du vaisseau
-    ctx.drawImage(spaceship, pos, 400); // Dessine l'image sur le canvas aux coordonnées spécifiées
+    ctx.drawImage(spaceship, pos, canvas.height -90); // Dessine l'image sur le canvas aux coordonnées spécifiées
 
     // Incrémente le compteur pour contrôler la vitesse de l'animation
     frameCount++;
@@ -31,7 +31,7 @@ function drawSpaceShip(pos) {
 function addMissile() {
     let missile = {
         x: spaceshipPos + 12,
-        y: 360,
+        y: canvas.height -130,
         img: missileImg
     };
 

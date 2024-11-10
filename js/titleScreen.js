@@ -12,7 +12,7 @@ function renderTitleScreen() {
         startMeteorSpawning();
         drawMeteors();
         ctx.fillStyle = "white";
-        ctx.font = "40px 'SpaceMan'";
+        ctx.font = "50px 'SpaceMan'";
         ctx.textAlign = "center";
         ctx.fillText("Space Shooter", canvas.width / 2, 100);
         ctx.fillStyle = "#c08dd3";

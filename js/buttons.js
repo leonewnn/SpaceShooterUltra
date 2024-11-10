@@ -1,8 +1,8 @@
 // buttons.js
 let buttonPlay = {
-    width: 200,
-    y: 250,
-    height: 60,
+    width: 230,
+    y: 275,
+    height: 80,
     color: "#27a448",
     radius: 20,
     label: "PLAY",
@@ -13,9 +13,9 @@ let buttonPlay = {
 };
 
 let buttonScoreBoard = {
-    width: 300,
-    y: 350,
-    height: 60,
+    width: 360,
+    y: 400,
+    height: 80,
     color: '#f68d14',
     radius: 20,
     label: "SCOREBOARD",
@@ -32,7 +32,7 @@ function drawButton(btn) {
     ctx.fillStyle = btn.color;
     ctx.fill();
     ctx.fillStyle = "white";
-    ctx.font = "24px 'SpaceMan'";
+    ctx.font = "30px 'SpaceMan'";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(btn.label, btn.x + btn.width / 2, btn.y + btn.height / 2);
