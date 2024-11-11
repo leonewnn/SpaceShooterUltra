@@ -5,7 +5,8 @@ let meteorites = [];
 let meteorSpawnInterval;
 let meteorLife = 1;
 let meteorSpawnFrequency = 1500;
-let meteorSpeed = 2;
+let multiplier = 1;
+let meteorSpeed = 2 * multiplier;
 
 for (let i = 1; i <= 10; i++) {
     let img = new Image();
@@ -15,7 +16,7 @@ for (let i = 1; i <= 10; i++) {
 
 function startMeteorSpawning() {
     if (!meteorSpawnInterval) {
-        meteorSpawnInterval = setInterval(spawnMeteor, meteorSpawnFrequency);
+        meteorSpawnInterval = setInterval(spawnMeteor, meteorSpawnFrequency * multiplier);
     }
 }
 
@@ -29,7 +30,7 @@ function spawnMeteor() {
         x: xPosition,
         y: -50,
         life: meteorLife,
-        size: sizeTemp,
+        size: sizeTemp * multiplier,
         inclinaition: inclinaitionTemp,
         img: randomMeteorImage
     };
