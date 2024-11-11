@@ -12,6 +12,10 @@ function renderPlayScreen() {
         ctx.drawImage(playScreenBackground, 0, 0, canvas.width, canvas.height);
         startMeteorSpawning();
         drawMeteors();
+
+        startPowerupSpawning();
+        drawPowerups();
+
         
         drawSpaceShip(spaceshipPos); // Appelle l'animation du vaisseau
         drawMissile(); // Dessine les missiles
