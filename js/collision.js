@@ -6,21 +6,30 @@ for (let i = 0; i <= 6; i++) {
 }
 
 let impactFrames = 0; // Variable pour suivre l'animation de l'impact
+let frameDelay = 180; // Délai de 3 secondes (3 * 60 frames)
+let delayCounter = 0; // Compteur pour gérer le délai
 
 function impactAnimation(x, y) {
-    let impactDuration = 100; // Durée de l'animation en frames
-    let frame = impacts[impactFrames % impacts.length]; // Choisir l'image de l'impact
+    let impactDuration = impacts.length * frameDelay; // Durée totale de l'animation
+    let frame = impacts[Math.floor(impactFrames / frameDelay) % impacts.length]; // Choisir l'image de l'impact
 
     // Dessiner l'impact à la position (x, y)
-    ctx.drawImage(frame, x - frame.width / 2, y - frame.height / 2);
+    ctx.drawImage(frame, (x - frame.width / 2)-125, (y - frame.height / 2)-100);
 
-    impactFrames++; // Passer au frame suivant de l'animation
+    delayCounter++;
 
-    // Supprimer l'impact après la durée définie
+    // Passer à l'image suivante après le délai
+    if (delayCounter >= frameDelay) {
+        impactFrames++;
+        delayCounter = 0; // Réinitialiser le compteur de délai
+    }
+
+    // Réinitialiser l'animation après la durée définie
     if (impactFrames >= impactDuration) {
         impactFrames = 0; // Réinitialiser l'animation
     }
 }
+
 
 
 
