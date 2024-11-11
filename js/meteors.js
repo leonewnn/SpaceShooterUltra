@@ -2,6 +2,7 @@
 let meteors = [];
 let meteorites = [];
 let meteorSpawnInterval;
+let meteorLife = 1;
 let meteorSpawnFrequency = 1500;
 
 for (let i = 1; i <= 10; i++) {
@@ -21,6 +22,7 @@ function spawnMeteor() {
     let meteor = {
         x: Math.random() * canvas.width,
         y: -50,
+        life: meteorLife,
         img: randomMeteorImage
     };
     meteorites.push(meteor);

@@ -29,14 +29,24 @@ function drawSpaceShip(pos) {
 }
 
 function addMissile() {
-    let missile = {
-        x: spaceshipPos + 12,
-        y: canvas.height -130,
+    // Crée le premier missile légèrement décalé à gauche
+    let missileLeft = {
+        x: spaceshipPos + 13,  // Décalé légèrement vers la gauche du centre du vaisseau
+        y: canvas.height - 140,
         img: missileImg
     };
 
-    missiles.push(missile); // Ajoute le missile au tableau des missiles
+    // Crée le deuxième missile légèrement décalé à droite
+    let missileRight = {
+        x: spaceshipPos + 53,  // Décalé légèrement vers la droite du centre du vaisseau
+        y: canvas.height - 140,
+        img: missileImg
+    };
+
+    // Ajoute les deux missiles au tableau
+    missiles.push(missileLeft, missileRight);
 }
+
 
 
 
@@ -47,7 +57,7 @@ function drawMissile() {
         missile.y -= missileSpeed; // Déplace le missile vers le haut
 
         // Vérifie si le missile est sorti de l'écran
-        if (missile.y < 0) {
+        if (missile.y < -56) {
             missiles.splice(i, 1); // Supprime le missile hors de l'écran
             i--; // Ajuste l'index après la suppression
         }

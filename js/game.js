@@ -1,7 +1,7 @@
 // game.js
 let gameState = 'titleScreen';
 let lastTime = 0;
-let fireRate = 500; // Temps de la dernière frame
+let fireRate = 600; // Temps de la dernière frame
 
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);

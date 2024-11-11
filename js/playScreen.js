@@ -15,6 +15,9 @@ function renderPlayScreen() {
         
         drawSpaceShip(spaceshipPos); // Appelle l'animation du vaisseau
         drawMissile(); // Dessine les missiles
+      //  logMissile();
+        handleCollisions(); //
+
     }
 }
 
