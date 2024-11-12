@@ -6,18 +6,15 @@ playScreenBackground.onload = function () {
 };
 playScreenBackground.src = 'images/StartScreen.png';
 
-function renderPlayScreen() {
+function renderPlayScreen(delta) {
     if (psBgReady) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Efface l'écran
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(playScreenBackground, 0, 0, canvas.width, canvas.height);
         startMeteorSpawning();
-        drawMeteors();
-        
-        drawSpaceShip(spaceshipPos); // Appelle l'animation du vaisseau
-        drawMissile(); // Dessine les missiles
-      //  logMissile();
-        handleCollisions(); //
-
+        drawMeteors(delta); // Appel de drawMeteors avec delta
+        drawSpaceShip(spaceshipPos);
+        drawMissile(delta); // Ajouter delta à l'appel de drawMissile
+        handleCollisions();
     }
 }
 

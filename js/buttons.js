@@ -24,8 +24,8 @@ let buttonScoreBoard = {
     }
 };
 let buttonChangeSpaceship = {
-    width: 360,
-    y: 525,
+    width: 550,
+    y: 500,
     height: 80,
     color: '#3d85c6',
     radius: 20,
