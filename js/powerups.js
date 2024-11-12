@@ -3,7 +3,10 @@ let powerups = [];
 let powerupItems = [];
 let powerupSpawnInterval;
 let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
-let powerupSpeed = 100; // Vitesse des power-ups
+let powerupSpeed = 100; 
+let powerupspawnproccessing = true;
+let minmalSpawnInterval = 15000;
+let timespanspawntime = 15000;
 
 // Charger les images des power-ups
 powerups[0] = new Image();
@@ -20,9 +23,21 @@ powerups[3].src = `images/powerups/fire_rate_up.png`;
 
 // Démarrer le spawn des power-ups
 function startPowerupSpawning() {
-    if (!powerupSpawnInterval) {
-        powerupSpawnInterval = setInterval(spawnPowerup, powerupSpawnFrequency);
-    }
+    if(powerupspawnproccessing){
+        nextPowerUpSpawn();
+    }    
+}
+
+function nextPowerUpSpawn(){
+    powerupspawnproccessing = false;
+    
+    // Attendre un intervalle aléatoire, puis spawn le power-up
+    let nextMoment = Math.floor(Math.random() * timespanspawntime ) + minmalSpawnInterval;
+    setTimeout(() => {
+        spawnPowerup(); // Appel de la fonction pour faire apparaître un power-up
+        powerupspawnproccessing = true; // Réactiver le spawn pour le prochain
+        nextPowerUpSpawn(); // Rappeler la fonction pour continuer le spawn
+    }, nextMoment);
 }
 
 // Fonction pour faire apparaître un power-up

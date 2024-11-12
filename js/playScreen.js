@@ -18,6 +18,7 @@ function renderPlayScreen(delta) {
         drawSpaceShip(spaceshipPos);
         drawMissile(delta); // Ajouter delta à l'appel de drawMissile
         handleCollisions();
+        handleCollisionsPowerUp();
     }
 }
 

@@ -5,9 +5,7 @@ for (let i = 0; i <= 6; i++) {
     impacts.push(img);
 }
 
-let impactFrameIndex = 0;
-let frameDelay = 30; // Augmente ce nombre pour ralentir l'animation
-let frameCounter = 0;
+
 
 function impactAnimation(x, y) {
     for(let i = 0; i<impacts.length; i++){
@@ -26,6 +24,33 @@ function checkCollision(missile, meteor) {
         missile.y < meteor.y + 100 &&
         missile.y + missile.img.height > meteor.y
     );
+}
+
+function checkPowerupGrabbed(spaceshipPos, powerup) {
+    const spaceshipX = spaceshipPos;
+    const spaceshipY = canvas.height - 90; // Position Y fixe du vaisseau
+
+    return (
+        spaceshipX < powerup.x + 50 &&
+        spaceshipX + 75 > powerup.x &&
+        spaceshipY < powerup.y + 50 &&
+        spaceshipY + 75 > powerup.y
+    );
+}
+
+function handleCollisionsPowerUp() {
+    for (let i = powerupItems.length - 1; i >= 0; i--) {
+        let poweruip = powerupItems[i];
+        
+        // Vérifiez si le power-up est attrapé
+        if (checkPowerupGrabbed(spaceshipPos, poweruip)) {
+            console.log('power up caught !');
+            
+            // Retirer le power-up de la liste
+            powerupItems.splice(i, 1);
+
+        }
+    }
 }
 
 
