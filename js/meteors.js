@@ -5,6 +5,7 @@ let meteorites = [];
 let meteorSpawnInterval;
 let meteorLife = 1;
 let meteorSpawnFrequency = 1500;
+let multiplier = 1;
 let meteorSpeed = 150;
 
 for (let i = 1; i <= 10; i++) {
@@ -15,16 +16,22 @@ for (let i = 1; i <= 10; i++) {
 
 function startMeteorSpawning() {
     if (!meteorSpawnInterval) {
-        meteorSpawnInterval = setInterval(spawnMeteor, meteorSpawnFrequency);
+        meteorSpawnInterval = setInterval(spawnMeteor, meteorSpawnFrequency * multiplier);
     }
 }
 
 function spawnMeteor() {
     let randomMeteorImage = meteors[Math.floor(Math.random() * meteors.length)];
+    let inclinaitionTemp = Math.random() - 0.5;
+    let sizeTemp = 30 + Math.random() * (130 - 30);
+    let xPosition = Math.random() * (canvas.width - sizeTemp);
+
     let meteor = {
-        x: Math.random() * canvas.width,
+        x: xPosition,
         y: -50,
         life: meteorLife,
+        size: sizeTemp * multiplier,
+        inclinaition: inclinaitionTemp,
         img: randomMeteorImage
     };
     meteorites.push(meteor);
@@ -33,8 +40,11 @@ function spawnMeteor() {
 function drawMeteors(delta) {
     for (let i = 0; i < meteorites.length; i++) {
         let meteor = meteorites[i];
-        ctx.drawImage(meteor.img, meteor.x, meteor.y, 100, 100);
+
+        ctx.drawImage(meteor.img, meteor.x, meteor.y, meteor.size, meteor.size);
         meteor.y += meteorSpeed * delta;
+        meteor.x += meteor.inclinaition;
+
 
         if (meteor.y > canvas.height) {
             meteorites.splice(i, 1);

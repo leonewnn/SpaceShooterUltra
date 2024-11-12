@@ -11,6 +11,9 @@ function renderPlayScreen(delta) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(playScreenBackground, 0, 0, canvas.width, canvas.height);
         startMeteorSpawning();
+
+        startPowerupSpawning();
+        drawPowerups();
         drawMeteors(delta); // Appel de drawMeteors avec delta
         drawSpaceShip(spaceshipPos);
         drawMissile(delta); // Ajouter delta à l'appel de drawMissile
