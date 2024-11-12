@@ -13,7 +13,7 @@ function renderPlayScreen(delta) {
         startMeteorSpawning();
 
         startPowerupSpawning();
-        drawPowerups();
+        drawPowerups(delta);
         drawMeteors(delta); // Appel de drawMeteors avec delta
         drawSpaceShip(spaceshipPos);
         drawMissile(delta); // Ajouter delta à l'appel de drawMissile

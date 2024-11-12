@@ -3,7 +3,7 @@ let powerups = [];
 let powerupItems = [];
 let powerupSpawnInterval;
 let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
-let powerupSpeed = 1; // Vitesse des power-ups
+let powerupSpeed = 100; // Vitesse des power-ups
 
 // Charger les images des power-ups
 powerups[0] = new Image();
@@ -40,11 +40,11 @@ function spawnPowerup() {
 }
 
 // Fonction pour dessiner et déplacer les power-ups
-function drawPowerups() {
+function drawPowerups(delta) {
     for (let i = 0; i < powerupItems.length; i++) {
         let powerup = powerupItems[i];
         ctx.drawImage(powerup.img, powerup.x, powerup.y, powerup.size, powerup.size);
-        powerup.y += powerupSpeed; // Déplacer le power-up vers le bas
+        powerup.y += powerupSpeed * delta; // Déplacer le power-up vers le bas
 
         if (powerup.y > canvas.height) {
             powerupItems.splice(i, 1); // Supprimer le power-up lorsqu'il sort de l'écran
