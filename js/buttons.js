@@ -23,8 +23,20 @@ let buttonScoreBoard = {
         console.log("Click scoreboardbtn");
     }
 };
+let buttonChangeSpaceship = {
+    width: 550,
+    y: 500,
+    height: 80,
+    color: '#3d85c6',
+    radius: 20,
+    label: "CHANGE SPACESHIP",
+    onClick: function() {
+        console.log("Click change spaceship");
+        
+    }
+};
 
-let buttons = [buttonPlay, buttonScoreBoard];
+let buttons = [buttonPlay, buttonScoreBoard, buttonChangeSpaceship];
 
 function drawButton(btn) {
     ctx.beginPath();

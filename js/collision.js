@@ -5,20 +5,15 @@ for (let i = 0; i <= 6; i++) {
     impacts.push(img);
 }
 
-let impactFrames = 0; // Variable pour suivre l'animation de l'impact
+let impactFrameIndex = 0;
+let frameDelay = 30; // Augmente ce nombre pour ralentir l'animation
+let frameCounter = 0;
 
 function impactAnimation(x, y) {
-    let impactDuration = 100; // Durée de l'animation en frames
-    let frame = impacts[impactFrames % impacts.length]; // Choisir l'image de l'impact
-
-    // Dessiner l'impact à la position (x, y)
-    ctx.drawImage(frame, x - frame.width / 2, y - frame.height / 2);
-
-    impactFrames++; // Passer au frame suivant de l'animation
-
-    // Supprimer l'impact après la durée définie
-    if (impactFrames >= impactDuration) {
-        impactFrames = 0; // Réinitialiser l'animation
+    for(let i = 0; i<impacts.length; i++){
+        let impact = impacts[i];
+        ctx.drawImage(impact,x,y);
+       
     }
 }
 

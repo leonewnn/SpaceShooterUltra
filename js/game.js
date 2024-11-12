@@ -3,12 +3,12 @@ let gameState = 'titleScreen';
 let lastTime = 0;
 let fireRate = 600; // Temps de la dernière frame
 
-function render() {
+function render(delta) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (gameState === 'titleScreen') {
-        renderTitleScreen();
+        renderTitleScreen(delta);
     } else if (gameState === 'playScreen') {
-        renderPlayScreen(); 
+        renderPlayScreen(delta); 
     }
 }
 
@@ -32,7 +32,7 @@ function main(currentTime) {
     // Appeler les fonctions de mise à jour et de rendu
     updateSpaceshipPosition(delta); 
 
-    render();
+    render(delta);
     
     requestAnimationFrame(main);
 }
