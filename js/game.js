@@ -34,6 +34,8 @@ function main(currentTime) {
 
     updateSpaceshipPosition(delta);
     render();
+
+    handleSpaceShipCollisions();
     
     requestAnimationFrame(main);
     drawImpacts();

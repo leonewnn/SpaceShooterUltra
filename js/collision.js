@@ -62,4 +62,28 @@ function handleCollisions() {
     }
 }
 
+function checkSpaceShipCollision(spaceship, meteor) {
+    return (
+        spaceship.x < meteor.x + 100 &&
+        spaceship.x + spaceship.img.width > meteor.x &&
+        spaceship.y < meteor.y + 100 &&
+        spaceship.y + spaceship.img.height > meteor.y
+    );
+}
+
+function handleSpaceShipCollisions() {
+    for (let i = 0; i < meteorites.length; i++) {
+        let meteor = meteorites[i];
+        let spaceship = { x: spaceshipPos, y: canvas.height - 90, img: spaceships[0] }; // Utiliser l'image de référence du vaisseau
+
+        if (checkSpaceShipCollision(spaceship, meteor)) {
+            console.log("Collision détectée entre le vaisseau et une météorite");
+            startLifeAnimation(); // Démarrer l'animation de vie
+            impactAnimation(spaceship.x, spaceship.y); // Optionnel pour un impact visuel
+            meteorites.splice(i, 1); // Supprimer la météorite en collision
+            break;
+        }
+    }
+}
+
 // Appeler drawImpacts() dans la boucle principale de dessin pour afficher les impacts actifs

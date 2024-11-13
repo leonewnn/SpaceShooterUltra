@@ -8,23 +8,21 @@ playScreenBackground.src = 'images/StartScreen.png';
 
 function renderPlayScreen() {
     if (psBgReady) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Efface l'écran
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(playScreenBackground, 0, 0, canvas.width, canvas.height);
         startMeteorSpawning();
         drawMeteors();
-        
-        drawSpaceShip(spaceshipPos); // Appelle l'animation du vaisseau
-        drawMissile(); // Dessine les missiles
-      //  logMissile();
-        handleCollisions(); //
-        
-         // Dessiner l'image avec l'animation (si démarrée) et conserver le dernier état
-         let stateToDraw = animationCompleted ? currentState : (animationStarted ? currentState : 0);
-         drawLife(10, 10, stateToDraw);
-         drawLife(50, 10, stateToDraw);
-         drawLife(90, 10, stateToDraw);
 
+        drawSpaceShip(spaceshipPos);
+        drawMissile();
+        handleCollisions();
+        handleSpaceShipCollisions();
+
+        // Dessiner les images de vie en fonction de leur état
+        for (let i = 0; i < imagesAnimated.length; i++) {
+            let stateToDraw = (i === currentImageIndex && animationStarted && !animationCompleted) ? currentState :
+                              (imagesAnimated[i] ? 4 : 0); // 4 pour image animée, 0 pour non animée
+            drawLife(10 + i * 40, 10, stateToDraw); // Espacement horizontal de 40 pixels entre chaque image
+        }
     }
 }
-
-
