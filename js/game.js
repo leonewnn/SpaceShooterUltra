@@ -35,6 +35,8 @@ function main(currentTime) {
     render();
     
     requestAnimationFrame(main);
+    
+    drawImpacts();
 }
 
 // Démarrer la boucle de jeu

@@ -5,33 +5,36 @@ for (let i = 0; i <= 6; i++) {
     impacts.push(img);
 }
 
-let impactFrames = 0; // Variable pour suivre l'animation de l'impact
-let frameDelay = 180; // Délai de 3 secondes (3 * 60 frames)
-let delayCounter = 0; // Compteur pour gérer le délai
+let impactAnimations = []; // Tableau pour stocker les animations d'impact actives
+let frameDelay = 3; // Ajustement du délai pour une animation plus fluide
 
 function impactAnimation(x, y) {
-    let impactDuration = impacts.length * frameDelay; // Durée totale de l'animation
-    let frame = impacts[Math.floor(impactFrames / frameDelay) % impacts.length]; // Choisir l'image de l'impact
-
-    // Dessiner l'impact à la position (x, y)
-    ctx.drawImage(frame, (x - frame.width / 2)-125, (y - frame.height / 2)-100);
-
-    delayCounter++;
-
-    // Passer à l'image suivante après le délai
-    if (delayCounter >= frameDelay) {
-        impactFrames++;
-        delayCounter = 0; // Réinitialiser le compteur de délai
-    }
-
-    // Réinitialiser l'animation après la durée définie
-    if (impactFrames >= impactDuration) {
-        impactFrames = 0; // Réinitialiser l'animation
-    }
+    impactAnimations.push({ x, y, impactFrames: 0, delayCounter: 0 });
 }
 
+function drawImpacts() {
+    for (let i = impactAnimations.length - 1; i >= 0; i--) {
+        let anim = impactAnimations[i];
+        let frameIndex = Math.floor(anim.impactFrames / frameDelay) % impacts.length;
+        let frame = impacts[frameIndex];
 
+        // Dessiner l'impact à la position (x, y)
+        ctx.drawImage(frame, anim.x - frame.width / 2, anim.y - frame.height / 2);
 
+        anim.delayCounter++;
+
+        // Passer à l'image suivante après le délai
+        if (anim.delayCounter >= frameDelay) {
+            anim.impactFrames++;
+            anim.delayCounter = 0;
+        }
+
+        // Supprimer l'animation une fois terminée
+        if (anim.impactFrames >= impacts.length * frameDelay) {
+            impactAnimations.splice(i, 1);
+        }
+    }
+}
 
 function checkCollision(missile, meteor) {
     return (
@@ -42,16 +45,15 @@ function checkCollision(missile, meteor) {
     );
 }
 
-
 function handleCollisions() {
     for (let i = missiles.length - 1; i >= 0; i--) {
         let missile = missiles[i];
-        
+
         for (let j = meteorites.length - 1; j >= 0; j--) {
             let meteor = meteorites[j];
-            
+
             if (checkCollision(missile, meteor)) {
-                impactAnimation(missile.x,missile.y);
+                impactAnimation(missile.x, missile.y);
                 missiles.splice(i, 1);
                 meteorites.splice(j, 1);
                 break;
@@ -59,3 +61,5 @@ function handleCollisions() {
         }
     }
 }
+
+// Appeler drawImpacts() dans la boucle principale de dessin pour afficher les impacts actifs
