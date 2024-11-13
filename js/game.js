@@ -36,7 +36,7 @@ function main(currentTime) {
     
     requestAnimationFrame(main);
     
-    drawImpacts();
+    drawImpacts(); //desine l'impact des tir du vaisseau contre les météorites
 }
 
 // Démarrer la boucle de jeu
