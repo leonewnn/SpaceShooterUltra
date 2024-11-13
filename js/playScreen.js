@@ -18,11 +18,13 @@ function renderPlayScreen() {
         handleCollisions();
         handleSpaceShipCollisions();
 
-        // Dessiner les images de vie en fonction de leur état
+        drawScore(); // Affiche le score dans un cadre stylisé en haut à droite
+
+        // Affichage des images de vie
         for (let i = 0; i < imagesAnimated.length; i++) {
             let stateToDraw = (i === currentImageIndex && animationStarted && !animationCompleted) ? currentState :
-                              (imagesAnimated[i] ? 4 : 0); // 4 pour image animée, 0 pour non animée
-            drawLife(10 + i * 40, 10, stateToDraw); // Espacement horizontal de 40 pixels entre chaque image
+                              (imagesAnimated[i] ? 4 : 0);
+            drawLife(10 + i * 40, 10, stateToDraw);
         }
     }
 }

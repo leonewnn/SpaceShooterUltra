@@ -54,6 +54,8 @@ function handleCollisions() {
 
             if (checkCollision(missile, meteor)) {
                 impactAnimation(missile.x, missile.y);
+                increaseScore(10); // Augmenter le score de 10 points
+
                 missiles.splice(i, 1);
                 meteorites.splice(j, 1);
                 break;
