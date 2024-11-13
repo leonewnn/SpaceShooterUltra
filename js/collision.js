@@ -31,9 +31,9 @@ function checkPowerupGrabbed(spaceshipPos, powerup) {
     const spaceshipY = canvas.height - 90; // Position Y fixe du vaisseau
 
     return (
-        spaceshipX < powerup.x + 50 &&
+        spaceshipX < powerup.x + powerup.size &&
         spaceshipX + 75 > powerup.x &&
-        spaceshipY < powerup.y + 50 &&
+        spaceshipY < powerup.y + powerup.size &&
         spaceshipY + 75 > powerup.y
     );
 }
