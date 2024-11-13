@@ -17,6 +17,12 @@ function renderPlayScreen() {
         drawMissile(); // Dessine les missiles
       //  logMissile();
         handleCollisions(); //
+        
+         // Dessiner l'image avec l'animation (si démarrée) et conserver le dernier état
+         let stateToDraw = animationCompleted ? currentState : (animationStarted ? currentState : 0);
+         drawLife(10, 10, stateToDraw);
+         drawLife(50, 10, stateToDraw);
+         drawLife(90, 10, stateToDraw);
 
     }
 }

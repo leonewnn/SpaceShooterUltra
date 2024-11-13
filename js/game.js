@@ -2,9 +2,12 @@
 let gameState = 'titleScreen';
 let lastTime = 0;
 let fireRate = 600; // Temps de la dernière frame
+window.ctx = canvas.getContext('2d'); // Déclare `ctx` comme variable globale
+
 
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     if (gameState === 'titleScreen') {
         renderTitleScreen();
     } else if (gameState === 'playScreen') {
@@ -15,28 +18,25 @@ function render() {
 // Fonction pour mettre à jour la position du vaisseau avec delta
 function updateSpaceshipPosition(delta) {
     if (leftPressed) {
-        spaceshipPos -= spaceshipSpeed * delta; // Utilise delta pour ajuster la vitesse
+        spaceshipPos -= spaceshipSpeed * delta;
     }
     if (rightPressed) {
         spaceshipPos += spaceshipSpeed * delta;
     }
 }
 
-setInterval(addMissile, fireRate); // 1000 ms = 1 seconde
+setInterval(addMissile, fireRate);
 
 // Fonction principale avec delta
 function main(currentTime) {
-    let delta = (currentTime - lastTime) / 1000; // Convertir le delta en secondes
+    let delta = (currentTime - lastTime) / 1000;
     lastTime = currentTime;
 
-    // Appeler les fonctions de mise à jour et de rendu
-    updateSpaceshipPosition(delta); 
-
+    updateSpaceshipPosition(delta);
     render();
     
     requestAnimationFrame(main);
-    
-    drawImpacts(); //desine l'impact des tir du vaisseau contre les météorites
+    drawImpacts();
 }
 
 // Démarrer la boucle de jeu
