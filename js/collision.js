@@ -19,9 +19,9 @@ function impactAnimation(x, y) {
 
 function checkCollision(missile, meteor) {
     return (
-        missile.x < meteor.x + 100 &&
+        missile.x < meteor.x + meteor.size &&
         missile.x + missile.img.width > meteor.x &&
-        missile.y < meteor.y + 100 &&
+        missile.y < meteor.y + meteor.size &&
         missile.y + missile.img.height > meteor.y
     );
 }
