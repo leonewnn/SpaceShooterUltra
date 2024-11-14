@@ -5,8 +5,8 @@ let powerupSpawnInterval;
 let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
 let powerupSpeed = 100; 
 let powerupspawnproccessing = true;
-let minmalSpawnInterval = 150;
-let timespanspawntime = 150;
+let minmalSpawnInterval = 15000;
+let timespanspawntime = 15000;
 
 // Indicateur unique pour afficher les power-ups actifs
 let activeIndicator = null;
