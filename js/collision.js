@@ -44,7 +44,7 @@ function handleCollisionsPowerUp() {
         
         // Vérifiez si le power-up est attrapé
         if (checkPowerupGrabbed(spaceshipPos, poweruip)) {
-            console.log('power up caught !');
+            activePowerup(poweruip);
             
             // Retirer le power-up de la liste
             powerupItems.splice(i, 1);

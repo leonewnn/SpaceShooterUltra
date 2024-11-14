@@ -19,6 +19,8 @@ function renderPlayScreen(delta) {
         drawMissile(delta); // Ajouter delta à l'appel de drawMissile
         handleCollisions();
         handleCollisionsPowerUp();
+
+        drawIndicator();
     }
 }
 
