@@ -1,4 +1,5 @@
 // buttons.js
+
 let buttonPlay = {
     width: 230,
     y: 275,

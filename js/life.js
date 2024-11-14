@@ -2,6 +2,8 @@
 let spriteSheet = new Image();
 spriteSheet.src = 'images/Hearts/animated/border/hearts_animated_2.png';
 
+let animationsCompleted = 0; //Compteur d'animations terminées
+
 // Largeur et hauteur d'un état dans le sprite sheet
 let spriteWidth, spriteHeight;
 spriteSheet.onload = function() {
@@ -20,7 +22,7 @@ let currentImageIndex = 2; // On commence par l'image la plus à droite
 
 // Fonction pour démarrer l'animation
 function startLifeAnimation() {
-    if (animationStarted || imagesAnimated[currentImageIndex]) return; // Ne rien faire si déjà animé
+    if (animationStarted || imagesAnimated[currentImageIndex]) return;
 
     animationStarted = true;
     animationCompleted = false;
@@ -35,11 +37,29 @@ function startLifeAnimation() {
             clearInterval(animationInterval);
             animationCompleted = true;
             animationStarted = false;
+            animationsCompleted++; // Incrémente le compteur d'animations terminées
 
             // Passer à l'image suivante vers la gauche
             currentImageIndex = imagesAnimated.lastIndexOf(false);
+
+            // Vérifier si toutes les animations sont terminées
+            checkGameOver();
         }
     }, 100);
+}
+
+// Vérifie si toutes les animations sont terminées
+function checkGameOver() {
+    if (animationsCompleted >= imagesAnimated.length) {
+        gameOver = true;
+
+        // Stocker le score actuel
+        localStorage.setItem("playerScore", playerScore);
+
+        setTimeout(() => {
+            window.location.href = "scoreboard.html"; // Rediriger vers la page scoreboard
+        }, 3000);
+    }
 }
 
 // Fonction pour dessiner un état spécifique du sprite

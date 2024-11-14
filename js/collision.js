@@ -37,7 +37,7 @@ function drawImpacts() {
 }
 
 function checkCollision(missile, meteor) {
-    return (
+         return (
         missile.x < meteor.x + 100 &&
         missile.x + missile.img.width > meteor.x &&
         missile.y < meteor.y + 100 &&
@@ -65,7 +65,7 @@ function handleCollisions() {
 }
 
 function checkSpaceShipCollision(spaceship, meteor) {
-    return (
+          return (
         spaceship.x < meteor.x + 100 &&
         spaceship.x + spaceship.img.width > meteor.x &&
         spaceship.y < meteor.y + 100 &&

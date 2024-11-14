@@ -9,7 +9,7 @@ function drawScore() {
     const scoreBoxY = 20;
 
     // Dessiner le cadre
-    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+    ctx.fillStyle = "rgba(0, 0, 0, 1)";
     ctx.fillRect(scoreBoxX, scoreBoxY, scoreBoxWidth, scoreBoxHeight);
 
     // Dessiner la bordure du cadre

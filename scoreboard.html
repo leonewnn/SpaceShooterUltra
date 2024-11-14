@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoreboard</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('images/playScreenBackground.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .scoreboard {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            width: 300px;
+            text-align: center;
+        }
+
+        .scoreboard input[type="text"] {
+            width: 60%;
+            padding: 5px;
+            margin-top: 10px;
+            font-size: 16px;
+            text-transform: uppercase;
+            text-align: center;
+            color: black;
+        }
+
+        .scoreboard button {
+            margin-top: 15px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* Style pour le bouton de retour */
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #27a448;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="scoreboard">
+    <h2>Scoreboard</h2>
+    <p>Score: <span id="scoreDisplay">0</span></p>
+    <p>Date: <span id="dateDisplay"></span></p>
+    <label for="name">Enter Name (3 letters):</label>
+    <input type="text" id="name" maxlength="3">
+    <button onclick="submitScore()">Submit</button>
+    
+    <!-- Bouton de retour -->
+    <button class="back-button" onclick="returnToHome()">Return to Home</button>
+</div>
+
+<script>
+    const score = localStorage.getItem("playerScore") || 0;
+    document.getElementById("scoreDisplay").textContent = score;
+    document.getElementById("dateDisplay").textContent = new Date().toLocaleDateString();
+
+    function submitScore() {
+        const name = document.getElementById("name").value.toUpperCase();
+        if (name.length === 3) {
+            alert("Score submitted: " + name + " - " + score);
+        } else {
+            alert("Please enter a 3-letter name.");
+        }
+    }
+
+    // Fonction pour retourner à la page de base
+    function returnToHome() {
+        window.location.href = "game.html"; // Remplacez par la page de démarrage
+    }
+</script>
+
+</body>
+</html>
