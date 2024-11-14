@@ -1,4 +1,4 @@
-// spaceship.js
+9// spaceship.js
 let spaceships = []; // Tableau pour stocker les images du vaisseau
 let currentFrame = 0; // Indice de l'image actuelle
 let frameInterval = 8; // Intervalle pour ralentir l'animation
