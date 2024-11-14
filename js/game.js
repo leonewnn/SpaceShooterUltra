@@ -1,20 +1,22 @@
+// game.js
 let gameState = 'titleScreen';
 let gameOver = false;
 let lastTime = 0;
 let fireRate = 600; // Temps de la dernière frame
 window.ctx = canvas.getContext('2d'); // Déclare `ctx` comme variable globale
 
-function render(delta) {
+
+function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (gameState === 'titleScreen') {
-        renderTitleScreen(delta);
+        renderTitleScreen();
     } else if (gameState === 'playScreen') {
-        renderPlayScreen(delta); 
+        renderPlayScreen(); 
     }
 }
 
-// Affiche Game Over dès que le joueur a perdu
+//Affiche Game Over dès que le joueur a perdu
 function renderGameOver() {
     // Dessiner le fond d'écran du jeu (comme dans renderPlayScreen)
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -37,6 +39,8 @@ function updateSpaceshipPosition(delta) {
     }
 }
 
+setInterval(addMissile, fireRate);
+
 // Fonction principale avec delta
 function main(currentTime) {
     if (gameOver) {
@@ -48,13 +52,12 @@ function main(currentTime) {
     lastTime = currentTime;
 
     updateSpaceshipPosition(delta);
-    render(delta);
+    render();
 
-    handleSpaceShipCollisions(); // Gestion des collisions entre le vaisseau et les météorites
-    handleCollisions(); // Gestion des collisions missiles/météorites
-    drawImpacts(); // Dessiner les impacts actifs
-
+    handleSpaceShipCollisions();
+    
     requestAnimationFrame(main);
+    drawImpacts();
 }
 
 // Démarrer la boucle de jeu

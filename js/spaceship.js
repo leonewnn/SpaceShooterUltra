@@ -4,7 +4,7 @@ let currentFrame = 0; // Indice de l'image actuelle
 let frameInterval = 8; // Intervalle pour ralentir l'animation
 let frameCount = 0; // Compteur pour contrôler la vitesse de changement d'image
 let missiles = [];
-let missileSpeed = 250;
+let missileSpeed = 5;
 
 // Charger les images du vaisseau
 for (let i = 0; i <= 6; i++) {
@@ -50,11 +50,11 @@ function addMissile() {
 
 
 
-function drawMissile(delta) {
+function drawMissile() {
     for (let i = 0; i < missiles.length; i++) {
         let missile = missiles[i];
         ctx.drawImage(missile.img, missile.x, missile.y);
-        missile.y -= missileSpeed * delta; // Déplace le missile vers le haut
+        missile.y -= missileSpeed; // Déplace le missile vers le haut
 
         // Vérifie si le missile est sorti de l'écran
         if (missile.y < -56) {

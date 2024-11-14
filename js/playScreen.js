@@ -1,34 +1,24 @@
 let psBgReady = false;
-let spaceshipPos = canvas.width / 2;
+let spaceshipPos = canvas.width/2;
 let playScreenBackground = new Image();
 playScreenBackground.onload = function () {
     psBgReady = true;
 };
 playScreenBackground.src = 'images/StartScreen.png';
 
-function renderPlayScreen(delta) {
+function renderPlayScreen() {
     if (psBgReady) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(playScreenBackground, 0, 0, canvas.width, canvas.height);
-
-        // Démarrer les spawns
         startMeteorSpawning();
-        startPowerupSpawning();
+        drawMeteors();
 
-        // Dessiner les éléments
-        drawMeteors(delta);
-        drawPowerups(delta);
         drawSpaceShip(spaceshipPos);
-        drawMissile(delta);
-
-        // Gérer les collisions
+        drawMissile();
         handleCollisions();
-        handleCollisionsPowerUp();
         handleSpaceShipCollisions();
 
-        // Dessiner les indicateurs et le score
-        drawIndicator();
-        drawScore();
+        drawScore(); // Affiche le score dans un cadre stylisé en haut à droite
 
         // Affichage des images de vie
         for (let i = 0; i < imagesAnimated.length; i++) {

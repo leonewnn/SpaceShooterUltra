@@ -6,11 +6,11 @@ titleScreenBackground.onload = function () {
 };
 titleScreenBackground.src = 'images/StartScreen.png';
 
-function renderTitleScreen(delta) {
+function renderTitleScreen() {
     if (bgReady) {
         ctx.drawImage(titleScreenBackground, 0, 0, canvas.width, canvas.height);
         startMeteorSpawning();
-        drawMeteors(delta);
+        drawMeteors();
         ctx.fillStyle = "white";
         ctx.font = "50px 'SpaceMan'";
         ctx.textAlign = "center";
