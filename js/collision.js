@@ -62,10 +62,15 @@ function handleCollisions() {
             let meteor = meteorites[j];
             
             if (checkCollision(missile, meteor)) {
-                impactAnimation(missile.x,missile.y);
+                meteor.life = meteor.life -1 ;
+                console.log(meteor.life);
                 missiles.splice(i, 1);
+                
+                impactAnimation(missile.x,missile.y);
+                if(meteor.life < 1){
                 meteorites.splice(j, 1);
                 break;
+                }
             }
         }
     }

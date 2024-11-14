@@ -3,7 +3,7 @@ let meteors = [];
 
 let meteorites = [];
 let meteorSpawnInterval;
-let meteorLife = 1;
+let meteorLife = 4;
 let meteorSpawnFrequency = 1500;
 let multiplier = 1;
 let meteorSpeed = 150;
