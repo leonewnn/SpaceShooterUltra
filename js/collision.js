@@ -37,12 +37,38 @@ function drawImpacts() {
 }
 
 function checkCollision(missile, meteor) {
-         return (
-        missile.x < meteor.x + 100 &&
+    return (
+        missile.x < meteor.x + meteor.size &&
         missile.x + missile.img.width > meteor.x &&
-        missile.y < meteor.y + 100 &&
+        missile.y < meteor.y + meteor.size &&
         missile.y + missile.img.height > meteor.y
     );
+}
+
+function checkPowerupGrabbed(spaceshipPos, powerup) {
+    const spaceshipX = spaceshipPos;
+    const spaceshipY = canvas.height - 90; // Position Y fixe du vaisseau
+
+    return (
+        spaceshipX < powerup.x + powerup.size &&
+        spaceshipX + 75 > powerup.x &&
+        spaceshipY < powerup.y + powerup.size &&
+        spaceshipY + 75 > powerup.y
+    );
+}
+
+function handleCollisionsPowerUp() {
+    for (let i = powerupItems.length - 1; i >= 0; i--) {
+        let powerup = powerupItems[i];
+
+        // Vérifiez si le power-up est attrapé
+        if (checkPowerupGrabbed(spaceshipPos, powerup)) {
+            activePowerup(powerup);
+
+            // Retirer le power-up de la liste
+            powerupItems.splice(i, 1);
+        }
+    }
 }
 
 function handleCollisions() {
@@ -53,11 +79,16 @@ function handleCollisions() {
             let meteor = meteorites[j];
 
             if (checkCollision(missile, meteor)) {
+                meteor.life -= 1;
+                console.log(meteor.life);
+
                 impactAnimation(missile.x, missile.y);
-                increaseScore(10); // Augmenter le score de 10 points
+
+                if (meteor.life < 1) {
+                    meteorites.splice(j, 1);
+                }
 
                 missiles.splice(i, 1);
-                meteorites.splice(j, 1);
                 break;
             }
         }
@@ -65,7 +96,7 @@ function handleCollisions() {
 }
 
 function checkSpaceShipCollision(spaceship, meteor) {
-          return (
+    return (
         spaceship.x < meteor.x + 100 &&
         spaceship.x + spaceship.img.width > meteor.x &&
         spaceship.y < meteor.y + 100 &&
@@ -87,5 +118,3 @@ function handleSpaceShipCollisions() {
         }
     }
 }
-
-// Appeler drawImpacts() dans la boucle principale de dessin pour afficher les impacts actifs
