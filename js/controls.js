@@ -2,7 +2,7 @@
 let leftPressed = false;
 let rightPressed = false;
 let spacePressed = false;
-let spaceshipSpeed = 350; // Vitesse en pixels par seconde
+let spaceshipSpeed = 700; // Vitesse en pixels par seconde
 
 function setupControls() {
   // Détecte les pressions sur les touches
