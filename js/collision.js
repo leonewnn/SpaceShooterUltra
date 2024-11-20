@@ -5,14 +5,8 @@ for (let i = 0; i <= 6; i++) {
   impacts.push(img);
 }
 
-<<<<<<< Updated upstream
-let impactFrameIndex = 0;
-let frameDelay = 30; // Augmente ce nombre pour ralentir l'animation
-let frameCounter = 0;
-=======
 let impactAnimations = []; // Tableau pour stocker les animations d'impact actives
 let frameDelay = 3; // Ajustement du délai pour une animation plus fluide
->>>>>>> Stashed changes
 
 function impactAnimation(x, y) {
   impactAnimations.push({ x, y, impactFrames: 0, delayCounter: 0 });
@@ -44,30 +38,6 @@ function drawImpacts() {
 }
 
 function checkCollision(missile, meteor) {
-<<<<<<< Updated upstream
-    return (
-        missile.x < meteor.x + 100 &&
-        missile.x + missile.img.width > meteor.x &&
-        missile.y < meteor.y + 100 &&
-        missile.y + missile.img.height > meteor.y
-    );
-}
-
-
-function handleCollisions() {
-    for (let i = missiles.length - 1; i >= 0; i--) {
-        let missile = missiles[i];
-        
-        for (let j = meteorites.length - 1; j >= 0; j--) {
-            let meteor = meteorites[j];
-            
-            if (checkCollision(missile, meteor)) {
-                impactAnimation(missile.x,missile.y);
-                missiles.splice(i, 1);
-                meteorites.splice(j, 1);
-                break;
-            }
-=======
   return (
     missile.x < meteor.x + meteor.size &&
     missile.x + missile.img.width > meteor.x &&
@@ -119,7 +89,6 @@ function handleCollisions() {
           impactAnimation(missile.x, missile.y);
           meteorites.splice(j, 1);
           break;
->>>>>>> Stashed changes
         }
       }
     }

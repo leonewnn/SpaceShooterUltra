@@ -11,15 +11,6 @@ function renderPlayScreen(delta) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(playScreenBackground, 0, 0, canvas.width, canvas.height);
 
-<<<<<<< Updated upstream
-        startPowerupSpawning();
-        drawPowerups(delta);
-        drawMeteors(delta); // Appel de drawMeteors avec delta
-        drawSpaceShip(spaceshipPos);
-        drawMissile(delta); // Ajouter delta à l'appel de drawMissile
-        handleCollisions();
-    }
-=======
     drawPowerups(delta);
     drawMeteors(delta); // Appel de drawMeteors avec delta
     drawSpaceShip(spaceshipPos);
@@ -33,5 +24,4 @@ function renderPlayScreen(delta) {
     if (!meteorSpawnInterval) startMeteorSpawning();
     if (!scoreInterval) startScoreIncrement();
   }
->>>>>>> Stashed changes
 }

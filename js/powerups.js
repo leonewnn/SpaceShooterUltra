@@ -3,19 +3,15 @@ let powerups = [];
 let powerupItems = [];
 let powerupSpawnInterval;
 let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
-<<<<<<< Updated upstream
-let powerupSpeed = 100; // Vitesse des power-ups
-=======
 let powerupSpeed = 100;
 let powerupspawnproccessing = true;
-let minmalSpawnInterval = 15000;
-let timespanspawntime = 15000;
+let minmalSpawnInterval = 1500;
+let timespanspawntime = 1500;
 
 // Indicateur unique pour afficher les power-ups actifs
 let activeIndicator = null;
 let indicatorEndTime = null;
 let activeIndicatorImage = null;
->>>>>>> Stashed changes
 
 // Charger les images des power-ups
 powerups[0] = new Image();
@@ -32,11 +28,6 @@ powerups[3].src = `images/powerups/fire_rate_up.png`;
 
 // Démarrer le spawn des power-ups
 function startPowerupSpawning() {
-<<<<<<< Updated upstream
-    if (!powerupSpawnInterval) {
-        powerupSpawnInterval = setInterval(spawnPowerup, powerupSpawnFrequency);
-    }
-=======
   if (powerupspawnproccessing) {
     nextPowerUpSpawn();
   }
@@ -52,23 +43,10 @@ function nextPowerUpSpawn() {
     powerupspawnproccessing = true; // Réactiver le spawn pour le prochain
     nextPowerUpSpawn(); // Rappeler la fonction pour continuer le spawn
   }, nextMoment);
->>>>>>> Stashed changes
 }
 
 // Fonction pour faire apparaître un power-up
 function spawnPowerup() {
-<<<<<<< Updated upstream
-    let randomPowerupImage = powerups[Math.floor(Math.random() * powerups.length)];
-    let xPosition = Math.random() * (canvas.width - 50); // Ajuste pour garder le power-up dans les limites
-
-    let powerup = {
-        x: xPosition,
-        y: -50, // Spawn au-dessus de l'écran
-        size: 50, // Taille fixe du power-up
-        img: randomPowerupImage
-    };
-    powerupItems.push(powerup);
-=======
   let randomPowerupImage =
     powerups[Math.floor(Math.random() * powerups.length)];
   let xPosition = Math.random() * (canvas.width - 50); // Ajuste pour garder le power-up dans les limites
@@ -80,22 +58,10 @@ function spawnPowerup() {
     img: randomPowerupImage,
   };
   powerupItems.push(powerup);
->>>>>>> Stashed changes
 }
 
 // Fonction pour dessiner et déplacer les power-ups
 function drawPowerups(delta) {
-<<<<<<< Updated upstream
-    for (let i = 0; i < powerupItems.length; i++) {
-        let powerup = powerupItems[i];
-        ctx.drawImage(powerup.img, powerup.x, powerup.y, powerup.size, powerup.size);
-        powerup.y += powerupSpeed * delta; // Déplacer le power-up vers le bas
-
-        if (powerup.y > canvas.height) {
-            powerupItems.splice(i, 1); // Supprimer le power-up lorsqu'il sort de l'écran
-            i--;
-        }
-=======
   for (let i = 0; i < powerupItems.length; i++) {
     let powerup = powerupItems[i];
     ctx.drawImage(
@@ -110,12 +76,9 @@ function drawPowerups(delta) {
     if (powerup.y > canvas.height) {
       powerupItems.splice(i, 1); // Supprimer le power-up lorsqu'il sort de l'écran
       i--;
->>>>>>> Stashed changes
     }
   }
 }
-<<<<<<< Updated upstream
-=======
 
 // Gestion des power-ups actifs
 function activePowerup(powerup) {
@@ -167,4 +130,3 @@ function drawIndicator() {
     }
   }
 }
->>>>>>> Stashed changes
