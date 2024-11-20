@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoreboard</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('images/playScreenBackground.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .scoreboard {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+            width: 350px;
+            text-align: center;
+        }
+
+        .scoreboard table {
+            width: 100%;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .scoreboard th, .scoreboard td {
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .input-name {
+            width: 60%;
+            padding: 5px;
+            font-size: 16px;
+            text-align: center;
+            text-transform: uppercase;
+            margin-top: 10px;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .submit-button, .back-button {
+            margin-top: 15px;
+            padding: 10px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #27a448;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Zone de drag-and-drop */
+        .drop-zone {
+            border: 2px dashed #ffffff;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="scoreboard">
+    <h2>Top Scores</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Profile</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="scoreTableBody">
+            <!-- Les scores seront ajoutés ici dynamiquement -->
+        </tbody>
+    </table>
+
+    <!-- Saisie du nom et zone de photo de profil -->
+    <div id="submissionSection" style="display: none;">
+        <input type="text" id="playerName" class="input-name" maxlength="3" placeholder="AAA">
+        <div class="drop-zone" id="dropZone">Drop your profile picture here</div>
+        <button class="submit-button" onclick="submitPlayerScore()">Submit</button>
+    </div>
+    <button class="back-button" onclick="returnToHome()">Return to Home</button>
+</div>
+
+<script>
+    let profileImage = null; // Variable pour stocker l'image de profil
+
+    // Zone de drag-and-drop
+    const dropZone = document.getElementById("dropZone");
+    dropZone.addEventListener("dragover", (e) => e.preventDefault());
+    dropZone.addEventListener("drop", handleDrop);
+
+    function handleDrop(e) {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                profileImage = reader.result; // Stocker l'image en base64
+                dropZone.innerHTML = "Profile picture uploaded!";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert("Please drop a valid image file.");
+        }
+    }
+
+    // Récupérer les scores depuis localStorage
+    function getHighScores() {
+        return JSON.parse(localStorage.getItem("highScores")) || [];
+    }
+
+    // Sauvegarder les scores dans localStorage
+    function saveHighScore(name, score, profileImage) {
+        const highScores = getHighScores();
+        const date = new Date().toISOString().split('T')[0]; // Format de date YYYY-MM-DD
+
+        // Utiliser l'image par défaut si aucune image n'est téléversée
+        const profilePicture = profileImage || 'images/default_pp.png';
+
+        highScores.push({ name, score, date, profileImage: profilePicture });
+        highScores.sort((a, b) => b.score - a.score);
+        highScores.splice(10); // Garde uniquement les 10 meilleurs scores
+
+        localStorage.setItem("highScores", JSON.stringify(highScores));
+    }
+
+    // Afficher les scores dans le tableau
+    function displayHighScores() {
+        const highScores = getHighScores();
+        const scoreTableBody = document.getElementById("scoreTableBody");
+
+        scoreTableBody.innerHTML = highScores
+            .map((score, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td><img src="${score.profileImage}" width="30" height="30"></td>
+                    <td>${score.name}</td>
+                    <td>${score.score}</td>
+                </tr>
+            `)
+            .join("");
+    }
+
+    // Vérifier si le score est parmi les 10 meilleurs
+    function checkIfTopScore(score) {
+        const highScores = getHighScores();
+        return highScores.length < 10 || score > highScores[highScores.length - 1].score;
+    }
+
+    // Fonction de soumission du score du joueur
+    function submitPlayerScore() {
+        const nameInput = document.getElementById("playerName");
+        const playerName = nameInput.value.toUpperCase().slice(0, 3);
+
+        if (playerName.length === 3 && localStorage.getItem("scoreSubmitted") === "false") {
+            const score = localStorage.getItem("playerScore") || 0;
+
+            saveHighScore(playerName, score, profileImage); // Sauvegarde l'image de profil avec le score
+            localStorage.setItem("scoreSubmitted", "true"); // Marquer le score comme soumis
+            nameInput.value = ""; // Réinitialise le champ
+            displayHighScores();
+
+            // Désactiver le bouton "Submit" après soumission
+            document.querySelector(".submit-button").disabled = true;
+        } else if (localStorage.getItem("scoreSubmitted") === "true") {
+            alert("Score already submitted!");
+        } else {
+            alert("Please enter a 3-letter name.");
+        }
+    }
+
+    // Afficher ou masquer la soumission en fonction du score du joueur
+    function setupScoreSubmission() {
+        const score = localStorage.getItem("playerScore") || 0;
+        if (checkIfTopScore(score)) {
+            document.getElementById("submissionSection").style.display = "block";
+        }
+    }
+
+    // Redirection vers la page principale
+    function returnToHome() {
+        window.location.href = "game.html";
+    }
+
+    // Initialiser l'affichage du tableau des scores
+    displayHighScores();
+
+    // Initialiser la section de soumission du score
+    setupScoreSubmission();
+
+    // Désactiver le bouton "Submit" si le score a déjà été soumis
+    if (localStorage.getItem("scoreSubmitted") === "true") {
+        document.querySelector(".submit-button").disabled = true;
+    }
+</script>
+
+</body>
+</html>

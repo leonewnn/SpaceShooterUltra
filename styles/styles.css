@@ -1,4 +1,21 @@
 @font-face {
-    font-family: 'SpaceMan';
-    src: url('../fonts/SPACEMAN.TTF') format('truetype');
+  font-family: "SpaceMan";
+  src: url("../fonts/SPACEMAN.TTF") format("truetype");
+}
+
+/* Supprime les marges et les défilements */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Empêche les barres de défilement */
+  width: 100%;
+  height: 100%;
+}
+
+/* Canvas en plein écran */
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
 }
