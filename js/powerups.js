@@ -5,8 +5,9 @@ let powerupSpawnInterval;
 let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
 let powerupSpeed = 100;
 let powerupspawnproccessing = true;
-let minmalSpawnInterval = 15000;
-let timespanspawntime = 15000;
+let minmalSpawnInterval = 1500;
+let timespanspawntime = 1500;
+let powerUpTime = 10;
 
 // Indicateur unique pour afficher les power-ups actifs
 let activeIndicator = null;
@@ -84,7 +85,56 @@ function drawPowerups(delta) {
 function activePowerup(powerup) {
   const powerupName = getImageName(powerup);
   console.log(powerupName + " activé");
-  setIndicator(powerup, 10); // 10 secondes par défaut
+
+  switch (powerupName) {
+    case "armor_up":
+      activateArmorUp();
+      break;
+    case "fire_rate_up":
+      activateFireRateUp();
+      break;
+    case "hp_up":
+      activateHpUp();
+      break;
+    case "nuke_up":
+      activateNukeUp();
+      break;
+    default:
+      console.log("Power-up inconnu : " + powerupName);
+  }
+
+  setIndicator(powerup, powerUpTime); // 10 secondes par défaut
+}
+
+// Fonctions placeholders à coder plus tard
+function activateArmorUp() {
+  console.log("Activation de Armor Up!");
+  // Ajoute la logique ici
+}
+
+function activateFireRateUp() {
+  console.log("Activation de Fire Rate Up!");
+
+  // Démarrer l'intervalle pour tirer des missiles
+  const interval = setInterval(() => {
+    addMissile(-1, 65, -15); // Tire des missiles avec les ajustements nécessaires
+  }, fireRate);
+
+  // Arrêter l'intervalle après la durée du power-up
+  setTimeout(() => {
+    clearInterval(interval);
+    console.log("Fire Rate Up terminé !");
+  }, powerUpTime * 1000); // Convertir powerUpTime en millisecondes
+}
+
+function activateHpUp() {
+  console.log("Activation de HP Up!");
+  // Ajoute la logique ici
+}
+
+function activateNukeUp() {
+  console.log("Activation de Nuke Up!");
+  // Ajoute la logique ici
 }
 
 function getImageName(picture) {

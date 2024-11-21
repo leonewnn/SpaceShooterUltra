@@ -36,7 +36,7 @@ function updateSpaceshipPosition(delta) {
   }
 }
 
-setInterval(addMissile, fireRate); // 1000 ms = 1 seconde
+setInterval(() => addMissile(15, 51, 5), fireRate);
 
 // Fonction principale avec delta
 function main(currentTime) {

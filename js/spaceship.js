@@ -29,18 +29,18 @@ function drawSpaceShip(pos) {
   }
 }
 
-function addMissile() {
+function addMissile(adjustementLeftx, adjustementRightx, adjustementy) {
   // Crée le premier missile légèrement décalé à gauche
   let missileLeft = {
-    x: spaceshipPos + 13, // Décalé légèrement vers la gauche du centre du vaisseau
-    y: canvas.height - 140,
+    x: spaceshipPos + adjustementLeftx, // Décalé légèrement vers la gauche du centre du vaisseau
+    y: canvas.height - 140 - adjustementy,
     img: missileImg,
   };
 
   // Crée le deuxième missile légèrement décalé à droite
   let missileRight = {
-    x: spaceshipPos + 53, // Décalé légèrement vers la droite du centre du vaisseau
-    y: canvas.height - 140,
+    x: spaceshipPos + adjustementRightx, // Décalé légèrement vers la droite du centre du vaisseau
+    y: canvas.height - 140 - adjustementy,
     img: missileImg,
   };
 

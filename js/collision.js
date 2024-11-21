@@ -97,9 +97,9 @@ function handleCollisions() {
 
 function checkSpaceShipCollision(spaceship, meteor) {
   return (
-    spaceship.x < meteor.x + 100 &&
+    spaceship.x < meteor.x + meteor.size &&
     spaceship.x + spaceship.img.width > meteor.x &&
-    spaceship.y < meteor.y + 100 &&
+    spaceship.y < meteor.y + meteor.size &&
     spaceship.y + spaceship.img.height > meteor.y
   );
 }
