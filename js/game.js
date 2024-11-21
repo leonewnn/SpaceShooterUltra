@@ -3,6 +3,8 @@ let gameState = "titleScreen";
 let gameOver = false; //Indique si le joueur a perdu
 let lastTime = 0;
 let fireRate = 600; // Temps de la dernière frame
+let bonusActive = false; // Indique si le power-up bonus est actif
+let bonusOffset = 100; // Décalage des tirs bonus en millisecondes
 window.ctx = canvas.getContext("2d"); // Déclare `ctx` comme variable globale
 
 function render(delta) {
@@ -36,7 +38,18 @@ function updateSpaceshipPosition(delta) {
   }
 }
 
-setInterval(() => addMissile(15, 51, 5), fireRate);
+// Intervalle pour gérer les tirs synchronisés
+setInterval(() => {
+  // Tir normal
+  addMissile(15, 51, 5);
+
+  // Tir bonus avec décalage si actif
+  if (bonusActive) {
+    setTimeout(() => {
+      addMissile(-1, 65, -15); // Tirs bonus avec ajustements
+    }, bonusOffset);
+  }
+}, fireRate);
 
 // Fonction principale avec delta
 function main(currentTime) {

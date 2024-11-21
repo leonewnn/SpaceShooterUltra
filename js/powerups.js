@@ -115,16 +115,13 @@ function activateArmorUp() {
 function activateFireRateUp() {
   console.log("Activation de Fire Rate Up!");
 
-  // Démarrer l'intervalle pour tirer des missiles
-  const interval = setInterval(() => {
-    addMissile(-1, 65, -15); // Tire des missiles avec les ajustements nécessaires
-  }, fireRate);
+  bonusActive = true; // Activer les tirs bonus
 
-  // Arrêter l'intervalle après la durée du power-up
+  // Désactiver le bonus après 10 secondes
   setTimeout(() => {
-    clearInterval(interval);
+    bonusActive = false;
     console.log("Fire Rate Up terminé !");
-  }, powerUpTime * 1000); // Convertir powerUpTime en millisecondes
+  }, powerUpTime * 1000);
 }
 
 function activateHpUp() {
