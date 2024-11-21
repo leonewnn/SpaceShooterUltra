@@ -5,8 +5,8 @@ let powerupSpawnInterval;
 let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
 let powerupSpeed = 100;
 let powerupspawnproccessing = true;
-let minmalSpawnInterval = 1500;
-let timespanspawntime = 1500;
+let minmalSpawnInterval = 150;
+let timespanspawntime = 150;
 let powerUpTime = 10;
 
 // Indicateur unique pour afficher les power-ups actifs
@@ -109,7 +109,12 @@ function activePowerup(powerup) {
 // Fonctions placeholders à coder plus tard
 function activateArmorUp() {
   console.log("Activation de Armor Up!");
-  // Ajoute la logique ici
+  shieldActive = true;
+
+  setTimeout(() => {
+    shieldActive = false;
+    console.log("Shiled finito");
+  }, powerUpTime * 1000);
 }
 
 function activateFireRateUp() {

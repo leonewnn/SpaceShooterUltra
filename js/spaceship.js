@@ -5,6 +5,9 @@ let frameInterval = 8; // Intervalle pour ralentir l'animation
 let frameCount = 0; // Compteur pour contrôler la vitesse de changement d'image
 let missiles = [];
 let missileSpeed = 250;
+let shieldActive = false;
+let shield = new Image();
+shield.src = `images/spaceship/shield.png`;
 
 // Charger les images du vaisseau
 for (let i = 0; i <= 6; i++) {
@@ -18,9 +21,12 @@ missileImg.src = `images/spaceship/missile.png`; // Charger l'image du missile u
 
 function drawSpaceShip(pos) {
   if (isPaused) return; // Ne dessine pas le vaisseau si le jeu est en pause
+
   let spaceship = spaceships[currentFrame]; // Image actuelle du vaisseau
   ctx.drawImage(spaceship, pos, canvas.height - 90); // Dessine l'image sur le canvas aux coordonnées spécifiées
-
+  if (shieldActive) {
+    ctx.drawImage(shield, pos - 22, canvas.height - 115, 115, 115);
+  }
   // Incrémente le compteur pour contrôler la vitesse de l'animation
   frameCount++;
   if (frameCount >= frameInterval) {
