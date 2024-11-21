@@ -38,6 +38,9 @@ function startLifeAnimation() {
       animationStarted = false;
       animationsCompleted++; // Incrémente le compteur d'animations terminées
 
+      remainingLives = imagesAnimated.length - animationsCompleted;
+      console.log("Vies restantes :", remainingLives); // Ajoute ce log
+
       // Passer à l'image suivante vers la gauche
       currentImageIndex = imagesAnimated.lastIndexOf(false);
 

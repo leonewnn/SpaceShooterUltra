@@ -115,7 +115,10 @@ function handleSpaceShipCollisions() {
 
     if (checkSpaceShipCollision(spaceship, meteor)) {
       console.log("Collision détectée entre le vaisseau et une météorite");
-      startLifeAnimation(); // Démarrer l'animation de vie
+
+      if (!shieldActive) {
+        startLifeAnimation(); // Démarrer l'animation de vie
+      }
       impactAnimation(spaceship.x, spaceship.y); // Optionnel pour un impact visuel
       meteorites.splice(i, 1); // Supprimer la météorite en collision
       break;
