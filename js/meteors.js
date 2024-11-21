@@ -4,9 +4,10 @@ let meteors = [];
 let meteorites = [];
 let meteorSpawnInterval;
 let meteorLife = 4;
-let meteorSpawnFrequency = 1500;
+let meteorSpawnFrequency = 1000;
 let multiplier = 1;
 let meteorSpeed = 150;
+let isMeteorSpawning = false;
 
 for (let i = 1; i <= 10; i++) {
   let img = new Image();
@@ -15,7 +16,10 @@ for (let i = 1; i <= 10; i++) {
 }
 
 function startMeteorSpawning() {
-  if (!meteorSpawnInterval) {
+  if (!meteorSpawnInterval && !isMeteorSpawning) {
+    // Vérifie si aucun spawn n'est actif
+    console.log("Starting meteor spawning...");
+    isMeteorSpawning = true; // Marque le spawn comme actif
     meteorSpawnInterval = setInterval(
       spawnMeteor,
       meteorSpawnFrequency * multiplier
@@ -55,15 +59,24 @@ function drawMeteors(delta) {
   }
 }
 
+// Fonction pour arrêter temporairement le spawn des météorites
 function pauseMeteorSpawning() {
   if (meteorSpawnInterval) {
-    clearInterval(meteorSpawnInterval); // Arrête le timer
-    meteorSpawnInterval = null; // Réinitialise l'intervalle
+    console.log("Pausing meteor spawning...");
+    clearInterval(meteorSpawnInterval); // Arrête l'intervalle
+    meteorSpawnInterval = null;
+    isMeteorSpawning = false; // Marque le spawn comme inactif
   }
 }
 
+// Fonction pour reprendre le spawn des météorites
 function resumeMeteorSpawning() {
-  if (!meteorSpawnInterval) {
-    meteorSpawnInterval = setInterval(spawnMeteor, meteorSpawnFrequency); // Relance le timer
+  if (!meteorSpawnInterval && !isMeteorSpawning) {
+    console.log("Resuming meteor spawning...");
+    isMeteorSpawning = true; // Marque le spawn comme actif
+    meteorSpawnInterval = setInterval(
+      spawnMeteor,
+      meteorSpawnFrequency * multiplier
+    );
   }
 }

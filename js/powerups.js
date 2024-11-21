@@ -5,8 +5,8 @@ let powerupSpawnInterval;
 let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
 let powerupSpeed = 100;
 let powerupspawnproccessing = true;
-let minmalSpawnInterval = 150;
-let timespanspawntime = 150;
+let minmalSpawnInterval = 750;
+let timespanspawntime = 750;
 let powerUpTime = 10;
 
 // Indicateur unique pour afficher les power-ups actifs
@@ -89,21 +89,24 @@ function activePowerup(powerup) {
   switch (powerupName) {
     case "armor_up":
       activateArmorUp();
+      setIndicator(powerup, powerUpTime);
       break;
     case "fire_rate_up":
       activateFireRateUp();
+      setIndicator(powerup, powerUpTime);
       break;
     case "hp_up":
       activateHpUp();
       break;
     case "nuke_up":
       activateNukeUp();
+
       break;
     default:
       console.log("Power-up inconnu : " + powerupName);
   }
 
-  setIndicator(powerup, powerUpTime); // 10 secondes par défaut
+  // 10 secondes par défaut
 }
 
 // Fonctions placeholders à coder plus tard
@@ -136,7 +139,17 @@ function activateHpUp() {
 
 function activateNukeUp() {
   console.log("Activation de Nuke Up!");
-  // Ajoute la logique ici
+
+  // Vider les météorites et arrêter leur spawn
+  meteorites.length = 0; // Efface toutes les météorites
+  pauseMeteorSpawning(); // Arrête temporairement le spawn
+  console.log("Meteorites cleared and spawning paused.");
+
+  // Relancer après 8 secondes
+  setTimeout(() => {
+    resumeMeteorSpawning(); // Relance le spawn
+    console.log("Meteor spawning resumed after Nuke.");
+  }, 8 * 1000);
 }
 
 function getImageName(picture) {
