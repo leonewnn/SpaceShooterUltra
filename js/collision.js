@@ -121,14 +121,22 @@ function handleSpaceShipCollisions() {
 
       if (shieldActive) {
         console.log("Protection activée : aucune vie perdue !");
-        meteorites.splice(i, 1); // Supprimer la météorite
+        meteorites.splice(i, 1); // Supprime la météorite
         return; // Arrêter la gestion de la collision
       }
 
-      // Si pas de protection, jouer l'animation de perte de vie
-      startLifeAnimation(); // Animation pour le cœur correspondant
+      // Prioriser la vie en cours de récupération si elle existe
+      if (recoveringLifeIndex !== null) {
+        console.log(`Vie en cours de récupération perdue : cœur ${recoveringLifeIndex + 1}`);
+        imagesAnimated[recoveringLifeIndex] = true; // Marque la vie comme perdue
+        recoveringLifeIndex = null; // Réinitialise l'indice
+      } else {
+        // Sinon, jouer l'animation de perte de la prochaine vie
+        startLifeAnimation(); // Animation pour le cœur correspondant
+      }
+
       impactAnimation(spaceship.x, spaceship.y); // Impact visuel optionnel
-      meteorites.splice(i, 1); // Supprimer la météorite
+      meteorites.splice(i, 1); // Supprime la météorite
       break;
     }
   }

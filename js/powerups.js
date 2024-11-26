@@ -8,6 +8,7 @@ let powerupspawnproccessing = true;
 let minmalSpawnInterval = 750;
 let timespanspawntime = 750;
 let powerUpTime = 10;
+let recoveringLifeIndex = null; // Indice de la vie en cours de récupération
 
 // Indicateur unique pour afficher les power-ups actifs
 let activeIndicator = null;
@@ -134,7 +135,18 @@ function activateFireRateUp() {
 
 function activateHpUp() {
   console.log("Activation de HP Up!");
-  // Ajoute la logique ici
+
+  // Chercher la dernière vie perdue (la plus à droite)
+  const lostLifeIndex = imagesAnimated.lastIndexOf(true);
+
+  if (lostLifeIndex !== -1) {
+    imagesAnimated[lostLifeIndex] = false; // Réactive la vie perdue
+    animationsCompleted--; // Réduit le compteur d'animations terminées
+    recoveringLifeIndex = lostLifeIndex; // Marque la vie comme en cours de récupération
+    console.log(`Vie restaurée : cœur ${lostLifeIndex + 1}`);
+  } else {
+    console.log("Toutes les vies sont déjà restaurées !");
+  }
 }
 
 function activateNukeUp() {
