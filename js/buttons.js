@@ -21,8 +21,10 @@ let buttonScoreBoard = {
   label: "SCOREBOARD",
   onClick: function () {
     console.log("Click scoreboardbtn");
+    window.location.href = "scoreboard.html?fromMenu=true"; // paramètre `fromMenu`
   },
 };
+
 let buttonChangeSpaceship = {
   width: 550,
   y: 500,

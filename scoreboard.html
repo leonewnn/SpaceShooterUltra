@@ -208,6 +208,21 @@
     if (localStorage.getItem("scoreSubmitted") === "true") {
         document.querySelector(".submit-button").disabled = true;
     }
+
+    // Vérifie si la page est visitée depuis le menu principal
+    function checkAccessFromMenu() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromMenu = urlParams.get("fromMenu");
+
+    if (fromMenu === "true") {
+        // Masquer la section de soumission du score
+        document.getElementById("submissionSection").style.display = "none";
+    }
+    }
+
+    // Appeler la fonction au chargement de la page
+    checkAccessFromMenu();
+
 </script>
 
 </body>
