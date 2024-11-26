@@ -71,3 +71,55 @@ canvas.addEventListener("click", function (event) {
     }
   });
 });
+
+canvas.addEventListener("click", function handleClick(event) {
+  const clickX = event.offsetX;
+  const clickY = event.offsetY;
+
+  // Gestion des clics pour le menu principal
+  if (gameState === "titleScreen") {
+    buttons.forEach(button => {
+      if (
+        clickX >= button.x &&
+        clickX <= button.x + button.width &&
+        clickY >= button.y &&
+        clickY <= button.y + button.height
+      ) {
+        button.onClick();
+      }
+    });
+  }
+
+  // Gestion des clics pour le menu de pause
+  if (isPaused && gameState === "playScreen") {
+    pauseButtons.forEach(button => {
+      if (
+        clickX >= button.x &&
+        clickX <= button.x + button.width &&
+        clickY >= button.y &&
+        clickY <= button.y + button.height
+      ) {
+        button.onClick();
+      }
+    });
+  }
+});
+
+canvas.addEventListener("click", function handleButtonClick(event) {
+  const clickX = event.offsetX;
+  const clickY = event.offsetY;
+
+  if (gameState === "titleScreen") {
+    // Gestion des boutons du menu principal
+    buttons.forEach(button => {
+      if (
+        clickX >= button.x &&
+        clickX <= button.x + button.width &&
+        clickY >= button.y &&
+        clickY <= button.y + button.height
+      ) {
+        button.onClick();
+      }
+    });
+  }
+});

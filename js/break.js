@@ -8,14 +8,14 @@ let pauseButtons = [];
 
 // Fonction pour dessiner la fenêtre de pause
 function renderPauseMenu(ctx) {
-  pauseButtons = []; // Réinitialiser la liste des boutons
+  pauseButtons = []; // Réinitialiser les boutons de pause
 
   const menuWidth = 300;
   const menuHeight = 200;
   const menuX = (canvas.width - menuWidth) / 2;
   const menuY = (canvas.height - menuHeight) / 2;
 
-  // Dessiner la fenêtre de pause
+  // Dessiner le fond de la pause
   ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
   ctx.fillRect(menuX, menuY, menuWidth, menuHeight);
 
@@ -23,27 +23,15 @@ function renderPauseMenu(ctx) {
   ctx.lineWidth = 2;
   ctx.strokeRect(menuX, menuY, menuWidth, menuHeight);
 
-  // Afficher le texte "Pause"
+  // Texte "Pause"
   ctx.font = "24px 'Courier New', monospace";
   ctx.fillStyle = "#FFFFFF";
   ctx.textAlign = "center";
   ctx.fillText("Pause", menuX + menuWidth / 2, menuY + 40);
 
-  // Ajouter les boutons
-  drawPauseButton(
-    ctx,
-    "Reprendre",
-    menuX + menuWidth / 2,
-    menuY + 90,
-    resumeGame
-  );
-  drawPauseButton(
-    ctx,
-    "Menu Principal",
-    menuX + menuWidth / 2,
-    menuY + 140,
-    goToMainMenu
-  );
+  // Ajouter les boutons de pause
+  drawPauseButton(ctx, "Reprendre", menuX + menuWidth / 2, menuY + 90, resumeGame);
+  drawPauseButton(ctx, "Menu Principal", menuX + menuWidth / 2, menuY + 140, goToMainMenu);
 }
 
 // Fonction pour dessiner un bouton
