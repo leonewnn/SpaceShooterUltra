@@ -19,3 +19,111 @@ canvas {
   width: 100vw;
   height: 100vh;
 }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: url('images/scoreboard_background.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  overflow: hidden;
+}
+
+.scoreboard {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 15px;
+  color: white;
+  width: 80%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.scoreboard h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.scoreboard table {
+  width: 100%;
+  border-spacing: 10px;
+  color: white;
+  font-size: 18px;
+}
+
+.scoreboard th, .scoreboard td {
+  padding: 12px;
+  text-align: center;
+}
+
+.scoreboard img {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.game-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  text-align: center;
+  color: white;
+  background: linear-gradient(90deg, rgba(255, 0, 150, 0.8), rgba(0, 153, 255, 0.8));
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 0, 150, 0.8);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.game-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 1);
+}
+
+.drop-zone {
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: background-color 0.3s;
+}
+
+.drop-zone:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.blinking-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 30px;
+  background-color: white;
+  animation: blink 0.5s step-end infinite;
+}
+
+@keyframes blink {
+  from, to {
+      background-color: transparent;
+  }
+  50% {
+      background-color: white;
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}
