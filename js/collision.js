@@ -60,14 +60,16 @@ function checkPowerupGrabbed(spaceshipPos, powerup) {
 
 function handleCollisionsPowerUp() {
   for (let i = powerupItems.length - 1; i >= 0; i--) {
-    let poweruip = powerupItems[i];
+    let powerup = powerupItems[i];
 
-    // Vérifiez si le power-up est attrapé
-    if (checkPowerupGrabbed(spaceshipPos, poweruip)) {
-      activePowerup(poweruip);
+    if (checkPowerupGrabbed(spaceshipPos, powerup)) {
+      if (powerup.type === "armor") {
+        hasArmor = true; // Activer l'armor
+        console.log("Power-up Armor activé !");
+      }
 
-      // Retirer le power-up de la liste
-      powerupItems.splice(i, 1);
+      activePowerup(powerup); // Appliquer l'effet du power-up
+      powerupItems.splice(i, 1); // Retirer le power-up du jeu
     }
   }
 }
@@ -111,16 +113,22 @@ function handleSpaceShipCollisions() {
       x: spaceshipPos,
       y: canvas.height - 90,
       img: spaceships[0],
-    }; // Utiliser l'image de référence du vaisseau
+    };
 
     if (checkSpaceShipCollision(spaceship, meteor)) {
       console.log("Collision détectée entre le vaisseau et une météorite");
+      console.log("Protection active :", shieldActive);
 
-      if (!shieldActive) {
-        startLifeAnimation(); // Démarrer l'animation de vie
+      if (shieldActive) {
+        console.log("Protection activée : aucune vie perdue !");
+        meteorites.splice(i, 1); // Supprimer la météorite
+        return; // Arrêter la gestion de la collision
       }
-      impactAnimation(spaceship.x, spaceship.y); // Optionnel pour un impact visuel
-      meteorites.splice(i, 1); // Supprimer la météorite en collision
+
+      // Si pas de protection, jouer l'animation de perte de vie
+      startLifeAnimation(); // Animation pour le cœur correspondant
+      impactAnimation(spaceship.x, spaceship.y); // Impact visuel optionnel
+      meteorites.splice(i, 1); // Supprimer la météorite
       break;
     }
   }

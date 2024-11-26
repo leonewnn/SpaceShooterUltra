@@ -21,13 +21,14 @@ let currentImageIndex = 2; // On commence par l'image la plus à droite
 
 // Fonction pour démarrer l'animation
 function startLifeAnimation() {
+  console.log("Début de l'animation pour la perte de vie");
   if (animationStarted || imagesAnimated[currentImageIndex]) return;
 
   animationStarted = true;
   animationCompleted = false;
   currentState = 0;
 
-  imagesAnimated[currentImageIndex] = true; // Marquer l'image comme animée
+  imagesAnimated[currentImageIndex] = true;
 
   let animationInterval = setInterval(() => {
     if (currentState < 4) {
@@ -36,18 +37,12 @@ function startLifeAnimation() {
       clearInterval(animationInterval);
       animationCompleted = true;
       animationStarted = false;
-      animationsCompleted++; // Incrémente le compteur d'animations terminées
 
-      remainingLives = imagesAnimated.length - animationsCompleted;
-      console.log("Vies restantes :", remainingLives); // Ajoute ce log
-
-      // Passer à l'image suivante vers la gauche
+      animationsCompleted++;
       currentImageIndex = imagesAnimated.lastIndexOf(false);
-
-      // Vérifier si toutes les animations sont terminées
       checkGameOver();
     }
-  }, 100);
+  }, 200);
 }
 
 // Vérifie si toutes les animations sont terminées
@@ -55,12 +50,12 @@ function checkGameOver() {
   if (animationsCompleted >= imagesAnimated.length) {
     gameOver = true;
 
-    // Stocker le score actuel et indiquer que le score n'est pas encore soumis
+    // Stocker le score et rediriger vers le scoreboard
     localStorage.setItem("playerScore", playerScore);
     localStorage.setItem("scoreSubmitted", "false");
 
     setTimeout(() => {
-      window.location.href = "scoreboard.html"; // Rediriger vers la page scoreboard
+      window.location.href = "scoreboard.html";
     }, 3000);
   }
 }
@@ -76,18 +71,18 @@ function saveHighScore(name, score) {
 
 // Fonction pour dessiner un état spécifique du sprite
 function drawLife(xPos, yPos, state = 0) {
-  if (spriteWidth && spriteHeight) {
-    let sourceX = state * spriteWidth;
-    ctx.drawImage(
-      spriteSheet,
-      sourceX,
-      0,
-      spriteWidth,
-      spriteHeight,
-      xPos,
-      yPos,
-      spriteWidth,
-      spriteHeight
-    );
-  }
+  if (!spriteWidth || !spriteHeight) return; // S'assurer que le sprite est chargé
+
+  let sourceX = state * spriteWidth; // Position dans le sprite sheet
+  ctx.drawImage(
+    spriteSheet,
+    sourceX,
+    0,
+    spriteWidth,
+    spriteHeight,
+    xPos,
+    yPos,
+    spriteWidth,
+    spriteHeight
+  );
 }

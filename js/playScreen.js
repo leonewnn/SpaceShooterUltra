@@ -10,18 +10,25 @@ function renderPlayScreen(delta) {
   if (psBgReady) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(playScreenBackground, 0, 0, canvas.width, canvas.height);
+
     startPowerupSpawning();
     drawPowerups(delta);
-    drawMeteors(delta); // Appel de drawMeteors avec delta
+    drawMeteors(delta);
     drawSpaceShip(spaceshipPos);
-    drawMissile(delta); // Ajouter delta à l'appel de drawMissile
+    drawMissile(delta);
 
     handleCollisions();
     handleCollisionsPowerUp();
 
+    // Dessiner les vies en haut à gauche
+    drawLife(10, 10, imagesAnimated[0] ? 4 : (currentImageIndex === 0 && animationStarted ? currentState : 0)); // Vie 1
+    drawLife(50, 10, imagesAnimated[1] ? 4 : (currentImageIndex === 1 && animationStarted ? currentState : 0)); // Vie 2
+    drawLife(90, 10, imagesAnimated[2] ? 4 : (currentImageIndex === 2 && animationStarted ? currentState : 0)); // Vie 3
+
     drawScore();
     drawIndicator();
-    //if (!meteorSpawnInterval) startMeteorSpawning();
+
     if (!scoreInterval) startScoreIncrement();
   }
 }
+
