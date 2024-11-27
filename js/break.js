@@ -2,6 +2,8 @@
 
 // Indicateur de pause
 let isPaused = false;
+let lastPauseTime = 0; // Temps où le jeu a été mis en pause
+let pauseDuration = 0; // Temps total de pause
 
 // Tableau pour stocker les boutons de la fenêtre de pause
 let pauseButtons = [];
@@ -98,14 +100,21 @@ canvas.addEventListener("click", function handlePauseClick(event) {
   }
 });
 
-// Fonction pour reprendre le jeu
+function pauseGame() {
+  if (gameState === "playScreen" && !isPaused) {
+    isPaused = true; // Met le jeu en pause
+    console.log("Jeu mis en pause !");
+    pauseMeteorSpawning(); // Arrête le spawn des météorites
+  }
+}
+
 function resumeGame() {
   if (gameState === "playScreen" && isPaused) {
     isPaused = false; // Reprendre le jeu
+    lastTime = performance.now(); // Réinitialise lastTime pour ignorer le temps en pause
     console.log("Jeu repris !");
+    resumeMeteorSpawning(); // Reprend le spawn des météorites
     requestAnimationFrame(main); // Redémarre la boucle de rendu
-  } else {
-    console.error("Le jeu n'était pas en pause ou n'était pas en cours !");
   }
 }
 

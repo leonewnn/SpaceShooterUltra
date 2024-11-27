@@ -48,25 +48,19 @@ function drawMeteors(delta) {
   for (let i = 0; i < meteorites.length; i++) {
     let meteor = meteorites[i];
 
-    if (meteor.fadeOut) {
-      meteor.opacity = (meteor.opacity || 1) - delta * 2; // Réduit l'opacité
-      if (meteor.opacity <= 0) {
-        meteorites.splice(i, 1);
-        i--;
-        continue;
-      }
-      ctx.globalAlpha = meteor.opacity; // Applique l'opacité
-    }
-
+    // Dessine la météorite
     ctx.drawImage(meteor.img, meteor.x, meteor.y, meteor.size, meteor.size);
-    ctx.globalAlpha = 1; // Réinitialise l'opacité
 
-    meteor.y += meteorSpeed * delta;
-    meteor.x += meteor.inclinaition;
+    // Si le jeu n'est pas en pause, met à jour la position
+    if (!isPaused) {
+      meteor.y += meteorSpeed * delta; // Déplacement vertical
+      meteor.x += meteor.inclinaition; // Déplacement horizontal
 
-    if (meteor.y > canvas.height) {
-      meteorites.splice(i, 1);
-      i--;
+      // Supprimer les météorites qui sortent de l'écran
+      if (meteor.y > canvas.height) {
+        meteorites.splice(i, 1);
+        i--; // Ajuste l'index après suppression
+      }
     }
   }
 }
@@ -92,18 +86,15 @@ function resetMeteorSpawning() {
 // Fonction pour arrêter temporairement le spawn des météorites
 function pauseMeteorSpawning() {
   if (meteorSpawnInterval) {
-    console.log("Pausing meteor spawning...");
-    clearInterval(meteorSpawnInterval); // Arrête l'intervalle
+    console.log("Pause du spawn des météorites...");
+    clearInterval(meteorSpawnInterval); // Arrête uniquement l'intervalle
     meteorSpawnInterval = null;
-    isMeteorSpawning = false; // Marque le spawn comme inactif
   }
 }
 
-// Fonction pour reprendre le spawn des météorites
 function resumeMeteorSpawning() {
-  if (!meteorSpawnInterval && !isMeteorSpawning) {
-    console.log("Resuming meteor spawning...");
-    isMeteorSpawning = true; // Marque le spawn comme actif
+  if (!meteorSpawnInterval) {
+    console.log("Reprise du spawn des météorites...");
     meteorSpawnInterval = setInterval(
       spawnMeteor,
       meteorSpawnFrequency * multiplier

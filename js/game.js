@@ -1,7 +1,7 @@
 // game.js
 let gameState = "titleScreen";
 let gameOver = false; //Indique si le joueur a perdu
-let lastTime = 0;
+let lastTime = performance.now(); // Temps de la dernière frame
 let fireRate = 600; // Temps de la dernière frame
 let bonusActive = false; // Indique si le power-up bonus est actif
 let bonusOffset = 100; // Décalage des tirs bonus en millisecondes
@@ -72,19 +72,20 @@ function main(currentTime) {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Efface l'écran
     renderPlayScreen(); // Affiche l'écran du jeu en arrière-plan
     renderPauseMenu(ctx); // Dessine le menu de pause
+    lastTime = currentTime; // Réinitialise lastTime pour ignorer le temps en pause
     return; // Empêche les autres mises à jour
   }
-  let delta = (currentTime - lastTime) / 1000; // Convertir le delta en secondes
+
+  // Ajuste delta pour ignorer le temps passé en pause
+  const delta = (currentTime - lastTime) / 1000; // Convertir le delta en secondes
   lastTime = currentTime;
 
-  // Appeler les fonctions de mise à jour et de rendu
+  // Mettez à jour les éléments du jeu ici
   updateSpaceshipPosition(delta);
-
   render(delta);
   handleSpaceShipCollisions();
 
-  requestAnimationFrame(main);
-  drawImpacts();
+  requestAnimationFrame(main); // Boucle la fonction
 }
 
 // Démarrer la boucle de jeu

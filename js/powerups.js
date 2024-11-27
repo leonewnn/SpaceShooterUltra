@@ -207,3 +207,12 @@ function drawIndicator() {
     }
   }
 }
+
+function pausePowerupSpawning() {
+  powerupspawnproccessing = false; // Arrête le processus de génération
+}
+
+function resumePowerupSpawning() {
+  powerupspawnproccessing = true; // Redémarre le processus de génération
+  nextPowerUpSpawn(); // Relance la génération du prochain power-up
+}
