@@ -61,8 +61,10 @@ function renderButtons() {
 }
 
 canvas.addEventListener("click", function (event) {
-  let clickX = event.offsetX;
-  let clickY = event.offsetY;
+  if (gameState !== "titleScreen") return; // Ne traiter que les clics du menu principal dans l'écran titre
+
+  const clickX = event.offsetX;
+  const clickY = event.offsetY;
 
   buttons.forEach((button) => {
     if (
@@ -71,6 +73,7 @@ canvas.addEventListener("click", function (event) {
       clickY >= button.y &&
       clickY <= button.y + button.height
     ) {
+      console.log("Bouton principal cliqué :", button.label);
       button.onClick();
     }
   });

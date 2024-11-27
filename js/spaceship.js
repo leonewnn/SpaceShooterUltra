@@ -1,4 +1,5 @@
 // spaceship.js
+let spaceshipY = canvas.height + 300; // Position initiale du vaisseau
 let spaceships = []; // Tableau pour stocker les images du vaisseau
 let currentFrame = 0; // Indice de l'image actuelle
 let frameInterval = 8; // Intervalle pour ralentir l'animation
@@ -23,11 +24,12 @@ function drawSpaceShip(pos) {
   if (isPaused) return; // Ne dessine pas le vaisseau si le jeu est en pause
 
   let spaceship = spaceships[currentFrame]; // Image actuelle du vaisseau
-  ctx.drawImage(spaceship, pos, canvas.height - 90); // Dessine l'image sur le canvas aux coordonnées spécifiées
+  ctx.drawImage(spaceship, pos, spaceshipY); // Utilise spaceshipY pour la position verticale
   if (shieldActive) {
-    ctx.drawImage(shield, pos - 22, canvas.height - 115, 115, 115);
+    ctx.drawImage(shield, pos - 22, spaceshipY - 25, 115, 115);
   }
-  // Incrémente le compteur pour contrôler la vitesse de l'animation
+
+  // Animation
   frameCount++;
   if (frameCount >= frameInterval) {
     currentFrame = (currentFrame + 1) % 7; // Passe à l'image suivante
@@ -38,15 +40,15 @@ function drawSpaceShip(pos) {
 function addMissile(adjustementLeftx, adjustementRightx, adjustementy) {
   // Crée le premier missile légèrement décalé à gauche
   let missileLeft = {
-    x: spaceshipPos + adjustementLeftx, // Décalé légèrement vers la gauche du centre du vaisseau
-    y: canvas.height - 140 - adjustementy,
+    x: spaceshipPos + adjustementLeftx, // Décalé légèrement vers la gauche
+    y: spaceshipY - adjustementy, // Utilise spaceshipY pour la position verticale
     img: missileImg,
   };
 
   // Crée le deuxième missile légèrement décalé à droite
   let missileRight = {
-    x: spaceshipPos + adjustementRightx, // Décalé légèrement vers la droite du centre du vaisseau
-    y: canvas.height - 140 - adjustementy,
+    x: spaceshipPos + adjustementRightx, // Décalé légèrement vers la droite
+    y: spaceshipY - adjustementy, // Utilise spaceshipY pour la position verticale
     img: missileImg,
   };
 
@@ -56,9 +58,11 @@ function addMissile(adjustementLeftx, adjustementRightx, adjustementy) {
 
 function drawMissile(delta) {
   if (isPaused) return;
+
   for (let i = 0; i < missiles.length; i++) {
     let missile = missiles[i];
-    ctx.drawImage(missile.img, missile.x, missile.y);
+
+    ctx.drawImage(missile.img, missile.x, missile.y); // Dessine le missile
     missile.y -= missileSpeed * delta; // Déplace le missile vers le haut
 
     // Vérifie si le missile est sorti de l'écran

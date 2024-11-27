@@ -34,6 +34,8 @@ function renderPauseMenu(ctx) {
 
   // Ajouter les boutons
   drawPauseButton(ctx, "resume", menuX + menuWidth / 2, menuY + 120, resumeGame);
+
+  // Bouton "Main Menu"
   drawPauseButton(ctx, "main menu", menuX + menuWidth / 2, menuY + 190, goToMainMenu);
 }
 
@@ -82,7 +84,6 @@ canvas.addEventListener("click", function handlePauseClick(event) {
   const clickX = event.offsetX;
   const clickY = event.offsetY;
 
-  // Vérifie si le clic correspond à un bouton
   for (const button of pauseButtons) {
     if (
       clickX >= button.x &&
@@ -90,17 +91,22 @@ canvas.addEventListener("click", function handlePauseClick(event) {
       clickY >= button.y &&
       clickY <= button.y + button.height
     ) {
+      console.log("Bouton cliqué :", button.label);
       button.onClick(); // Appelle l'action associée au bouton
-      break; // Stop après le clic sur un bouton
+      return; // Stoppe le traitement des clics
     }
   }
 });
 
 // Fonction pour reprendre le jeu
 function resumeGame() {
-  isPaused = false; // Reprendre le jeu
-  console.log("Jeu repris !");
-  requestAnimationFrame(main); // Redémarre la boucle de rendu
+  if (gameState === "playScreen" && isPaused) {
+    isPaused = false; // Reprendre le jeu
+    console.log("Jeu repris !");
+    requestAnimationFrame(main); // Redémarre la boucle de rendu
+  } else {
+    console.error("Le jeu n'était pas en pause ou n'était pas en cours !");
+  }
 }
 
 // Fonction pour retourner au menu principal

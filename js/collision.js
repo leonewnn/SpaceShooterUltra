@@ -46,15 +46,12 @@ function checkCollision(missile, meteor) {
   );
 }
 
-function checkPowerupGrabbed(spaceshipPos, powerup) {
-  const spaceshipX = spaceshipPos;
-  const spaceshipY = canvas.height - 90; // Position Y fixe du vaisseau
-
+function checkPowerupGrabbed(spaceshipX, spaceshipY, powerup) {
   return (
-    spaceshipX < powerup.x + powerup.size &&
-    spaceshipX + 75 > powerup.x &&
-    spaceshipY < powerup.y + powerup.size &&
-    spaceshipY + 75 > powerup.y
+    spaceshipX < powerup.x + powerup.size && // Collision horizontale
+    spaceshipX + 75 > powerup.x && // Collision horizontale
+    spaceshipY < powerup.y + powerup.size && // Collision verticale
+    spaceshipY + 75 > powerup.y // Collision verticale
   );
 }
 
@@ -62,7 +59,7 @@ function handleCollisionsPowerUp() {
   for (let i = powerupItems.length - 1; i >= 0; i--) {
     let powerup = powerupItems[i];
 
-    if (checkPowerupGrabbed(spaceshipPos, powerup)) {
+    if (checkPowerupGrabbed(spaceshipPos, spaceshipY, powerup)) {
       if (powerup.type === "armor") {
         hasArmor = true; // Activer l'armor
         console.log("Power-up Armor activé !");
@@ -99,21 +96,21 @@ function handleCollisions() {
 
 function checkSpaceShipCollision(spaceship, meteor) {
   return (
-    spaceship.x < meteor.x + meteor.size &&
-    spaceship.x + spaceship.img.width > meteor.x &&
-    spaceship.y < meteor.y + meteor.size &&
-    spaceship.y + spaceship.img.height > meteor.y
+    spaceship.x < meteor.x + meteor.size && // Collision horizontale
+    spaceship.x + spaceship.img.width > meteor.x && // Collision horizontale
+    spaceship.y < meteor.y + meteor.size && // Collision verticale
+    spaceship.y + spaceship.img.height > meteor.y // Collision verticale
   );
 }
 
 function handleSpaceShipCollisions() {
-  if (gameState !== "playScreen") return; // Ne pas vérifier les collisions si le jeu n'est pas actif
+  if (gameState !== "playScreen") return; // Ne pas vérifier si le jeu n'est pas actif
 
   for (let i = 0; i < meteorites.length; i++) {
     let meteor = meteorites[i];
     let spaceship = {
       x: spaceshipPos,
-      y: canvas.height - 90,
+      y: spaceshipY, // Inclure spaceshipY pour la position verticale
       img: spaceships[0],
     };
 

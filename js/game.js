@@ -31,10 +31,20 @@ function renderGameOver() {
 // Fonction pour mettre à jour la position du vaisseau avec delta
 function updateSpaceshipPosition(delta) {
   if (leftPressed) {
-    spaceshipPos -= spaceshipSpeed * delta; // Utilise delta pour ajuster la vitesse
+    spaceshipPos -= spaceshipSpeed * delta;
+    if (spaceshipPos < 0) spaceshipPos = 0; // Limite à gauche
   }
   if (rightPressed) {
     spaceshipPos += spaceshipSpeed * delta;
+    if (spaceshipPos > canvas.width - 75) spaceshipPos = canvas.width - 75; // Limite à droite
+  }
+  if (upPressed) {
+    spaceshipY -= spaceshipSpeed * delta;
+    if (spaceshipY < 0) spaceshipY = 0; // Limite en haut
+  }
+  if (downPressed) {
+    spaceshipY += spaceshipSpeed * delta;
+    if (spaceshipY > canvas.height - 90) spaceshipY = canvas.height - 90; // Limite en bas
   }
 }
 
