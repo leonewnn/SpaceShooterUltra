@@ -107,6 +107,8 @@ function checkSpaceShipCollision(spaceship, meteor) {
 }
 
 function handleSpaceShipCollisions() {
+  if (gameState !== "playScreen") return; // Ne pas vérifier les collisions si le jeu n'est pas actif
+
   for (let i = 0; i < meteorites.length; i++) {
     let meteor = meteorites[i];
     let spaceship = {
@@ -125,18 +127,18 @@ function handleSpaceShipCollisions() {
         return; // Arrêter la gestion de la collision
       }
 
-      // Prioriser la vie en cours de récupération si elle existe
       if (recoveringLifeIndex !== null) {
-        console.log(`Vie en cours de récupération perdue : cœur ${recoveringLifeIndex + 1}`);
-        imagesAnimated[recoveringLifeIndex] = true; // Marque la vie comme perdue
-        recoveringLifeIndex = null; // Réinitialise l'indice
+        console.log(
+          `Vie en cours de récupération perdue : cœur ${recoveringLifeIndex + 1}`
+        );
+        imagesAnimated[recoveringLifeIndex] = true;
+        recoveringLifeIndex = null;
       } else {
-        // Sinon, jouer l'animation de perte de la prochaine vie
-        startLifeAnimation(); // Animation pour le cœur correspondant
+        startLifeAnimation();
       }
 
-      impactAnimation(spaceship.x, spaceship.y); // Impact visuel optionnel
-      meteorites.splice(i, 1); // Supprime la météorite
+      impactAnimation(spaceship.x, spaceship.y);
+      meteorites.splice(i, 1);
       break;
     }
   }

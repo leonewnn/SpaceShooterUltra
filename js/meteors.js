@@ -48,7 +48,19 @@ function drawMeteors(delta) {
   for (let i = 0; i < meteorites.length; i++) {
     let meteor = meteorites[i];
 
+    if (meteor.fadeOut) {
+      meteor.opacity = (meteor.opacity || 1) - delta * 2; // Réduit l'opacité
+      if (meteor.opacity <= 0) {
+        meteorites.splice(i, 1);
+        i--;
+        continue;
+      }
+      ctx.globalAlpha = meteor.opacity; // Applique l'opacité
+    }
+
     ctx.drawImage(meteor.img, meteor.x, meteor.y, meteor.size, meteor.size);
+    ctx.globalAlpha = 1; // Réinitialise l'opacité
+
     meteor.y += meteorSpeed * delta;
     meteor.x += meteor.inclinaition;
 
@@ -57,6 +69,24 @@ function drawMeteors(delta) {
       i--;
     }
   }
+}
+
+function resetMeteorSpawning() {
+  console.log("Réinitialisation des météorites et du spawn...");
+
+  // Ajoute une animation fade-out avant de les supprimer
+  meteorites.forEach((meteor) => {
+    meteor.fadeOut = true; // Ajoute un drapeau pour l'effet de disparition
+  });
+
+  setTimeout(() => {
+    // Supprimer toutes les météorites après un délai
+    meteorites.length = 0;
+
+    // Arrêter et relancer le spawn
+    pauseMeteorSpawning();
+    resumeMeteorSpawning();
+  }, 500); // Délai pour permettre l'effet
 }
 
 // Fonction pour arrêter temporairement le spawn des météorites

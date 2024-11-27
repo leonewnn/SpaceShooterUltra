@@ -8,7 +8,9 @@ let buttonPlay = {
   label: "PLAY",
   onClick: function () {
     console.log("Click playbtn");
-    gameState = "playScreen";
+    gameState = "playScreen"; // Change l'état du jeu
+    resetMeteorSpawning(); // Réinitialise les météorites
+    startScoreIncrement(); // Commence le score
   },
 };
 
