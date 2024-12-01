@@ -3,10 +3,10 @@ let meteors = [];
 
 let meteorites = [];
 let meteorSpawnInterval;
-let meteorLife = 4;
-let meteorSpawnFrequency = 1000;
+let meteorLife = gameDifficulty.current.meteorHealth;
+let meteorSpawnFrequency = gameDifficulty.current.spawnInterval;
 let multiplier = 1;
-let meteorSpeed = 150;
+let meteorSpeed = gameDifficulty.current.meteorSpeed;
 let isMeteorSpawning = false;
 
 for (let i = 1; i <= 10; i++) {
@@ -22,7 +22,7 @@ function startMeteorSpawning() {
     isMeteorSpawning = true; // Marque le spawn comme actif
     meteorSpawnInterval = setInterval(
       spawnMeteor,
-      meteorSpawnFrequency * multiplier
+      gameDifficulty.current.spawnInterval * multiplier
     );
   }
 }
@@ -36,7 +36,7 @@ function spawnMeteor() {
   let meteor = {
     x: xPosition,
     y: -50,
-    life: meteorLife,
+    life: gameDifficulty.current.meteorHealth,
     size: sizeTemp * multiplier,
     inclinaition: inclinaitionTemp,
     img: randomMeteorImage,
@@ -53,7 +53,7 @@ function drawMeteors(delta) {
 
     // Si le jeu n'est pas en pause, met à jour la position
     if (!isPaused) {
-      meteor.y += meteorSpeed * delta; // Déplacement vertical
+      meteor.y += gameDifficulty.current.meteorSpeed * delta; // Déplacement vertical
       meteor.x += meteor.inclinaition; // Déplacement horizontal
 
       // Supprimer les météorites qui sortent de l'écran
@@ -66,21 +66,27 @@ function drawMeteors(delta) {
 }
 
 function resetMeteorSpawning() {
-  console.log("Réinitialisation des météorites et du spawn...");
-
-  // Ajoute une animation fade-out avant de les supprimer
+  // Clear existing meteors with fade effect
   meteorites.forEach((meteor) => {
-    meteor.fadeOut = true; // Ajoute un drapeau pour l'effet de disparition
+    meteor.fadeOut = true;
   });
 
   setTimeout(() => {
-    // Supprimer toutes les météorites après un délai
+    // Clear meteors array
     meteorites.length = 0;
 
-    // Arrêter et relancer le spawn
-    pauseMeteorSpawning();
-    resumeMeteorSpawning();
-  }, 500); // Délai pour permettre l'effet
+    // Clear existing spawn interval
+    if (meteorSpawnInterval) {
+      clearInterval(meteorSpawnInterval);
+      meteorSpawnInterval = null;
+    }
+
+    // Start new spawn interval with updated difficulty values
+    meteorSpawnInterval = setInterval(
+      spawnMeteor,
+      gameDifficulty.current.spawnInterval * multiplier
+    );
+  }, 500);
 }
 
 // Fonction pour arrêter temporairement le spawn des météorites
@@ -97,7 +103,17 @@ function resumeMeteorSpawning() {
     console.log("Reprise du spawn des météorites...");
     meteorSpawnInterval = setInterval(
       spawnMeteor,
-      meteorSpawnFrequency * multiplier
+      gameDifficulty.current.spawnInterval * multiplier
     );
   }
+}
+
+function updateMeteorSpawnInterval() {
+  if (meteorSpawnInterval) {
+    clearInterval(meteorSpawnInterval);
+  }
+  meteorSpawnInterval = setInterval(
+    spawnMeteor,
+    gameDifficulty.current.spawnInterval * multiplier
+  );
 }

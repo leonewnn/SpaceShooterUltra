@@ -12,6 +12,8 @@ function render(delta) {
   if (gameState === "titleScreen") {
     renderTitleScreen(delta);
   } else if (gameState === "playScreen") {
+    //   console.log("Score actuel :", playerScore);
+    updateDifficulty(playerScore);
     renderPlayScreen(delta);
   }
 }

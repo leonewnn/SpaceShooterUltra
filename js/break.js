@@ -35,10 +35,22 @@ function renderPauseMenu(ctx) {
   ctx.fillText("PAUSE", menuX + menuWidth / 2, menuY + 50);
 
   // Ajouter les boutons
-  drawPauseButton(ctx, "resume", menuX + menuWidth / 2, menuY + 120, resumeGame);
+  drawPauseButton(
+    ctx,
+    "resume",
+    menuX + menuWidth / 2,
+    menuY + 120,
+    resumeGame
+  );
 
   // Bouton "Main Menu"
-  drawPauseButton(ctx, "main menu", menuX + menuWidth / 2, menuY + 190, goToMainMenu);
+  drawPauseButton(
+    ctx,
+    "main menu",
+    menuX + menuWidth / 2,
+    menuY + 190,
+    goToMainMenu
+  );
 }
 
 // Fonction pour dessiner un bouton

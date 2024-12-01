@@ -1,5 +1,5 @@
 // score.js
-let playerScore = 0;
+let playerScore = 950;
 let scoreInterval;
 
 // Fonction pour styliser et afficher le score en haut à droite avec un cadre
@@ -32,7 +32,8 @@ function drawScore() {
 
 function startScoreIncrement() {
   scoreInterval = setInterval(() => {
-    playerScore += 2; // Augmente de 2 points chaque seconde
+    playerScore += 2;
+    // updateDifficulty(playerScore); // Passive score increase
   }, 1000);
 }
 
@@ -46,4 +47,5 @@ function stopScoreIncrement() {
 // Fonction pour augmenter le score après chaque destruction de meteor
 function increaseScore(amount = 10) {
   playerScore += amount;
+  //updateDifficulty(playerScore); // Active score increase from destroying meteors
 }

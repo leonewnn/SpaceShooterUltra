@@ -85,7 +85,7 @@ function drawPowerups(delta) {
 // Gestion des power-ups actifs
 function activePowerup(powerup) {
   const powerupName = getImageName(powerup);
-  console.log(powerupName + " activé");
+  //  console.log(powerupName + " activé");
 
   switch (powerupName) {
     case "armor_up":
@@ -104,7 +104,7 @@ function activePowerup(powerup) {
 
       break;
     default:
-      console.log("Power-up inconnu : " + powerupName);
+    //    console.log("Power-up inconnu : " + powerupName);
   }
 
   // 10 secondes par défaut
@@ -112,29 +112,29 @@ function activePowerup(powerup) {
 
 // Fonctions placeholders à coder plus tard
 function activateArmorUp() {
-  console.log("Activation de Armor Up!");
+  //  console.log("Activation de Armor Up!");
   shieldActive = true;
 
   setTimeout(() => {
     shieldActive = false;
-    console.log("Shiled finito");
+    // console.log("Shiled finito");
   }, powerUpTime * 1000);
 }
 
 function activateFireRateUp() {
-  console.log("Activation de Fire Rate Up!");
+  //  console.log("Activation de Fire Rate Up!");
 
   bonusActive = true; // Activer les tirs bonus
 
   // Désactiver le bonus après 10 secondes
   setTimeout(() => {
     bonusActive = false;
-    console.log("Fire Rate Up terminé !");
+    //  console.log("Fire Rate Up terminé !");
   }, powerUpTime * 1000);
 }
 
 function activateHpUp() {
-  console.log("Activation de HP Up!");
+  // console.log("Activation de HP Up!");
 
   // Chercher la dernière vie perdue (la plus à droite)
   const lostLifeIndex = imagesAnimated.lastIndexOf(true);
@@ -143,24 +143,24 @@ function activateHpUp() {
     imagesAnimated[lostLifeIndex] = false; // Réactive la vie perdue
     animationsCompleted--; // Réduit le compteur d'animations terminées
     recoveringLifeIndex = lostLifeIndex; // Marque la vie comme en cours de récupération
-    console.log(`Vie restaurée : cœur ${lostLifeIndex + 1}`);
+    // console.log(`Vie restaurée : cœur ${lostLifeIndex + 1}`);
   } else {
-    console.log("Toutes les vies sont déjà restaurées !");
+    //  console.log("Toutes les vies sont déjà restaurées !");
   }
 }
 
 function activateNukeUp() {
-  console.log("Activation de Nuke Up!");
+  // console.log("Activation de Nuke Up!");
 
   // Vider les météorites et arrêter leur spawn
   meteorites.length = 0; // Efface toutes les météorites
   pauseMeteorSpawning(); // Arrête temporairement le spawn
-  console.log("Meteorites cleared and spawning paused.");
+  // console.log("Meteorites cleared and spawning paused.");
 
   // Relancer après 8 secondes
   setTimeout(() => {
     resumeMeteorSpawning(); // Relance le spawn
-    console.log("Meteor spawning resumed after Nuke.");
+    //  console.log("Meteor spawning resumed after Nuke.");
   }, 8 * 1000);
 }
 
@@ -173,7 +173,7 @@ function getImageName(picture) {
 
 // Fonction pour définir l'indicateur actif
 function setIndicator(powerup, duration) {
-  console.log("Activation du power-up :", powerup);
+  //console.log("Activation du power-up :", powerup);
   activeIndicator = powerup;
   activeIndicatorImage = powerup.img;
   indicatorEndTime = Date.now() + duration * 1000;
