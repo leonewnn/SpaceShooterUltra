@@ -36,6 +36,14 @@ let gameDifficulty = {
   },
 };
 
+let phaseTransition = {
+  active: false,
+  startTime: 0,
+  duration: 2000, // 2 seconds for the animation
+  text: "",
+  alpha: 0,
+};
+
 function updateDifficulty(score) {
   const previousLevel = gameDifficulty.level;
 
@@ -63,6 +71,9 @@ function updateDifficulty(score) {
     gameDifficulty.current.meteorSpeed = newValues.meteorSpeed;
     gameDifficulty.current.spawnInterval = newValues.spawnInterval;
     gameDifficulty.current.meteorHealth = newValues.meteorHealth;
+
+    // Trigger phase transition animation
+    startPhaseTransition(gameDifficulty.level);
 
     updateMeteorSpawnInterval();
 
@@ -96,4 +107,66 @@ function showLevelUpMessage() {
     canvas.width / 2,
     canvas.height / 2
   );
+}
+
+function startPhaseTransition(level) {
+  phaseTransition.active = true;
+  phaseTransition.startTime = Date.now();
+  phaseTransition.text = `PHASE ${level}`;
+  phaseTransition.alpha = 0;
+}
+
+// Add to difficulty.js
+function drawPhaseTransition() {
+  if (!phaseTransition.active) return;
+
+  const currentTime = Date.now();
+  const elapsed = currentTime - phaseTransition.startTime;
+  const progress = Math.min(elapsed / phaseTransition.duration, 1);
+
+  // Calculate alpha for fade in/out effect
+  if (progress < 0.3) {
+    // Fade in
+    phaseTransition.alpha = progress / 0.3;
+  } else if (progress > 0.7) {
+    // Fade out
+    phaseTransition.alpha = (1 - progress) / 0.3;
+  } else {
+    // Stay fully visible
+    phaseTransition.alpha = 1;
+  }
+
+  // Save context state
+  ctx.save();
+
+  // Add glow effect
+  ctx.shadowBlur = 20;
+  ctx.shadowColor = "#FFD700";
+
+  // Draw main text
+  ctx.globalAlpha = phaseTransition.alpha;
+  ctx.font = "48px SpaceMan";
+  ctx.fillStyle = "#FFD700";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(phaseTransition.text, canvas.width / 2, canvas.height / 2);
+
+  // Draw smaller subtitle
+  ctx.font = "24px SpaceMan";
+  ctx.fillStyle = "#FFA500";
+  ctx.fillText(
+    "DIFFICULTY INCREASED",
+    canvas.width / 2,
+    canvas.height / 2 + 50
+  );
+
+  // Reset context
+  //ctx.globalAlpha = 1;
+  ctx.restore();
+
+  // End transition when complete
+  if (progress >= 1) {
+    phaseTransition.active = false;
+    phaseTransition.alpha = 0;
+  }
 }
