@@ -5,8 +5,8 @@ let powerupSpawnInterval;
 let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
 let powerupSpeed = 100;
 let powerupspawnproccessing = true;
-let minmalSpawnInterval = 15000;
-let timespanspawntime = 15000;
+let minmalSpawnInterval = 700;
+let timespanspawntime = 700;
 let powerUpTime = 10;
 let recoveringLifeIndex = null; // Indice de la vie en cours de récupération
 
@@ -66,17 +66,25 @@ function spawnPowerup() {
 function drawPowerups(delta) {
   for (let i = 0; i < powerupItems.length; i++) {
     let powerup = powerupItems[i];
+
+    // Add glow effect
+    ctx.shadowBlur = 30;
+    ctx.shadowColor = "rgba(255, 255, 255, 0.7)";
+
     ctx.drawImage(
       powerup.img,
       powerup.x,
-      powerup.y,
+      powerup.y, // Removed floatOffset
       powerup.size,
       powerup.size
     );
-    powerup.y += powerupSpeed * delta; // Déplacer le power-up vers le bas
+
+    ctx.shadowBlur = 0;
+
+    powerup.y += powerupSpeed * delta;
 
     if (powerup.y > canvas.height) {
-      powerupItems.splice(i, 1); // Supprimer le power-up lorsqu'il sort de l'écran
+      powerupItems.splice(i, 1);
       i--;
     }
   }
