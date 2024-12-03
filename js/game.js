@@ -13,9 +13,11 @@ function render(delta) {
     renderTitleScreen(delta);
   } else if (gameState === "playScreen") {
     //   console.log("Score actuel :", playerScore);
+    drawSpaceParticles(delta);
     updateDifficulty(playerScore);
     renderPlayScreen(delta);
     updateScreenShake();
+    drawSpaceParticles(delta);
 
     if (screenShake.duration <= 0) {
       ctx.restore();
