@@ -40,6 +40,9 @@ function spawnMeteor() {
     size: sizeTemp * multiplier,
     inclinaition: inclinaitionTemp,
     img: randomMeteorImage,
+    // Add new rotation properties
+    rotation: 0,
+    rotationSpeed: (Math.random() - 0.5) * 2, // Random rotation speed between -1 and 1
   };
   meteorites.push(meteor);
 }
@@ -48,18 +51,39 @@ function drawMeteors(delta) {
   for (let i = 0; i < meteorites.length; i++) {
     let meteor = meteorites[i];
 
-    // Dessine la météorite
-    ctx.drawImage(meteor.img, meteor.x, meteor.y, meteor.size, meteor.size);
+    // Save the current context state
+    ctx.save();
 
-    // Si le jeu n'est pas en pause, met à jour la position
+    // Move to meteor's center position
+    ctx.translate(meteor.x + meteor.size / 2, meteor.y + meteor.size / 2);
+
+    // Apply rotation
+    ctx.rotate(meteor.rotation);
+
+    // Draw meteor at origin (since we translated to its position)
+    ctx.drawImage(
+      meteor.img,
+      -meteor.size / 2,
+      -meteor.size / 2,
+      meteor.size,
+      meteor.size
+    );
+
+    // Restore the context state
+    ctx.restore();
+
+    // If game is not paused, update position and rotation
     if (!isPaused) {
-      meteor.y += gameDifficulty.current.meteorSpeed * delta; // Déplacement vertical
-      meteor.x += meteor.inclinaition; // Déplacement horizontal
+      meteor.y += gameDifficulty.current.meteorSpeed * delta;
+      meteor.x += meteor.inclinaition;
 
-      // Supprimer les météorites qui sortent de l'écran
+      // Update rotation
+      meteor.rotation += meteor.rotationSpeed * delta;
+
+      // Remove meteors that go off screen
       if (meteor.y > canvas.height) {
         meteorites.splice(i, 1);
-        i--; // Ajuste l'index après suppression
+        i--;
       }
     }
   }
