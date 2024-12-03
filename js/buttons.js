@@ -42,6 +42,10 @@ let buttonChangeSpaceship = {
 let buttons = [buttonPlay, buttonScoreBoard, buttonChangeSpaceship];
 
 function drawButton(btn) {
+  ctx.save();
+  ctx.shadowColor = btn.color;
+  ctx.shadowBlur = 10;
+
   ctx.beginPath();
   ctx.roundRect(btn.x, btn.y, btn.width, btn.height, btn.radius);
   ctx.fillStyle = btn.color;
@@ -51,6 +55,7 @@ function drawButton(btn) {
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(btn.label, btn.x + btn.width / 2, btn.y + btn.height / 2);
+  ctx.restore();
 }
 
 function renderButtons() {
@@ -85,7 +90,7 @@ canvas.addEventListener("click", function handleClick(event) {
 
   // Gestion des clics pour le menu principal
   if (gameState === "titleScreen") {
-    buttons.forEach(button => {
+    buttons.forEach((button) => {
       if (
         clickX >= button.x &&
         clickX <= button.x + button.width &&
@@ -99,7 +104,7 @@ canvas.addEventListener("click", function handleClick(event) {
 
   // Gestion des clics pour le menu de pause
   if (isPaused && gameState === "playScreen") {
-    pauseButtons.forEach(button => {
+    pauseButtons.forEach((button) => {
       if (
         clickX >= button.x &&
         clickX <= button.x + button.width &&
@@ -118,7 +123,7 @@ canvas.addEventListener("click", function handleButtonClick(event) {
 
   if (gameState === "titleScreen") {
     // Gestion des boutons du menu principal
-    buttons.forEach(button => {
+    buttons.forEach((button) => {
       if (
         clickX >= button.x &&
         clickX <= button.x + button.width &&
