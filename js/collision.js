@@ -1,3 +1,8 @@
+let screenShake = {
+  intensity: 0,
+  duration: 0,
+};
+
 let impacts = [];
 for (let i = 0; i <= 6; i++) {
   let img = new Image();
@@ -9,7 +14,9 @@ let impactAnimations = []; // Tableau pour stocker les animations d'impact activ
 let frameDelay = 3; // Ajustement du délai pour une animation plus fluide
 
 function impactAnimation(x, y) {
+  console.log("Animation d'impact à la position (", x, ",", y, ")");
   impactAnimations.push({ x, y, impactFrames: 0, delayCounter: 0 });
+  triggerShake(5, 5); // Trigger shake when impact occurs
 }
 
 function drawImpacts() {
@@ -33,6 +40,40 @@ function drawImpacts() {
     // Supprimer l'animation une fois terminée
     if (anim.impactFrames >= impacts.length * frameDelay) {
       impactAnimations.splice(i, 1);
+    }
+  }
+}
+
+let particles = [];
+
+function createExplosion(x, y) {
+  for (let i = 0; i < 20; i++) {
+    particles.push({
+      x: x,
+      y: y,
+      vx: (Math.random() - 0.5) * 2,
+      vy: (Math.random() - 0.5) * 2,
+      alpha: 1,
+      size: Math.random() * 3 + 1,
+    });
+  }
+}
+
+function drawParticles(delta) {
+  for (let i = particles.length - 1; i >= 0; i--) {
+    let p = particles[i];
+    p.x += p.vx * delta * 100;
+    p.y += p.vy * delta * 100;
+    p.alpha -= delta;
+    if (p.alpha <= 0) {
+      particles.splice(i, 1);
+    } else {
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = "orange";
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
     }
   }
 }
@@ -86,6 +127,7 @@ function handleCollisions() {
 
         if (meteor.life < 1) {
           impactAnimation(missile.x, missile.y);
+          createExplosion(missile.x, missile.y); // Add explosion effect
           meteorites.splice(j, 1);
           break;
         }
@@ -117,7 +159,7 @@ function handleSpaceShipCollisions() {
     if (checkSpaceShipCollision(spaceship, meteor)) {
       console.log("Collision détectée entre le vaisseau et une météorite");
       console.log("Protection active :", shieldActive);
-
+      // triggerShake(20, 20); // Déclencher un écran secoué
       if (shieldActive) {
         console.log("Protection activée : aucune vie perdue !");
         meteorites.splice(i, 1); // Supprime la météorite
@@ -126,7 +168,9 @@ function handleSpaceShipCollisions() {
 
       if (recoveringLifeIndex !== null) {
         console.log(
-          `Vie en cours de récupération perdue : cœur ${recoveringLifeIndex + 1}`
+          `Vie en cours de récupération perdue : cœur ${
+            recoveringLifeIndex + 1
+          }`
         );
         imagesAnimated[recoveringLifeIndex] = true;
         recoveringLifeIndex = null;
@@ -137,6 +181,25 @@ function handleSpaceShipCollisions() {
       impactAnimation(spaceship.x, spaceship.y);
       meteorites.splice(i, 1);
       break;
+    }
+  }
+}
+
+function triggerShake(amount = 5, duration = 10) {
+  screenShake.intensity = amount;
+  screenShake.duration = duration;
+}
+
+function updateScreenShake() {
+  if (screenShake.duration > 0) {
+    const offsetX = (Math.random() - 0.5) * screenShake.intensity;
+    const offsetY = (Math.random() - 0.5) * screenShake.intensity;
+    ctx.save();
+    ctx.translate(offsetX, offsetY);
+
+    screenShake.duration--;
+    if (screenShake.duration <= 0) {
+      screenShake.intensity = 0;
     }
   }
 }

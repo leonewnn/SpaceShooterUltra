@@ -15,6 +15,11 @@ function render(delta) {
     //   console.log("Score actuel :", playerScore);
     updateDifficulty(playerScore);
     renderPlayScreen(delta);
+    updateScreenShake();
+
+    if (screenShake.duration <= 0) {
+      ctx.restore();
+    }
   }
 }
 
@@ -84,6 +89,7 @@ function main(currentTime) {
 
   // Mettez à jour les éléments du jeu ici
   updateSpaceshipPosition(delta);
+  updateScreenShake(); // Add this line to update screen shake effect
   render(delta);
   handleSpaceShipCollisions();
 

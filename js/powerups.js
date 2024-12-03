@@ -5,8 +5,8 @@ let powerupSpawnInterval;
 let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
 let powerupSpeed = 100;
 let powerupspawnproccessing = true;
-let minmalSpawnInterval = 750;
-let timespanspawntime = 750;
+let minmalSpawnInterval = 15000;
+let timespanspawntime = 15000;
 let powerUpTime = 10;
 let recoveringLifeIndex = null; // Indice de la vie en cours de récupération
 
