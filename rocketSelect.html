@@ -1,0 +1,65 @@
+<!-- rocketSelect.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Select Rocket</title>
+    <style>
+      .rocket-grid {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px;
+      }
+      .rocket {
+        padding: 10px;
+        cursor: pointer;
+        border: 2px solid transparent;
+      }
+      .rocket.selected {
+        border-color: cyan;
+      }
+      .rocket img {
+        width: 50px;
+      }
+      .back-button {
+        display: block;
+        margin: 20px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="rocket-grid">
+      <div class="rocket" onclick="selectRocket('default')">
+        <img src="images/spaceship/missile.png" />
+      </div>
+      <div class="rocket" onclick="selectRocket('blue')">
+        <img src="images/spaceship/missile_blue.png" />
+      </div>
+      <div class="rocket" onclick="selectRocket('green')">
+        <img src="images/spaceship/missile_green.png" />
+      </div>
+      <div class="rocket" onclick="selectRocket('pink')">
+        <img src="images/spaceship/missile_pink.png" />
+      </div>
+    </div>
+    <button class="back-button" onclick="location.href='game.html'">
+      Back to Game
+    </button>
+
+    <script>
+      function selectRocket(type) {
+        localStorage.setItem("selectedRocket", type);
+        document
+          .querySelectorAll(".rocket")
+          .forEach((r) => r.classList.remove("selected"));
+        event.currentTarget.classList.add("selected");
+      }
+
+      // Show current selection
+      const current = localStorage.getItem("selectedRocket") || "default";
+      document
+        .querySelector(`[onclick="selectRocket('${current}')"]`)
+        .classList.add("selected");
+    </script>
+  </body>
+</html>

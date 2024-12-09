@@ -27,19 +27,19 @@ let buttonScoreBoard = {
   },
 };
 
-let buttonChangeSpaceship = {
+let buttonChangeRocket = {
   width: 550,
   y: 500,
   height: 80,
   color: "#3d85c6",
   radius: 20,
-  label: "CHANGE SPACESHIP",
+  label: "CHANGE ROCKET",
   onClick: function () {
-    console.log("Click change spaceship");
+    window.location.href = "rocketSelect.html";
   },
 };
 
-let buttons = [buttonPlay, buttonScoreBoard, buttonChangeSpaceship];
+let buttons = [buttonPlay, buttonScoreBoard, buttonChangeRocket];
 
 function drawButton(btn) {
   ctx.save();

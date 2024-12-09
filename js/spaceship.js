@@ -18,7 +18,22 @@ for (let i = 0; i <= 6; i++) {
 }
 
 let missileImg = new Image();
-missileImg.src = `images/spaceship/missile.png`; // Charger l'image du missile une seule fois
+missileImg.src = `images/spaceship/missile${
+  localStorage.getItem("selectedRocket") === "default"
+    ? ""
+    : "_" + localStorage.getItem("selectedRocket")
+}.png`;
+
+function getMissileImage() {
+  const selectedRocket = localStorage.getItem("selectedRocket") || "default";
+  const rocketPaths = {
+    default: "images/spaceship/missile.png",
+    blue: "images/spaceship/missile_blue.png",
+    green: "images/spaceship/missile_green.png",
+    pink: "images/spaceship/missile_pink.png",
+  };
+  return rocketPaths[selectedRocket];
+}
 
 function drawSpaceShip(pos) {
   if (isPaused) return; // Ne dessine pas le vaisseau si le jeu est en pause
