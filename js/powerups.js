@@ -2,7 +2,7 @@
 let powerups = [];
 let powerupItems = [];
 let powerupSpawnInterval;
-let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
+let powerupSpawnFrequency = 2000; // Fréquence de spawn des power-ups en millisecondes
 let powerupSpeed = 100;
 let powerupspawnproccessing = true;
 let minmalSpawnInterval = 15000;

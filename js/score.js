@@ -1,5 +1,5 @@
 // score.js
-let playerScore = 1450;
+let playerScore = 0;
 let scoreInterval;
 
 // Fonction pour styliser et afficher le score en haut à droite avec un cadre

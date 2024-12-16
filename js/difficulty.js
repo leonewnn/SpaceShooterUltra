@@ -8,7 +8,7 @@ let gameDifficulty = {
       // Learning phase
       meteorSpeed: 150,
       spawnInterval: 2000,
-      meteorHealth: 1,
+      meteorHealth: 2,
     },
     2: {
       // Challenge begins
@@ -20,7 +20,7 @@ let gameDifficulty = {
       // Getting intense
       meteorSpeed: 250,
       spawnInterval: 1200,
-      meteorHealth: 3,
+      meteorHealth: 4,
     },
     4: {
       // Endless challenge
@@ -32,7 +32,7 @@ let gameDifficulty = {
   current: {
     meteorSpeed: 150,
     spawnInterval: 2000,
-    meteorHealth: 1,
+    meteorHealth: 2,
   },
 };
 
