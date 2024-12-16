@@ -71,45 +71,6 @@ function renderTitleScreen(delta) {
   }
 }
 
-let isMuted = false;
-let gameVolume = 0.5; // Volume par défaut
-
-// Initialise les contrôles pour la musique
-function setupSoundControls() {
-  const volumeSlider = document.getElementById("volumeSlider");
-  const muteButton = document.getElementById("muteButton");
-  const backgroundMusic = document.getElementById("backgroundMusic");
-
-  // Barre de réglage du volume
-  volumeSlider.addEventListener("input", (event) => {
-    gameVolume = parseFloat(event.target.value);
-    backgroundMusic.volume = gameVolume; // Ajuste le volume de l'audio
-  });
-
-  // Bouton pour activer/désactiver le son
-  muteButton.addEventListener("click", () => {
-    isMuted = !isMuted;
-    backgroundMusic.muted = isMuted; // Active/désactive le son
-    muteButton.textContent = isMuted ? "Unmute" : "Mute"; // Change le texte du bouton
-  });
-}
-
-// Fonction pour afficher les réglages audio uniquement dans le menu principal
-function renderSoundSettings() {
-  const soundForm = document.getElementById("soundForm");
-  const backgroundMusic = document.getElementById("backgroundMusic");
-
-  if (gameState === "titleScreen") {
-    soundForm.style.display = "block"; // Affiche le formulaire
-    if (backgroundMusic.paused) {
-      backgroundMusic.play(); // Joue la musique
-    }
-  } else {
-    soundForm.style.display = "none"; // Masque le formulaire
-    backgroundMusic.pause(); // Arrête la musique
-  }
-}
-
 // Appelle la fonction au chargement de l'écran titre
 function renderTitleScreen(delta) {
   if (bgReady) {
@@ -124,9 +85,5 @@ function renderTitleScreen(delta) {
     ctx.fillText("ultra", canvas.width / 2, 150);
     renderButtons();
 
-    renderSoundSettings(); // Affiche ou masque le formulaire selon l'état du jeu
   }
 }
-
-// Initialise les contrôles au démarrage du jeu
-setupSoundControls();

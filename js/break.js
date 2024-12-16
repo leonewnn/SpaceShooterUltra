@@ -117,15 +117,17 @@ function pauseGame() {
     isPaused = true; // Met le jeu en pause
     console.log("Jeu mis en pause !");
     pauseMeteorSpawning(); // Arrête le spawn des météorites
+    pauseCurrentMusic(); // Met la musique en pause
   }
 }
 
 function resumeGame() {
   if (gameState === "playScreen" && isPaused) {
-    isPaused = false; // Reprendre le jeu
+    isPaused = false; // Reprend le jeu
     lastTime = performance.now(); // Réinitialise lastTime pour ignorer le temps en pause
     console.log("Jeu repris !");
     resumeMeteorSpawning(); // Reprend le spawn des météorites
+    resumeCurrentMusic(); // Reprend la musique
     requestAnimationFrame(main); // Redémarre la boucle de rendu
   }
 }

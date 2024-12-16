@@ -73,8 +73,19 @@ setInterval(() => {
 // Fonction principale avec delta
 function main(currentTime) {
   if (gameOver) {
+    stopMusic();
     renderGameOver(); // Affiche "Game Over" si le jeu est terminé
     return;
+  }
+
+  if (gameState === "titleScreen" && isMusicAllowed) {
+    isMusicAllowed = false; // Désactive la musique dans le menu principal
+    stopMusic(); // Arrête la musique si elle est encore active
+  }
+
+  if (gameState === "playScreen" && !isMusicAllowed) {
+    isMusicAllowed = true; // Active la musique uniquement pour une partie
+    playMusicForPhase(gameDifficulty.level - 1); // Joue la musique de la phase actuelle
   }
 
   if (isPaused) {

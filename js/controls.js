@@ -43,16 +43,15 @@ function setupControls() {
 }
 
 window.addEventListener("keydown", (event) => {
+  console.log("Touche appuyée :", event.key); // Vérifie si les événements sont détectés
   if (event.key === "e") {
-    isPaused = !isPaused; // Bascule entre pause et reprise
-    console.log(isPaused ? "Jeu en pause" : "Jeu repris");
+    console.log("Pause/Resume togglé !");
+    isPaused = !isPaused;
 
     if (isPaused) {
-      pauseMeteorSpawning(); // Arrête les météorites
-      stopScoreIncrement(); // Arrête le score
+      pauseGame();
     } else {
-      resumeMeteorSpawning(); // Reprend les météorites
-      startScoreIncrement(); // Reprend le score
+      resumeGame();
     }
   }
 });
