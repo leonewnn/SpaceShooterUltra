@@ -66,26 +66,30 @@ const phaseMusics = [
   }
   
   // Fonction pour gérer la transition musicale selon le score
-  function updateMusic(score) {
+function updateMusic(score) {
     const thresholds = gameDifficulty.scoreThresholds; // Seuils de phase
     const phase = gameDifficulty.level - 1; // Phase actuelle (index de 0 à 3)
   
-    // Si le score approche du seuil, diminuer le volume
+    // Si le score approche du seuil, diminuer le volume progressivement
     if (
       phase >= 0 &&
       phase < thresholds.length &&
       score >= thresholds[phase] - 70 &&
       score < thresholds[phase]
     ) {
-      const volume = Math.max(0, (thresholds[phase] - score) / 70);
-      phaseMusics[phase].volume = volume;
+      const distanceToThreshold = thresholds[phase] - score; // Distance restante
+      const reductionFactor = distanceToThreshold / 70; // Facteur de réduction (entre 1 et 0)
+      const currentVolume = currentMusic.volume; // Volume actuel de la musique
+  
+      // Ajuste le volume en fonction de la distance au seuil
+      currentMusic.volume = Math.max(0, currentVolume * reductionFactor);
     }
   
     // Si on change de phase, jouer la nouvelle musique
     if (phase !== currentMusicIndex) {
       playMusicForPhase(phase);
     }
-  }
+  }  
   
   // Intégrer cette fonction dans ta boucle de jeu ou ton gestionnaire de phase
   setInterval(() => {

@@ -112,6 +112,19 @@ function setupSoundControls() {
     gameVolume = parseFloat(volumeSlider.value);
     updateAllAudio(); // Met à jour tous les audios
   });
+
+  // Empêcher les flèches de modifier la valeur du volume
+  volumeSlider.addEventListener("keydown", (event) => {
+    if (
+      event.key === "ArrowLeft" ||
+      event.key === "ArrowRight" ||
+      event.key === "ArrowUp" ||
+      event.key === "ArrowDown"
+    ) {
+      event.preventDefault(); // Empêche la modification du volume avec les flèches
+    }
+  });
+  
 }
 
 // Fonction pour mettre à jour le son de toutes les musiques
