@@ -18,11 +18,11 @@ for (let i = 0; i <= 6; i++) {
 }
 
 let missileImg = new Image();
-missileImg.src = `images/spaceship/missile${
-  localStorage.getItem("selectedRocket") === "default"
-    ? ""
-    : "_" + localStorage.getItem("selectedRocket")
-}.png`;
+const selectedRocket = localStorage.getItem("selectedRocket") || "default";
+missileImg.src =
+  selectedRocket === "default"
+    ? "images/spaceship/missile.png"
+    : `images/spaceship/missile_${selectedRocket}.png`;
 
 function getMissileImage() {
   const selectedRocket = localStorage.getItem("selectedRocket") || "default";

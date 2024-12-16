@@ -1,3 +1,8 @@
+// Set default rocket if none selected
+if (!localStorage.getItem("selectedRocket")) {
+  localStorage.setItem("selectedRocket", "default");
+}
+
 // game.js
 let gameState = "titleScreen";
 let gameOver = false; //Indique si le joueur a perdu
