@@ -131,12 +131,27 @@ function setupSoundControls() {
 function updateAllAudio() {
   phaseMusics.forEach((audio) => {
     if (isMuted) {
-      audio.muted = true; // Coupe le son
+      audio.muted = true;
     } else {
       audio.muted = false;
-      audio.volume = gameVolume; // Ajuste le volume global
+      audio.volume = gameVolume; // Applique le volume global
     }
   });
+
+  // Gérer la musique du menu
+  if (menuMusic) {
+    if (isMuted) {
+      menuMusic.muted = true;
+    } else {
+      menuMusic.muted = false;
+      menuMusic.volume = gameVolume;
+    }
+  }
+
+  // Met à jour la musique en cours
+  if (currentMusic) {
+    currentMusic.volume = isMuted ? 0 : gameVolume;
+  }
 }
 
 // Appeler cette fonction dans l'écran titre

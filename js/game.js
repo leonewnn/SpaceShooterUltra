@@ -37,6 +37,27 @@ function renderGameOver() {
   ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
 }
 
+// Écouteur pour détecter le mouvement de la souris
+let isMusicStarted = false; // Indique si la musique a déjà été lancée
+
+// Fonction pour démarrer la musique du menu
+function startMenuMusic() {
+  if (!isMusicStarted) {
+    isMusicStarted = true; // Empêche les relances multiples
+    menuMusic.volume = isMuted ? 0 : gameVolume; // Applique le volume global
+    menuMusic.play().then(() => {
+      console.log("Musique du menu démarrée !");
+    }).catch((error) => {
+      console.error("Impossible de démarrer la musique du menu :", error);
+    });
+  }
+}
+
+// Détection de l'interaction utilisateur
+window.addEventListener("mousemove", startMenuMusic);
+window.addEventListener("mousedown", startMenuMusic);
+window.addEventListener("keydown", startMenuMusic);
+
 // Fonction pour mettre à jour la position du vaisseau avec delta
 function updateSpaceshipPosition(delta) {
   if (leftPressed) {
@@ -73,18 +94,30 @@ setInterval(() => {
 // Fonction principale avec delta
 function main(currentTime) {
   if (gameOver) {
-    stopMusic();
+    stopMusic(); // Arrête la musique en cas de Game Over
     renderGameOver(); // Affiche "Game Over" si le jeu est terminé
     return;
   }
 
-  if (gameState === "titleScreen" && isMusicAllowed) {
-    isMusicAllowed = false; // Désactive la musique dans le menu principal
-    stopMusic(); // Arrête la musique si elle est encore active
+  // Gestion de la musique dans le menu principal
+  if (gameState === "titleScreen") {
+    if (currentMusic) {
+      stopMusic(); // Arrête la musique de la phase
+    }
+    if (menuMusic.paused && isMusicStarted) {
+      menuMusic.volume = isMuted ? 0 : gameVolume;
+      menuMusic.play(); // Relance la musique du menu si nécessaire
+    }
+  } else {
+    if (!menuMusic.paused) {
+      menuMusic.pause(); // Met la musique du menu en pause
+      menuMusic.currentTime = 0; // Réinitialise la musique
+    }
   }
 
+  // Gestion de la musique pendant le jeu
   if (gameState === "playScreen" && !isMusicAllowed) {
-    isMusicAllowed = true; // Active la musique uniquement pour une partie
+    isMusicAllowed = true; // Active la musique pour le jeu
     playMusicForPhase(gameDifficulty.level - 1); // Joue la musique de la phase actuelle
   }
 
@@ -100,9 +133,9 @@ function main(currentTime) {
   const delta = (currentTime - lastTime) / 1000; // Convertir le delta en secondes
   lastTime = currentTime;
 
-  // Mettez à jour les éléments du jeu ici
+  // Met à jour les éléments du jeu ici
   updateSpaceshipPosition(delta);
-  updateScreenShake(); // Add this line to update screen shake effect
+  updateScreenShake(); // Met à jour les effets de secousse d'écran
   render(delta);
   handleSpaceShipCollisions();
 

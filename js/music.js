@@ -146,6 +146,13 @@ function pauseCurrentMusic() {
     }
   }  
   
+    // Musique pour le menu principal
+const menuMusic = new Audio('audio/Menu-Music.mp3');
+menuMusic.loop = true; // La musique se répète
+menuMusic.volume = gameVolume; // Respecte le volume défini
+menuMusic.muted = isMuted; // Respecte l'état muet
+
+  
   window.addEventListener("load", () => {
     setupSoundControls(); // Initialise les contrôles audio au démarrage
   });
