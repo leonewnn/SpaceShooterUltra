@@ -10,7 +10,7 @@ window.addEventListener("resize", () => {
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  render(delta); // Appel de render pour redessiner après le redimensionnement
+  render(0); // Correction : passer 0 comme valeur par défaut pour delta
 }
 
 // Redimensionner au chargement de la page
