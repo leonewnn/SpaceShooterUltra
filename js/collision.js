@@ -8,7 +8,7 @@ for (let i = 0; i <= 6; i++) {
   let img = new Image();
   img.src = `images/collisions/impact_${i.toString()}.png`;
   impacts.push(img);
-}
+} //test
 
 let impactAnimations = []; // Tableau pour stocker les animations d'impact actives
 let frameDelay = 3; // Ajustement du délai pour une animation plus fluide
