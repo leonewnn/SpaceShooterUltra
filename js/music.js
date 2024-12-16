@@ -8,38 +8,45 @@ const phaseMusics = [
   
   let currentMusicIndex = -1; // -1 signifie qu'aucune musique n'est jouée
   let currentMusic = null; // Musique actuellement jouée
+  const defaultVolume = 0.05;
   
+  phaseMusics.forEach((audio) => {
+    audio.volume = defaultVolume; // Définit le volume initial
+  });
+
   // Fonction pour jouer une musique spécifique
   function playMusicForPhase(index) {
+    if (!isMusicAllowed) return;
     if (currentMusic) {
       fadeOutMusic(currentMusic, () => {
         currentMusic = phaseMusics[index];
         currentMusic.loop = true;
-        currentMusic.volume = 0; // Commence à volume 0
+        currentMusic.volume = isMuted ? 0 : gameVolume; // Respecte les paramètres audio
+        currentMusic.muted = isMuted;
         currentMusic.play();
-        fadeInMusic(currentMusic); // Lance le fondu entrant
+        fadeInMusic(currentMusic);
       });
     } else {
       currentMusic = phaseMusics[index];
       currentMusic.loop = true;
-      currentMusic.volume = 0;
+      currentMusic.volume = isMuted ? 0 : gameVolume; // Respecte les paramètres audio
+      currentMusic.muted = isMuted;
       currentMusic.play();
       fadeInMusic(currentMusic);
     }
-    currentMusicIndex = index; // Met à jour l'index
   }
   
   // Fonction pour augmenter progressivement le volume
   function fadeInMusic(audio) {
-    let volume = 0;
+    let volume = isMuted ? 0 : 0.05;
     const fadeInterval = setInterval(() => {
-      if (volume < 1) {
-        volume += 0.05; // Incrément du volume
-        audio.volume = Math.min(volume, 1);
+      if (volume < gameVolume && !isMuted) {
+        volume += 0.05;
+        audio.volume = Math.min(volume, gameVolume);
       } else {
         clearInterval(fadeInterval);
       }
-    }, 200); // Toutes les 200ms
+    }, 200);
   }
   
   // Fonction pour diminuer progressivement le volume
@@ -47,15 +54,15 @@ const phaseMusics = [
     let volume = audio.volume;
     const fadeInterval = setInterval(() => {
       if (volume > 0) {
-        volume -= 0.05; // Décrément du volume
+        volume -= 0.05;
         audio.volume = Math.max(volume, 0);
       } else {
         clearInterval(fadeInterval);
-        audio.pause(); // Arrête l'audio
-        audio.currentTime = 0; // Réinitialise à 0
-        if (callback) callback(); // Exécute un callback si fourni
+        audio.pause();
+        audio.currentTime = 0;
+        if (callback) callback();
       }
-    }, 200); // Toutes les 200ms
+    }, 200);
   }
   
   // Fonction pour gérer la transition musicale selon le score
@@ -134,4 +141,8 @@ function pauseCurrentMusic() {
       console.log("Aucune musique à reprendre !");
     }
   }  
+  
+  window.addEventListener("load", () => {
+    setupSoundControls(); // Initialise les contrôles audio au démarrage
+  });
   

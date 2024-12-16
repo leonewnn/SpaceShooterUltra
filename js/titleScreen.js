@@ -87,3 +87,44 @@ function renderTitleScreen(delta) {
 
   }
 }
+
+// Variables globales pour gérer le son
+let isMuted = false;
+let gameVolume = 0.5; // Volume par défaut
+
+// Initialiser les contrôles audio
+function setupSoundControls() {
+  const muteToggle = document.getElementById("muteToggle");
+  const volumeSlider = document.getElementById("volumeSlider");
+
+  // Synchroniser l'état initial
+  muteToggle.checked = isMuted;
+  volumeSlider.value = gameVolume;
+
+  // Gérer l'activation/désactivation du son
+  muteToggle.addEventListener("change", () => {
+    isMuted = muteToggle.checked;
+    updateAllAudio(); // Met à jour tous les audios
+  });
+
+  // Gérer le changement de volume
+  volumeSlider.addEventListener("input", () => {
+    gameVolume = parseFloat(volumeSlider.value);
+    updateAllAudio(); // Met à jour tous les audios
+  });
+}
+
+// Fonction pour mettre à jour le son de toutes les musiques
+function updateAllAudio() {
+  phaseMusics.forEach((audio) => {
+    if (isMuted) {
+      audio.muted = true; // Coupe le son
+    } else {
+      audio.muted = false;
+      audio.volume = gameVolume; // Ajuste le volume global
+    }
+  });
+}
+
+// Appeler cette fonction dans l'écran titre
+setupSoundControls();

@@ -6,6 +6,26 @@
     <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
+    <div id="soundForm" style="position: fixed; bottom: 20px; right: 20px;">
+      <form>
+        <label for="muteToggle">
+          <input type="checkbox" id="muteToggle" />
+          Activer/Désactiver le son
+        </label>
+        <br />
+        <label for="volumeSlider">Volume :</label>
+        <input
+          type="range"
+          id="volumeSlider"
+          min="0"
+          max="1"
+          step="0.1"
+          value="0.5"
+          style="width: 150px;"
+        />
+      </form>
+    </div>
+    
     <script src="js/canvas.js"></script>
     <script src="js/controls.js"></script>
     <script src="js/break.js"></script>
