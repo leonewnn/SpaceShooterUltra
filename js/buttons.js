@@ -20,7 +20,7 @@ let buttonScoreBoard = {
   height: 80,
   color: "#f68d14",
   radius: 20,
-  label: "SCOREBOARD",
+  label: "SCOREBOARDD",
   onClick: function () {
     console.log("Click scoreboardbtn");
     window.location.href = "scoreboard.html?fromMenu=true"; // paramètre `fromMenu`
