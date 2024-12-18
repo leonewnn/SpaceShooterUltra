@@ -90,7 +90,7 @@ function renderTitleScreen(delta) {
 
 // Variables globales pour gérer le son
 let isMuted = false;
-let gameVolume = 0.5; // Volume par défaut
+let gameVolume = 0.05; // Volume par défaut
 
 // Initialiser les contrôles audio
 function setupSoundControls() {
@@ -99,7 +99,7 @@ function setupSoundControls() {
 
   // Synchroniser l'état initial
   muteToggle.checked = isMuted;
-  volumeSlider.value = gameVolume;
+  volumeSlider.value = gameVolume / 0.1; // Barre de volume au milieu
 
   // Gérer l'activation/désactivation du son
   muteToggle.addEventListener("change", () => {
@@ -109,8 +109,11 @@ function setupSoundControls() {
 
   // Gérer le changement de volume
   volumeSlider.addEventListener("input", () => {
-    gameVolume = parseFloat(volumeSlider.value);
-    updateAllAudio(); // Met à jour tous les audios
+    const newVolume = parseFloat(volumeSlider.value) * 0.2; // Ajuster proportionnellement
+    if (newVolume !== gameVolume) {
+      gameVolume = newVolume;
+      updateAllAudio(); // Met à jour tous les audios
+    }
   });
 
   // Empêcher les flèches de modifier la valeur du volume
@@ -124,7 +127,6 @@ function setupSoundControls() {
       event.preventDefault(); // Empêche la modification du volume avec les flèches
     }
   });
-  
 }
 
 // Fonction pour mettre à jour le son de toutes les musiques
@@ -138,7 +140,6 @@ function updateAllAudio() {
     }
   });
 
-  // Gérer la musique du menu
   if (menuMusic) {
     if (isMuted) {
       menuMusic.muted = true;
@@ -148,7 +149,6 @@ function updateAllAudio() {
     }
   }
 
-  // Met à jour la musique en cours
   if (currentMusic) {
     currentMusic.volume = isMuted ? 0 : gameVolume;
   }
