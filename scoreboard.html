@@ -12,11 +12,19 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: url('images/scoreboard_background.png') no-repeat center center fixed; /* Image de fond */
+            background: url('../images/scoreboard_background.png') no-repeat center center fixed; /* Image de fond */
             background-size: cover; /* Couvre toute la page */
             font-family: 'Press Start 2P', cursive;
             color: white;
             overflow: hidden;
+            cursor: url('../images/custom-cursor.png'), pointer;
+        }
+
+        canvas {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        cursor: url('../images/custom-cursor.png'), pointer;
         }
     
         .scoreboard {
@@ -85,6 +93,7 @@
         cursor: pointer;
         box-shadow: 0 0 15px rgba(255, 0, 150, 0.8);
         transition: transform 0.2s, box-shadow 0.2s;
+        cursor: url('../images/custom-cursor.png'), pointer;
     }
 
     /* Effet au survol des boutons */
@@ -249,7 +258,7 @@
     // Sauvegarder un score dans le localStorage
     function saveHighScore(name, score, profileImage) {
     const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-    const profilePicture = profileImage || 'images/default_pp.png';
+    const profilePicture = profileImage || '../images/default_pp.png';
 
     // Ajouter le nouveau score
     highScores.push({ name, score, profileImage: profilePicture });
@@ -274,7 +283,7 @@
         <tr>
             <td>${index + 1}</td>
             <td>
-                <img src="${score.profileImage || 'images/default_pp.png'}" 
+                <img src="${score.profileImage || '../images/default_pp.png'}" 
                      alt="Profile" width="60" height="60">
             </td>
             <td>${score.name}</td>
@@ -288,7 +297,7 @@
             <tr>
                 <td>${i + 1}</td>
                 <td>
-                    <img src="images/default_pp.png" alt="Profile" width="60" height="60">
+                    <img src="../images/default_pp.png" alt="Profile" width="60" height="60">
                 </td>
                 <td>---</td>
                 <td>---</td>
@@ -334,7 +343,7 @@
         updateNameInput();
     } else if (enteredName.length === maxNameLength && event.key === "Enter") {
         const score = parseInt(localStorage.getItem("playerScore") || "0", 10);
-        const profilePicture = profileImage || 'images/default_pp.png';
+        const profilePicture = profileImage || '../images/default_pp.png';
 
         saveHighScore(enteredName, score, profilePicture); // Sauvegarde avec le nom
         localStorage.setItem("scoreSubmitted", "true");
@@ -353,7 +362,7 @@
     function submitPlayerScore() {
     if (enteredName.length === maxNameLength) {
         const score = parseInt(localStorage.getItem("playerScore") || "0", 10);
-        const profilePicture = profileImage || 'images/default_pp.png';
+        const profilePicture = profileImage || '../images/default_pp.png';
 
         // Sauvegarde du score
         saveHighScore(enteredName, score, profilePicture);

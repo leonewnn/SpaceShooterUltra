@@ -3,6 +3,7 @@
 <html>
   <head>
     <title>Select Rocket</title>
+    <link rel="stylesheet" href="styles/styles.css">
     <style>
       body {
         display: flex;
@@ -15,6 +16,14 @@
         background-size: cover; /* Couvre toute la page */
         color: black;
         overflow: hidden;
+        cursor: url('../images/custom-cursor.png'), pointer;
+      }
+
+      canvas {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        cursor: url('../images/custom-cursor.png'), pointer;
       }
 
       h1 {
@@ -53,6 +62,7 @@
         width: 50px;
         display: block;
         margin: auto;
+        cursor: url('../images/custom-cursor.png'), pointer;
       }
 
       .back-button {
@@ -67,6 +77,7 @@
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
         transition: background-color 0.3s;
         margin-top: 20px; /* Espacement par rapport aux rockets */
+        cursor: url('../images/custom-cursor.png'), pointer;
       }
 
       .back-button:hover {
