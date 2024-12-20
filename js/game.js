@@ -41,15 +41,16 @@ function renderGameOver() {
 
 // Fonction pour démarrer la musique du menu
 function startMenuMusic() {
-    isMusicStarted = true; // Empêche les relances multiples
-    menuMusic.volume = isMuted ? 0 : gameVolume; // Applique le volume global
-    menuMusic.play().then(() => {
-      console.log("Musique du menu démarrée !");
-    }).catch((error) => {
-      console.error("Impossible de démarrer la musique du menu :", error);
-    });
+  if (gameState === "titleScreen" && !isPaused) {
+      isMusicStarted = true; // Empêche les relances multiples
+      menuMusic.volume = isMuted ? 0 : gameVolume; // Applique le volume global
+      menuMusic.play().then(() => {
+          console.log("Musique du menu démarrée !");
+      }).catch((error) => {
+          console.error("Impossible de démarrer la musique du menu :", error);
+      });
   }
-
+}
 
 // Détection de l'interaction utilisateur
 window.addEventListener("mousemove", startMenuMusic);

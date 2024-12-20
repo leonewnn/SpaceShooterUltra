@@ -49,7 +49,7 @@ function renderPauseMenu(ctx) {
     "main menu",
     menuX + menuWidth / 2,
     menuY + 190,
-    goToMainMenu
+    goToMainMenu // Assurez-vous que cette fonction est appelée
   );
 }
 
@@ -92,23 +92,20 @@ function drawPauseButton(ctx, label, x, y, onClick) {
 }
 
 // Gestion des clics sur les boutons de pause
-canvas.addEventListener("click", function handlePauseClick(event) {
-  if (!isPaused) return; // Ignorer les clics si le jeu n'est pas en pause
-
-  const clickX = event.offsetX;
-  const clickY = event.offsetY;
-
-  for (const button of pauseButtons) {
-    if (
-      clickX >= button.x &&
-      clickX <= button.x + button.width &&
-      clickY >= button.y &&
-      clickY <= button.y + button.height
-    ) {
-      console.log("Bouton cliqué :", button.label);
-      button.onClick(); // Appelle l'action associée au bouton
-      return; // Stoppe le traitement des clics
-    }
+canvas.addEventListener("click", function handleClick(event) {
+  if (isPaused && gameState === "playScreen") {
+    pauseButtons.forEach((button) => {
+      if (
+        event.offsetX >= button.x &&
+        event.offsetX <= button.x + button.width &&
+        event.offsetY >= button.y &&
+        event.offsetY <= button.y + button.height
+      ) {
+        if (button.label === "main menu") {
+          goToMainMenu(); // Appelle la fonction pour revenir au menu principal
+        }
+      }
+    });
   }
 });
 
@@ -137,5 +134,5 @@ function goToMainMenu() {
   isPaused = false; // Arrêter la pause
   gameState = "titleScreen"; // Retourner à l'écran titre
   console.log("Retour au menu principal !");
-  requestAnimationFrame(main); // Redémarre la boucle de rendu
+  window.location.href = "game.html";
 }
