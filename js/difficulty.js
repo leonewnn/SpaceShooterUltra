@@ -48,14 +48,14 @@ function updateDifficulty(score) {
   const previousLevel = gameDifficulty.level;
 
   // Add comprehensive phase tracking
-  console.log(
+/*  console.log(
     `Current status:
     Score: ${score}
     Phase: ${gameDifficulty.level}
     Speed: ${gameDifficulty.current.meteorSpeed}
     Spawn Interval: ${gameDifficulty.current.spawnInterval}ms
     Meteor Health: ${gameDifficulty.current.meteorHealth}`
-  );
+  );*/
 
   // Determine phase based on score
   if (score >= gameDifficulty.scoreThresholds[2]) {
@@ -93,6 +93,9 @@ function updateDifficulty(score) {
       interval: gameDifficulty.current.spawnInterval,
       health: gameDifficulty.current.meteorHealth,
     });
+
+    // Play music for the new phase
+    playMusicForPhase(gameDifficulty.level - 1);
   }
 }
 

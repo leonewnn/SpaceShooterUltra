@@ -94,39 +94,39 @@ setInterval(() => {
 // Fonction principale avec delta
 function main(currentTime) {
   if (gameOver) {
-    stopMusic(); // Arrête la musique en cas de Game Over
-    renderGameOver(); // Affiche "Game Over" si le jeu est terminé
-    return;
+      stopMusic(); // Arrête la musique en cas de Game Over
+      renderGameOver(); // Affiche "Game Over" si le jeu est terminé
+      return;
   }
 
   // Gestion de la musique dans le menu principal
   if (gameState === "titleScreen") {
-    if (currentMusic) {
-      stopMusic(); // Arrête la musique de la phase
-    }
-    if (menuMusic.paused && isMusicStarted) {
-      menuMusic.volume = isMuted ? 0 : gameVolume;
-      menuMusic.play(); // Relance la musique du menu si nécessaire
-    }
+      if (currentMusic) {
+          stopMusic(); // Arrête la musique de la phase
+      }
+      if (menuMusic.paused && isMenuMusicAllowed) {
+          menuMusic.volume = isMuted ? 0 : gameVolume;
+          menuMusic.play(); // Relance la musique du menu si nécessaire
+      }
   } else {
-    if (!menuMusic.paused) {
-      menuMusic.pause(); // Met la musique du menu en pause
-      menuMusic.currentTime = 0; // Réinitialise la musique
-    }
+      if (!menuMusic.paused) {
+          menuMusic.pause(); // Met la musique du menu en pause
+          menuMusic.currentTime = 0; // Réinitialise la musique
+      }
   }
 
   // Gestion de la musique pendant le jeu
-  if (gameState === "playScreen" && !isMusicAllowed) {
-    isMusicAllowed = true; // Active la musique pour le jeu
-    playMusicForPhase(gameDifficulty.level - 1); // Joue la musique de la phase actuelle
+  if (gameState === "playScreen" && !isGameMusicAllowed) {
+      isGameMusicAllowed = true; // Active la musique pour le jeu
+      playMusicForPhase(gameDifficulty.level - 1); // Joue la musique de la phase actuelle
   }
 
   if (isPaused) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Efface l'écran
-    renderPlayScreen(); // Affiche l'écran du jeu en arrière-plan
-    renderPauseMenu(ctx); // Dessine le menu de pause
-    lastTime = currentTime; // Réinitialise lastTime pour ignorer le temps en pause
-    return; // Empêche les autres mises à jour
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Efface l'écran
+      renderPlayScreen(); // Affiche l'écran du jeu en arrière-plan
+      renderPauseMenu(ctx); // Dessine le menu de pause
+      lastTime = currentTime; // Réinitialise lastTime pour ignorer le temps en pause
+      return; // Empêche les autres mises à jour
   }
 
   // Ajuste delta pour ignorer le temps passé en pause
