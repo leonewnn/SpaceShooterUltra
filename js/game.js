@@ -38,11 +38,9 @@ function renderGameOver() {
 }
 
 // Écouteur pour détecter le mouvement de la souris
-let isMusicStarted = false; // Indique si la musique a déjà été lancée
 
 // Fonction pour démarrer la musique du menu
 function startMenuMusic() {
-  if (!isMusicStarted) {
     isMusicStarted = true; // Empêche les relances multiples
     menuMusic.volume = isMuted ? 0 : gameVolume; // Applique le volume global
     menuMusic.play().then(() => {
@@ -51,7 +49,7 @@ function startMenuMusic() {
       console.error("Impossible de démarrer la musique du menu :", error);
     });
   }
-}
+
 
 // Détection de l'interaction utilisateur
 window.addEventListener("mousemove", startMenuMusic);
@@ -100,7 +98,7 @@ function main(currentTime) {
   }
 
   // Gestion de la musique dans le menu principal
-  if (gameState === "titleScreen") {
+  if (gameState === "titleScreen" && !isPaused) {
       if (currentMusic) {
           stopMusic(); // Arrête la musique de la phase
       }
@@ -126,7 +124,24 @@ function main(currentTime) {
       renderPlayScreen(); // Affiche l'écran du jeu en arrière-plan
       renderPauseMenu(ctx); // Dessine le menu de pause
       lastTime = currentTime; // Réinitialise lastTime pour ignorer le temps en pause
+
+      // Mettre en pause la musique in-game
+      if (currentMusic && !currentMusic.paused) {
+          pauseCurrentMusic();
+      }
+
+      // Empêcher la musique du menu de se lancer
+      if (!menuMusic.paused) {
+          menuMusic.pause();
+          menuMusic.currentTime = 0;
+      }
+
       return; // Empêche les autres mises à jour
+  } else {
+      // Reprendre la musique in-game si elle était en pause
+      if (currentMusic && currentMusic.paused) {
+          resumeCurrentMusic();
+      }
   }
 
   // Ajuste delta pour ignorer le temps passé en pause
