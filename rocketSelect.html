@@ -4,86 +4,6 @@
   <head>
     <title>Select Rocket</title>
     <link rel="stylesheet" href="styles/styles.css">
-    <style>
-      body {
-        display: flex;
-        flex-direction: column; /* Aligne les enfants verticalement */
-        justify-content: center; /* Centre verticalement */
-        align-items: center; /* Centre horizontalement */
-        height: 100vh;
-        margin: 0;
-        background: url('images/scoreboard_background.png') no-repeat center center fixed; /* Image de fond */
-        background-size: cover; /* Couvre toute la page */
-        color: black;
-        overflow: hidden;
-        cursor: url('../images/custom-cursor.png'), pointer;
-      }
-
-      canvas {
-        display: block;
-        width: 100vw;
-        height: 100vh;
-        cursor: url('../images/custom-cursor.png'), pointer;
-      }
-
-      h1 {
-        font-size: 3rem;
-        margin-bottom: 20px; /* Espacement sous le titre */
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Effet d'ombre */
-      }
-
-      .rocket-grid {
-        display: flex;
-        justify-content: center; /* Centre les rockets horizontalement */
-        gap: 20px; /* Espacement entre les rockets */
-        margin: 20px;
-      }
-
-      .rocket {
-        padding: 10px;
-        cursor: pointer;
-        border: 2px solid transparent;
-        background-color: black;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        transition: transform 0.2s, border-color 0.2s;
-      }
-
-      .rocket:hover {
-        transform: scale(1.05);
-      }
-
-      .rocket.selected {
-        border-color: cyan;
-      }
-
-      .rocket img {
-        width: 50px;
-        display: block;
-        margin: auto;
-        cursor: url('../images/custom-cursor.png'), pointer;
-      }
-
-      .back-button {
-        display: block;
-        padding: 10px 20px;
-        font-size: 1rem;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.6);
-        border: 1px solid white;
-        border-radius: 5px;
-        text-decoration: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-        transition: background-color 0.3s;
-        margin-top: 20px; /* Espacement par rapport aux rockets */
-        cursor: url('../images/custom-cursor.png'), pointer;
-      }
-
-      .back-button:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-      }
-    </style>
   </head>
   <body>
     <!-- Titre ajouté -->
@@ -110,21 +30,7 @@
       Back to Game
     </button>
 
-    <script>
-      function selectRocket(type) {
-        localStorage.setItem("selectedRocket", type);
-        document
-          .querySelectorAll(".rocket")
-          .forEach((r) => r.classList.remove("selected"));
-        event.currentTarget.classList.add("selected");
-      }
-
-      // Affiche la sélection actuelle
-      const current = localStorage.getItem("selectedRocket") || "default";
-      document
-        .querySelector(`[onclick="selectRocket('${current}')"]`)
-        .classList.add("selected");
-    </script>
+    <script src="js/spaceship.js"></script>
   </body>
 </html>
 

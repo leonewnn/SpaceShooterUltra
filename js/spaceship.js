@@ -86,3 +86,18 @@ function drawMissile(delta) {
     }
   }
 }
+
+//fonction pour sélectionner les rockets du vaisseau
+function selectRocket(type) {
+  localStorage.setItem("selectedRocket", type);
+  document
+    .querySelectorAll(".rocket")
+    .forEach((r) => r.classList.remove("selected"));
+  event.currentTarget.classList.add("selected");
+}
+
+// Affiche la sélection actuelle
+const current = localStorage.getItem("selectedRocket") || "default";
+document
+  .querySelector(`[onclick="selectRocket('${current}')"]`)
+  .classList.add("selected");
