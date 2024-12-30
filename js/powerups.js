@@ -6,9 +6,18 @@ let powerupSpawnFrequency = 2000; // Fréquence de spawn des power-ups en millis
 let powerupSpeed = 100;
 let powerupspawnproccessing = true;
 let minmalSpawnInterval = 15000;
-let timespanspawntime = 15000;
+let timespanspawntime = 1500;
 let powerUpTime = 10;
 let recoveringLifeIndex = null; // Indice de la vie en cours de récupération
+
+// Charger le son du bonus
+const bonusSound = new Audio('audio/bonus.flac');
+bonusSound.volume = 0.05;
+
+// Fonction pour jouer le son du bonus
+function playBonusSound() {
+  bonusSound.play();
+}
 
 // Indicateur unique pour afficher les power-ups actifs
 let activeIndicator = null;
@@ -93,7 +102,7 @@ function drawPowerups(delta) {
 // Gestion des power-ups actifs
 function activePowerup(powerup) {
   const powerupName = getImageName(powerup);
-  //  console.log(powerupName + " activé");
+  playBonusSound();
 
   switch (powerupName) {
     case "armor_up":
