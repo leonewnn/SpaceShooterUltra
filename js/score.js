@@ -66,15 +66,12 @@ function increaseScore(amount = 10) {
   checkHighScore(); // Vérifie si le score actuel dépasse le précédent record
 }
 
+// js/score.js
 function checkHighScore() {
   const highScores = JSON.parse(localStorage.getItem('highScores')) || [];
   const highScore = highScores.length > 0 ? highScores[0].score : null;
 
   if (highScore !== null && playerScore > highScore && !highScoreSoundPlayed) {
-    highScores.unshift({ name: 'Player', score: playerScore }); // Ajouter le nouveau score en tête
-    highScores.sort((a, b) => b.score - a.score); // Trier par score décroissant
-    highScores.splice(10); // Garder uniquement les 10 meilleurs scores
-    localStorage.setItem('highScores', JSON.stringify(highScores));
     highScoreSound.play();
     highScoreSoundPlayed = true; // Marquer le son comme joué
 

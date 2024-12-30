@@ -170,26 +170,23 @@
     }
 
     function submitPlayerScore() {
-    if (enteredName.length === maxNameLength) {
-        const score = parseInt(localStorage.getItem("playerScore") || "0", 10);
-        const profilePicture = profileImage || '../images/default_pp.png';
-
-        // Sauvegarde du score
-        saveHighScore(enteredName, score, profilePicture);
-        localStorage.setItem("scoreSubmitted", "true"); // Marque comme soumis
-
-        scoreSubmitted = true;
-
-        // Cache la saisie et désactive le bouton "Submit"
-        document.getElementById("nameInputRow").classList.add("hidden");
-        document.querySelector(".submit-button").disabled = true;
-
-        displayHighScores(); // Rafraîchir l'affichage des scores
-        console.log("Score sauvegardé avec le nom :", enteredName);
-    } else {
-        alert("Please enter a valid 3-letter name.");
+      const name = enteredName.length === maxNameLength ? enteredName : "NPC";
+      const score = parseInt(localStorage.getItem("playerScore") || "0", 10);
+      const profilePicture = profileImage || '../images/default_pp.png';
+    
+      // Sauvegarde du score
+      saveHighScore(name, score, profilePicture);
+      localStorage.setItem("scoreSubmitted", "true"); // Marque comme soumis
+    
+      scoreSubmitted = true;
+    
+      // Cache la saisie et désactive le bouton "Submit"
+      document.getElementById("nameInputRow").classList.add("hidden");
+      document.querySelector(".submit-button").disabled = true;
+    
+      displayHighScores(); // Rafraîchir l'affichage des scores
+      console.log("Score sauvegardé avec le nom :", name);
     }
-}
 
 function updateCurrentScoreDisplay() {
     const currentScore = parseInt(localStorage.getItem("playerScore") || "0", 10);
