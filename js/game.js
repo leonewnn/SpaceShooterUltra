@@ -1,10 +1,12 @@
 // game.js
 let gameState = "titleScreen";
-let gameOver = false; //Indique si le joueur a perdu
+let gameOver = false; // Indique si le joueur a perdu
 let lastTime = performance.now(); // Temps de la dernière frame
 let bonusActive = false; // Indique si le power-up bonus est actif
 let bonusOffset = 100; // Décalage des tirs bonus en millisecondes
 window.ctx = canvas.getContext("2d"); // Déclare `ctx` comme variable globale
+
+let lastFireTime = 0; // Temps du dernier tir
 
 function render(delta) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -36,13 +38,8 @@ function renderGameOver() {
   ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
 }
 
-let fireRateInterval;
-
-function startFireRateInterval() {
-  if (fireRateInterval) {
-    clearInterval(fireRateInterval);
-  }
-  fireRateInterval = setInterval(() => {
+function handleShooting(currentTime) {
+  if (currentTime - lastFireTime >= gameDifficulty.current.fireRate) {
     // Tir normal
     addMissile(15, 51, 5);
 
@@ -52,21 +49,23 @@ function startFireRateInterval() {
         addMissile(-1, 65, -15); // Tirs bonus avec ajustements
       }, bonusOffset);
     }
-  }, gameDifficulty.current.fireRate); // Utiliser la cadence de tir spécifique à la phase
-}
 
-// Appeler cette fonction chaque fois que `fireRate` change
-startFireRateInterval();
+    lastFireTime = currentTime;
+  }
+}
 
 // Fonction pour démarrer la musique du menu
 function startMenuMusic() {
   if (gameState === "titleScreen" && !isPaused) {
-      isMusicStarted = true; // Empêche les relances multiples
-      menuMusic.volume = isMuted ? 0 : gameVolume; // Applique le volume global
-      menuMusic.play().then(() => {
-          console.log("Musique du menu démarrée !");
-      }).catch((error) => {
-          console.error("Impossible de démarrer la musique du menu :", error);
+    isMusicStarted = true; // Empêche les relances multiples
+    menuMusic.volume = isMuted ? 0 : gameVolume; // Applique le volume global
+    menuMusic
+      .play()
+      .then(() => {
+        console.log("Musique du menu démarrée !");
+      })
+      .catch((error) => {
+        console.error("Impossible de démarrer la musique du menu :", error);
       });
   }
 }
@@ -96,72 +95,59 @@ function updateSpaceshipPosition(delta) {
   }
 }
 
-// Intervalle pour gérer les tirs synchronisés
-setInterval(() => {
-  // Tir normal
-  addMissile(15, 51, 5);
-
-  // Tir bonus avec décalage si actif
-  if (bonusActive) {
-    setTimeout(() => {
-      addMissile(-1, 65, -15); // Tirs bonus avec ajustements
-    }, bonusOffset);
-  }
-}, gameDifficulty.current.fireRate); // Utiliser la cadence de tir spécifique à la phase
-
 // Fonction principale avec delta
 function main(currentTime) {
   if (gameOver) {
-      stopMusic(); // Arrête la musique en cas de Game Over
-      renderGameOver(); // Affiche "Game Over" si le jeu est terminé
-      return;
+    stopMusic(); // Arrête la musique en cas de Game Over
+    renderGameOver(); // Affiche "Game Over" si le jeu est terminé
+    return;
   }
 
   // Gestion de la musique dans le menu principal
   if (gameState === "titleScreen" && !isPaused) {
-      if (currentMusic) {
-          stopMusic(); // Arrête la musique de la phase
-      }
-      if (menuMusic.paused && isMenuMusicAllowed) {
-          menuMusic.volume = isMuted ? 0 : gameVolume;
-          menuMusic.play(); // Relance la musique du menu si nécessaire
-      }
+    if (currentMusic) {
+      stopMusic(); // Arrête la musique de la phase
+    }
+    if (menuMusic.paused && isMenuMusicAllowed) {
+      menuMusic.volume = isMuted ? 0 : gameVolume;
+      menuMusic.play(); // Relance la musique du menu si nécessaire
+    }
   } else {
-      if (!menuMusic.paused) {
-          menuMusic.pause(); // Met la musique du menu en pause
-          menuMusic.currentTime = 0; // Réinitialise la musique
-      }
+    if (!menuMusic.paused) {
+      menuMusic.pause(); // Met la musique du menu en pause
+      menuMusic.currentTime = 0; // Réinitialise la musique
+    }
   }
 
   // Gestion de la musique pendant le jeu
   if (gameState === "playScreen" && !isGameMusicAllowed) {
-      isGameMusicAllowed = true; // Active la musique pour le jeu
-      playMusicForPhase(gameDifficulty.level - 1); // Joue la musique de la phase actuelle
+    isGameMusicAllowed = true; // Active la musique pour le jeu
+    playMusicForPhase(gameDifficulty.level - 1); // Joue la musique de la phase actuelle
   }
 
   if (isPaused) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Efface l'écran
-      renderPlayScreen(); // Affiche l'écran du jeu en arrière-plan
-      renderPauseMenu(ctx); // Dessine le menu de pause
-      lastTime = currentTime; // Réinitialise lastTime pour ignorer le temps en pause
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Efface l'écran
+    renderPlayScreen(); // Affiche l'écran du jeu en arrière-plan
+    renderPauseMenu(ctx); // Dessine le menu de pause
+    lastTime = currentTime; // Réinitialise lastTime pour ignorer le temps en pause
 
-      // Mettre en pause la musique in-game
-      if (currentMusic && !currentMusic.paused) {
-          pauseCurrentMusic();
-      }
+    // Mettre en pause la musique in-game
+    if (currentMusic && !currentMusic.paused) {
+      pauseCurrentMusic();
+    }
 
-      // Empêcher la musique du menu de se lancer
-      if (!menuMusic.paused) {
-          menuMusic.pause();
-          menuMusic.currentTime = 0;
-      }
+    // Empêcher la musique du menu de se lancer
+    if (!menuMusic.paused) {
+      menuMusic.pause();
+      menuMusic.currentTime = 0;
+    }
 
-      return; // Empêche les autres mises à jour
+    return; // Empêche les autres mises à jour
   } else {
-      // Reprendre la musique in-game si elle était en pause
-      if (currentMusic && currentMusic.paused) {
-          resumeCurrentMusic();
-      }
+    // Reprendre la musique in-game si elle était en pause
+    if (currentMusic && currentMusic.paused) {
+      resumeCurrentMusic();
+    }
   }
 
   // Ajuste delta pour ignorer le temps passé en pause
@@ -173,6 +159,7 @@ function main(currentTime) {
   updateScreenShake(); // Met à jour les effets de secousse d'écran
   render(delta);
   handleSpaceShipCollisions();
+  handleShooting(currentTime); // Gérer les tirs
 
   requestAnimationFrame(main); // Boucle la fonction
 }

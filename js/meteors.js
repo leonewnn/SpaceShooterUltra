@@ -6,7 +6,6 @@ let meteorSpawnInterval;
 let meteorLife = gameDifficulty.current.meteorHealth;
 let meteorSpawnFrequency = gameDifficulty.current.spawnInterval;
 let multiplier = 1;
-let meteorSpeed = gameDifficulty.current.meteorSpeed;
 let isMeteorSpawning = false;
 
 for (let i = 1; i <= 10; i++) {
@@ -37,12 +36,17 @@ function spawnMeteor() {
   let sizeTemp = 30 + Math.random() * (130 - 30);
   let xPosition = Math.random() * (canvas.width - sizeTemp);
 
+  // Générer une vitesse aléatoire pour la météorite
+  let [minSpeed, maxSpeed] = gameDifficulty.current.meteorSpeedRange;
+  let randomSpeed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
+
   let meteor = {
     x: xPosition,
     y: -50,
     life: gameDifficulty.current.meteorHealth,
     size: sizeTemp * multiplier,
     inclinaition: inclinaitionTemp,
+    speed: randomSpeed, // Utiliser la vitesse aléatoire
     img: randomMeteorImage,
     // Add new rotation properties
     rotation: 0,
@@ -78,7 +82,7 @@ function drawMeteors(delta) {
 
     // If game is not paused, update position and rotation
     if (!isPaused) {
-      meteor.y += gameDifficulty.current.meteorSpeed * delta;
+      meteor.y += meteor.speed * delta; // Utiliser la vitesse spécifique à la météorite
       meteor.x += meteor.inclinaition;
 
       // Update rotation

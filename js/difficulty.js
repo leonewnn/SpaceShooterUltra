@@ -6,8 +6,8 @@ let gameDifficulty = {
   phaseValues: {
     1: {
       // Learning phase
-      meteorSpeed: 150,
-      spawnInterval: 1700,
+      meteorSpeedRange: [150, 500],
+      spawnInterval: 1250,
       meteorHealth: 2,
       maxMeteors: 5,
       powerupSpeed: 200,
@@ -17,8 +17,8 @@ let gameDifficulty = {
     },
     2: {
       // Challenge begins
-      meteorSpeed: 200,
-      spawnInterval: 1200,
+      meteorSpeedRange: [500, 850],
+      spawnInterval: 1000,
       meteorHealth: 3,
       maxMeteors: 10,
       powerupSpeed: 400,
@@ -28,8 +28,8 @@ let gameDifficulty = {
     },
     3: {
       // Getting intense
-      meteorSpeed: 250,
-      spawnInterval: 900,
+      meteorSpeedRange: [850, 1200],
+      spawnInterval: 700,
       meteorHealth: 3,
       maxMeteors: 15,
       powerupSpeed: 550,
@@ -39,8 +39,8 @@ let gameDifficulty = {
     },
     4: {
       // Endless challenge
-      meteorSpeed: 300,
-      spawnInterval: 700,
+      meteorSpeedRange: [1200, 1600],
+      spawnInterval: 500,
       meteorHealth: 4,
       maxMeteors: 20,
       powerupSpeed: 700,
@@ -50,8 +50,8 @@ let gameDifficulty = {
     },
   },
   current: {
-    meteorSpeed: 150,
-    spawnInterval: 1700,
+    meteorSpeedRange: [150, 500],
+    spawnInterval: 1250,
     meteorHealth: 2,
     maxMeteors: 5,
     powerupSpeed: 200,
@@ -97,7 +97,6 @@ function updateDifficulty(score) {
 
     updateMeteorSpawnInterval();
     updatePowerupSpawnInterval();
-    startFireRateInterval(); // Start the fire rate interval
 
     console.log(
       "Level changed from",
