@@ -151,18 +151,23 @@ function activateFireRateUp() {
 }
 
 function activateHpUp() {
-  // console.log("Activation de HP Up!");
+  console.log("Activation de HP Up!");
 
-  // Chercher la dernière vie perdue (la plus à droite)
-  const lostLifeIndex = imagesAnimated.lastIndexOf(true);
+  if (livesCount >= 3) {
+    console.log("Toutes les vies sont déjà restaurées !");
+    return;
+  }
+
+  // Chercher la première vie perdue (la plus à gauche)
+  const lostLifeIndex = imagesAnimated.indexOf(true);
 
   if (lostLifeIndex !== -1) {
     imagesAnimated[lostLifeIndex] = false; // Réactive la vie perdue
     animationsCompleted--; // Réduit le compteur d'animations terminées
-    recoveringLifeIndex = lostLifeIndex; // Marque la vie comme en cours de récupération
-    // console.log(`Vie restaurée : cœur ${lostLifeIndex + 1}`);
+    livesCount++; // Incrémente le compteur de vies
+    console.log(`Vie restaurée : cœur ${lostLifeIndex + 1}`);
   } else {
-    //  console.log("Toutes les vies sont déjà restaurées !");
+    console.log("Aucune vie à restaurer !");
   }
 }
 
