@@ -6,7 +6,7 @@ let gameDifficulty = {
   phaseValues: {
     1: {
       // Learning phase
-      meteorSpeedRange: [150, 500],
+      meteorSpeedRange: [150, 300],
       spawnInterval: 1700,
       meteorHealth: 2,
       maxMeteors: 5,
@@ -17,7 +17,7 @@ let gameDifficulty = {
     },
     2: {
       // Challenge begins
-      meteorSpeedRange: [500, 850],
+      meteorSpeedRange: [400, 700],
       spawnInterval: 1200,
       meteorHealth: 3,
       maxMeteors: 10,
@@ -28,7 +28,7 @@ let gameDifficulty = {
     },
     3: {
       // Getting intense
-      meteorSpeedRange: [850, 1200],
+      meteorSpeedRange: [800, 1100],
       spawnInterval: 900,
       meteorHealth: 3,
       maxMeteors: 15,
@@ -50,7 +50,7 @@ let gameDifficulty = {
     },
   },
   current: {
-    meteorSpeedRange: [100, 300],
+    meteorSpeedRange: [150, 300],
     spawnInterval: 1700,
     meteorHealth: 2,
     maxMeteors: 5,
