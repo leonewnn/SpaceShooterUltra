@@ -7,32 +7,57 @@ let gameDifficulty = {
     1: {
       // Learning phase
       meteorSpeed: 150,
-      spawnInterval: 2000,
+      spawnInterval: 1700,
       meteorHealth: 2,
+      maxMeteors: 5,
+      powerupSpeed: 200,
+      powerupSpawnInterval: 20000,
+      fireRate: 600,
+      missileSpeed: 750,
     },
     2: {
       // Challenge begins
       meteorSpeed: 200,
-      spawnInterval: 1500,
+      spawnInterval: 1200,
       meteorHealth: 3,
+      maxMeteors: 10,
+      powerupSpeed: 400,
+      powerupSpawnInterval: 30000,
+      fireRate: 550,
+      missileSpeed: 850,
     },
     3: {
       // Getting intense
       meteorSpeed: 250,
-      spawnInterval: 1200,
-      meteorHealth: 4,
+      spawnInterval: 900,
+      meteorHealth: 3,
+      maxMeteors: 15,
+      powerupSpeed: 550,
+      powerupSpawnInterval: 40000,
+      fireRate: 500,
+      missileSpeed: 950,
     },
     4: {
       // Endless challenge
       meteorSpeed: 300,
-      spawnInterval: 1000,
-      meteorHealth: 5,
+      spawnInterval: 700,
+      meteorHealth: 4,
+      maxMeteors: 20,
+      powerupSpeed: 700,
+      powerupSpawnInterval: 50000,
+      fireRate: 450,
+      missileSpeed: 1050,
     },
   },
   current: {
     meteorSpeed: 150,
-    spawnInterval: 2000,
+    spawnInterval: 1700,
     meteorHealth: 2,
+    maxMeteors: 5,
+    powerupSpeed: 200,
+    powerupSpawnInterval: 20000,
+    fireRate: 600,
+    missileSpeed: 750,
   },
 };
 
@@ -46,16 +71,6 @@ let phaseTransition = {
 
 function updateDifficulty(score) {
   const previousLevel = gameDifficulty.level;
-
-  // Add comprehensive phase tracking
-/*  console.log(
-    `Current status:
-    Score: ${score}
-    Phase: ${gameDifficulty.level}
-    Speed: ${gameDifficulty.current.meteorSpeed}
-    Spawn Interval: ${gameDifficulty.current.spawnInterval}ms
-    Meteor Health: ${gameDifficulty.current.meteorHealth}`
-  );*/
 
   // Determine phase based on score
   if (score >= gameDifficulty.scoreThresholds[2]) {
@@ -71,11 +86,18 @@ function updateDifficulty(score) {
     gameDifficulty.current.meteorSpeed = newValues.meteorSpeed;
     gameDifficulty.current.spawnInterval = newValues.spawnInterval;
     gameDifficulty.current.meteorHealth = newValues.meteorHealth;
+    gameDifficulty.current.maxMeteors = newValues.maxMeteors;
+    gameDifficulty.current.powerupSpeed = newValues.powerupSpeed;
+    gameDifficulty.current.powerupSpawnInterval = newValues.powerupSpawnInterval;
+    gameDifficulty.current.fireRate = newValues.fireRate; // Update fire rate
+    gameDifficulty.current.missileSpeed = newValues.missileSpeed; // Update missile speed
 
     // Trigger phase transition animation
     startPhaseTransition(gameDifficulty.level);
 
     updateMeteorSpawnInterval();
+    updatePowerupSpawnInterval();
+    startFireRateInterval(); // Start the fire rate interval
 
     console.log(
       "Level changed from",
@@ -92,6 +114,11 @@ function updateDifficulty(score) {
       speed: gameDifficulty.current.meteorSpeed,
       interval: gameDifficulty.current.spawnInterval,
       health: gameDifficulty.current.meteorHealth,
+      maxMeteors: gameDifficulty.current.maxMeteors,
+      powerupSpeed: gameDifficulty.current.powerupSpeed,
+      powerupSpawnInterval: gameDifficulty.current.powerupSpawnInterval,
+      fireRate: gameDifficulty.current.fireRate, // Log fire rate
+      missileSpeed: gameDifficulty.current.missileSpeed, // Log missile speed
     });
 
     // Play music for the new phase

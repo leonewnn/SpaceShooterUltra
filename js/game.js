@@ -2,7 +2,6 @@
 let gameState = "titleScreen";
 let gameOver = false; //Indique si le joueur a perdu
 let lastTime = performance.now(); // Temps de la dernière frame
-let fireRate = 600; // Temps de la dernière frame
 let bonusActive = false; // Indique si le power-up bonus est actif
 let bonusOffset = 100; // Décalage des tirs bonus en millisecondes
 window.ctx = canvas.getContext("2d"); // Déclare `ctx` comme variable globale
@@ -37,7 +36,27 @@ function renderGameOver() {
   ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
 }
 
-// Écouteur pour détecter le mouvement de la souris
+let fireRateInterval;
+
+function startFireRateInterval() {
+  if (fireRateInterval) {
+    clearInterval(fireRateInterval);
+  }
+  fireRateInterval = setInterval(() => {
+    // Tir normal
+    addMissile(15, 51, 5);
+
+    // Tir bonus avec décalage si actif
+    if (bonusActive) {
+      setTimeout(() => {
+        addMissile(-1, 65, -15); // Tirs bonus avec ajustements
+      }, bonusOffset);
+    }
+  }, gameDifficulty.current.fireRate); // Utiliser la cadence de tir spécifique à la phase
+}
+
+// Appeler cette fonction chaque fois que `fireRate` change
+startFireRateInterval();
 
 // Fonction pour démarrer la musique du menu
 function startMenuMusic() {
@@ -88,7 +107,7 @@ setInterval(() => {
       addMissile(-1, 65, -15); // Tirs bonus avec ajustements
     }, bonusOffset);
   }
-}, fireRate);
+}, gameDifficulty.current.fireRate); // Utiliser la cadence de tir spécifique à la phase
 
 // Fonction principale avec delta
 function main(currentTime) {

@@ -28,6 +28,10 @@ function startMeteorSpawning() {
 }
 
 function spawnMeteor() {
+  if (meteorites.length >= gameDifficulty.current.maxMeteors) {
+    return; // Ne pas ajouter de nouvelles météorites si le maximum est atteint
+  }
+
   let randomMeteorImage = meteors[Math.floor(Math.random() * meteors.length)];
   let inclinaitionTemp = Math.random() - 0.5;
   let sizeTemp = 30 + Math.random() * (130 - 30);

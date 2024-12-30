@@ -48,7 +48,7 @@ function nextPowerUpSpawn() {
   powerupspawnproccessing = false;
   // Attendre un intervalle aléatoire, puis spawn le power-up
   let nextMoment =
-    Math.floor(Math.random() * timespanspawntime) + minmalSpawnInterval;
+    Math.floor(Math.random() * timespanspawntime) + gameDifficulty.current.powerupSpawnInterval;
   setTimeout(() => {
     spawnPowerup(); // Appel de la fonction pour faire apparaître un power-up
     powerupspawnproccessing = true; // Réactiver le spawn pour le prochain
@@ -90,7 +90,7 @@ function drawPowerups(delta) {
 
     ctx.shadowBlur = 0;
 
-    powerup.y += powerupSpeed * delta;
+    powerup.y += gameDifficulty.current.powerupSpeed * delta; // Utiliser la vitesse spécifique à la phase
 
     if (powerup.y > canvas.height) {
       powerupItems.splice(i, 1);
@@ -232,4 +232,14 @@ function pausePowerupSpawning() {
 function resumePowerupSpawning() {
   powerupspawnproccessing = true; // Redémarre le processus de génération
   nextPowerUpSpawn(); // Relance la génération du prochain power-up
+}
+
+function updatePowerupSpawnInterval() {
+  if (powerupSpawnInterval) {
+    clearInterval(powerupSpawnInterval);
+  }
+  powerupSpawnInterval = setInterval(
+    spawnPowerup,
+    gameDifficulty.current.powerupSpawnInterval
+  );
 }
