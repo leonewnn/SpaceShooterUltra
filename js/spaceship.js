@@ -1,5 +1,5 @@
 // spaceship.js
-let spaceshipY = canvas.height + 300; // Position initiale du vaisseau
+let spaceshipY = canvas.height + 500; // Position initiale du vaisseau
 let spaceships = []; // Tableau pour stocker les images du vaisseau
 let currentFrame = 0; // Indice de l'image actuelle
 let frameInterval = 8; // Intervalle pour ralentir l'animation
