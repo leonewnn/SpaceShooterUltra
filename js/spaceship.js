@@ -5,7 +5,6 @@ let currentFrame = 0; // Indice de l'image actuelle
 let frameInterval = 8; // Intervalle pour ralentir l'animation
 let frameCount = 0; // Compteur pour contrôler la vitesse de changement d'image
 let missiles = [];
-let missileSpeed = 750;
 let shieldActive = false;
 let shield = new Image();
 shield.src = `images/spaceship/shield.png`;
@@ -78,7 +77,7 @@ function drawMissile(delta) {
     let missile = missiles[i];
 
     ctx.drawImage(missile.img, missile.x, missile.y); // Dessine le missile
-    missile.y -= missileSpeed * delta; // Déplace le missile vers le haut
+    missile.y -= gameDifficulty.current.missileSpeed * delta; // Utiliser la vitesse des missiles spécifique à la phase
 
     // Vérifie si le missile est sorti de l'écran
     if (missile.y < -56) {
