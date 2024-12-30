@@ -66,25 +66,6 @@ function renderButtons() {
 }
 
 canvas.addEventListener("click", function (event) {
-  if (gameState !== "titleScreen") return; // Ne traiter que les clics du menu principal dans l'écran titre
-
-  const clickX = event.offsetX;
-  const clickY = event.offsetY;
-
-  buttons.forEach((button) => {
-    if (
-      clickX >= button.x &&
-      clickX <= button.x + button.width &&
-      clickY >= button.y &&
-      clickY <= button.y + button.height
-    ) {
-      console.log("Bouton principal cliqué :", button.label);
-      button.onClick();
-    }
-  });
-});
-
-canvas.addEventListener("click", function handleClick(event) {
   const clickX = event.offsetX;
   const clickY = event.offsetY;
 
@@ -97,6 +78,7 @@ canvas.addEventListener("click", function handleClick(event) {
         clickY >= button.y &&
         clickY <= button.y + button.height
       ) {
+        console.log("Bouton principal cliqué :", button.label);
         button.onClick();
       }
     });
@@ -105,25 +87,6 @@ canvas.addEventListener("click", function handleClick(event) {
   // Gestion des clics pour le menu de pause
   if (isPaused && gameState === "playScreen") {
     pauseButtons.forEach((button) => {
-      if (
-        clickX >= button.x &&
-        clickX <= button.x + button.width &&
-        clickY >= button.y &&
-        clickY <= button.y + button.height
-      ) {
-        button.onClick();
-      }
-    });
-  }
-});
-
-canvas.addEventListener("click", function handleButtonClick(event) {
-  const clickX = event.offsetX;
-  const clickY = event.offsetY;
-
-  if (gameState === "titleScreen") {
-    // Gestion des boutons du menu principal
-    buttons.forEach((button) => {
       if (
         clickX >= button.x &&
         clickX <= button.x + button.width &&

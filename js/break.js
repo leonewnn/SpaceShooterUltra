@@ -110,7 +110,7 @@ canvas.addEventListener("click", function handleClick(event) {
 });
 
 function pauseGame() {
-  if (gameState === "playScreen" && !isPaused) {
+  if (gameState === "playScreen") {
     isPaused = true; // Met le jeu en pause
     console.log("Jeu mis en pause !");
     pauseMeteorSpawning(); // Arrête le spawn des météorites

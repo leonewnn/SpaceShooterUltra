@@ -46,12 +46,10 @@ window.addEventListener("keydown", (event) => {
   console.log("Touche appuyée :", event.key); // Vérifie si les événements sont détectés
   if (event.key === "e") {
     console.log("Pause/Resume togglé !");
-    isPaused = !isPaused;
-
     if (isPaused) {
-      pauseGame();
+      resumeGame(); // Reprend le jeu si en pause
     } else {
-      resumeGame();
+      pauseGame(); // Met le jeu en pause si en cours
     }
   }
 });
