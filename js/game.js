@@ -89,6 +89,7 @@ function main(currentTime) {
     lastTime = currentTime; // Réinitialise lastTime pour ignorer le temps en pause
     return; // Empêche les autres mises à jour
   }
+  
 
   // Ajuste delta pour ignorer le temps passé en pause
   const delta = (currentTime - lastTime) / 1000; // Convertir le delta en secondes

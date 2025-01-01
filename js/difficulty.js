@@ -94,6 +94,9 @@ function updateDifficulty(score) {
       health: gameDifficulty.current.meteorHealth,
     });
   }
+
+  // Check for rocket unlocks
+  checkRocketUnlocks(score);
 }
 
 function showLevelUpMessage() {
