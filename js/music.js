@@ -1,23 +1,23 @@
 const phaseMusics = [
-  new Audio('audio/phase1.mp3'), // Musique de la phase 1
-  new Audio('audio/phase2.mp3'), // Musique de la phase 2
-  new Audio('audio/phase3.mp3'), // Musique de la phase 3
-  new Audio('audio/phase4.mp3'), // Musique de la phase 4
+  new Audio("audio/phase1.mp3"), // Musique de la phase 1
+  new Audio("audio/phase2.mp3"), // Musique de la phase 2
+  new Audio("audio/phase3.mp3"), // Musique de la phase 3
+  new Audio("audio/phase4.mp3"), // Musique de la phase 4
 ];
 
 let currentMusicIndex = -1; // -1 signifie qu'aucune musique n'est jouée
 let currentMusic = null; // Musique actuellement jouée
-const defaultVolume = 0.03;
+const defaultVolume = 0.1; // Increased from 0.03
 let isMuted = false;
-let gameVolume = 0.015;
+let gameVolume = 0.05; // Increased from 0.015
 
 phaseMusics.forEach((audio, index) => {
   audio.volume = defaultVolume; // Définit le volume initial
-  audio.addEventListener('canplaythrough', () => {
-      console.log(`Audio phase ${index + 1} ready to play.`);
+  audio.addEventListener("canplaythrough", () => {
+    console.log(`Audio phase ${index + 1} ready to play.`);
   });
-  audio.addEventListener('error', (e) => {
-      console.error(`Error loading audio phase ${index + 1}:`, e);
+  audio.addEventListener("error", (e) => {
+    console.error(`Error loading audio phase ${index + 1}:`, e);
   });
 });
 
@@ -25,21 +25,21 @@ phaseMusics.forEach((audio, index) => {
 function playMusicForPhase(index) {
   if (!isGameMusicAllowed) return;
   if (currentMusic) {
-      fadeOutMusic(currentMusic, () => {
-          currentMusic = phaseMusics[index];
-          currentMusic.loop = true;
-          currentMusic.volume = isMuted ? 0 : gameVolume; // Respecte les paramètres audio
-          currentMusic.muted = isMuted;
-          currentMusic.play();
-          fadeInMusic(currentMusic);
-      });
-  } else {
+    fadeOutMusic(currentMusic, () => {
       currentMusic = phaseMusics[index];
       currentMusic.loop = true;
       currentMusic.volume = isMuted ? 0 : gameVolume; // Respecte les paramètres audio
       currentMusic.muted = isMuted;
       currentMusic.play();
       fadeInMusic(currentMusic);
+    });
+  } else {
+    currentMusic = phaseMusics[index];
+    currentMusic.loop = true;
+    currentMusic.volume = isMuted ? 0 : gameVolume; // Respecte les paramètres audio
+    currentMusic.muted = isMuted;
+    currentMusic.play();
+    fadeInMusic(currentMusic);
   }
   currentMusicIndex = index; // Met à jour l'index
   console.log(`Playing music for phase ${index + 1}`);
@@ -49,12 +49,12 @@ function playMusicForPhase(index) {
 function fadeInMusic(audio) {
   let volume = isMuted ? 0 : 0.05;
   const fadeInterval = setInterval(() => {
-      if (volume < gameVolume && !isMuted) {
-          volume += 0.05;
-          audio.volume = Math.min(volume, gameVolume);
-      } else {
-          clearInterval(fadeInterval);
-      }
+    if (volume < gameVolume && !isMuted) {
+      volume += 0.05;
+      audio.volume = Math.min(volume, gameVolume);
+    } else {
+      clearInterval(fadeInterval);
+    }
   }, 200);
 }
 
@@ -62,15 +62,15 @@ function fadeInMusic(audio) {
 function fadeOutMusic(audio, callback) {
   let volume = audio.volume;
   const fadeInterval = setInterval(() => {
-      if (volume > 0) {
-          volume -= 0.05;
-          audio.volume = Math.max(volume, 0);
-      } else {
-          clearInterval(fadeInterval);
-          audio.pause();
-          audio.currentTime = 0;
-          if (callback) callback();
-      }
+    if (volume > 0) {
+      volume -= 0.05;
+      audio.volume = Math.max(volume, 0);
+    } else {
+      clearInterval(fadeInterval);
+      audio.pause();
+      audio.currentTime = 0;
+      if (callback) callback();
+    }
   }, 200);
 }
 
@@ -81,24 +81,24 @@ function updateMusic(score) {
 
   // Si le score approche du seuil, diminuer le volume progressivement
   if (
-      phase >= 0 &&
-      phase < thresholds.length &&
-      score >= thresholds[phase] - 70 &&
-      score < thresholds[phase]
+    phase >= 0 &&
+    phase < thresholds.length &&
+    score >= thresholds[phase] - 70 &&
+    score < thresholds[phase]
   ) {
-      const distanceToThreshold = thresholds[phase] - score; // Distance restante
-      const reductionFactor = distanceToThreshold / 70; // Facteur de réduction (entre 1 et 0)
-      const targetVolume = defaultVolume * reductionFactor; // Volume cible basé sur la distance
+    const distanceToThreshold = thresholds[phase] - score; // Distance restante
+    const reductionFactor = distanceToThreshold / 70; // Facteur de réduction (entre 1 et 0)
+    const targetVolume = defaultVolume * reductionFactor; // Volume cible basé sur la distance
 
-      // Ajuste le volume progressivement vers le volume cible
-      if (currentMusic.volume > targetVolume) {
-          currentMusic.volume = Math.max(targetVolume, currentMusic.volume - 0.01);
-      }
+    // Ajuste le volume progressivement vers le volume cible
+    if (currentMusic.volume > targetVolume) {
+      currentMusic.volume = Math.max(targetVolume, currentMusic.volume - 0.01);
+    }
   }
 
   // Si on change de phase, jouer la nouvelle musique
   if (phase !== currentMusicIndex && !gameOver) {
-      playMusicForPhase(phase);
+    playMusicForPhase(phase);
   }
 }
 
@@ -114,10 +114,10 @@ let isMenuMusicAllowed = false; // Indicateur pour la musique du menu
 
 function stopMusic() {
   if (currentMusic) {
-      fadeOutMusic(currentMusic, () => {
-          currentMusic = null;
-          currentMusicIndex = -1; // Réinitialise l'index
-      });
+    fadeOutMusic(currentMusic, () => {
+      currentMusic = null;
+      currentMusicIndex = -1; // Réinitialise l'index
+    });
   }
 }
 
@@ -140,13 +140,13 @@ function resumeCurrentMusic() {
 }
 
 // Musique pour le menu principal
-const menuMusic = new Audio('audio/Menu-Music.mp3');
+const menuMusic = new Audio("audio/Menu-Music.mp3");
 menuMusic.loop = true; // La musique se répète
 menuMusic.volume = gameVolume; // Respecte le volume défini
 menuMusic.muted = isMuted;
 
 window.addEventListener("load", () => {
-    setupSoundControls(); // Initialise les contrôles audio au démarrage
+  setupSoundControls(); // Initialise les contrôles audio au démarrage
 });
 
 // Initialiser les contrôles audio

@@ -9,6 +9,9 @@ let shieldActive = false;
 let shield = new Image();
 shield.src = `images/spaceship/shield.png`;
 
+const shootSound = new Audio("audio/shoot_sound.mp3");
+shootSound.volume = 0.01; // Adjust volume to match other sound effects
+
 // Charger les images du vaisseau
 for (let i = 0; i <= 6; i++) {
   let img = new Image();
@@ -52,6 +55,12 @@ function drawSpaceShip(pos) {
 }
 
 function addMissile(adjustementLeftx, adjustementRightx, adjustementy) {
+  // Play shoot sound if not muted
+  if (!isMuted) {
+    shootSound.currentTime = 0; // Reset sound to start
+    shootSound.play();
+  }
+
   // Crée le premier missile légèrement décalé à gauche
   let missileLeft = {
     x: spaceshipPos + adjustementLeftx, // Décalé légèrement vers la gauche
