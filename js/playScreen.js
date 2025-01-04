@@ -16,12 +16,11 @@ function renderPlayScreen(delta) {
     drawMeteors(delta);
     drawSpaceShip(spaceshipPos);
     drawMissile(delta);
-    drawImpacts(); // Add this line to render impact animations
+    drawImpacts();
 
     handleCollisions();
     handleCollisionsPowerUp();
 
-    // Draw game elements
     drawLife(
       10,
       10,
@@ -53,8 +52,8 @@ function renderPlayScreen(delta) {
     drawScore();
     drawIndicator();
 
-    // Add phase transition drawing
-    drawPhaseTransition();
+    // Replace drawPhaseTransition with the new generic transition
+    drawTransitionMessage();
 
     if (!scoreInterval) startScoreIncrement();
   }
