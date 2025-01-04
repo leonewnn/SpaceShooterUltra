@@ -11,7 +11,7 @@ let powerUpTime = 10;
 let recoveringLifeIndex = null; // Indice de la vie en cours de récupération
 
 // Charger le son du bonus
-const bonusSound = new Audio('audio/bonus.flac');
+const bonusSound = new Audio("audio/bonus.flac");
 bonusSound.volume = 0.05;
 
 // Fonction pour jouer le son du bonus
@@ -48,7 +48,8 @@ function nextPowerUpSpawn() {
   powerupspawnproccessing = false;
   // Attendre un intervalle aléatoire, puis spawn le power-up
   let nextMoment =
-    Math.floor(Math.random() * timespanspawntime) + gameDifficulty.current.powerupSpawnInterval;
+    Math.floor(Math.random() * timespanspawntime) +
+    gameDifficulty.current.powerupSpawnInterval;
   setTimeout(() => {
     spawnPowerup(); // Appel de la fonction pour faire apparaître un power-up
     powerupspawnproccessing = true; // Réactiver le spawn pour le prochain
@@ -129,60 +130,47 @@ function activePowerup(powerup) {
 
 // Fonctions placeholders à coder plus tard
 function activateArmorUp() {
-  //  console.log("Activation de Armor Up!");
   shieldActive = true;
+  startTransitionMessage(
+    "SHIELD ACTIVATED!",
+    "Damage Protection",
+    "#00ff00",
+    2000
+  );
 
   setTimeout(() => {
     shieldActive = false;
-    // console.log("Shiled finito");
   }, powerUpTime * 1000);
 }
 
 function activateFireRateUp() {
-  //  console.log("Activation de Fire Rate Up!");
+  bonusActive = true;
+  startTransitionMessage("DOUBLE FIRE!", "Rate Increased", "#ff0000", 2000);
 
-  bonusActive = true; // Activer les tirs bonus
-
-  // Désactiver le bonus après 10 secondes
   setTimeout(() => {
     bonusActive = false;
-    //  console.log("Fire Rate Up terminé !");
   }, powerUpTime * 1000);
 }
 
 function activateHpUp() {
-  console.log("Activation de HP Up!");
+  if (livesCount >= 3) return;
 
-  if (livesCount >= 3) {
-    console.log("Toutes les vies sont déjà restaurées !");
-    return;
-  }
-
-  // Chercher la première vie perdue (la plus à gauche)
   const lostLifeIndex = imagesAnimated.indexOf(true);
-
   if (lostLifeIndex !== -1) {
-    imagesAnimated[lostLifeIndex] = false; // Réactive la vie perdue
-    animationsCompleted--; // Réduit le compteur d'animations terminées
-    livesCount++; // Incrémente le compteur de vies
-    console.log(`Vie restaurée : cœur ${lostLifeIndex + 1}`);
-  } else {
-    console.log("Aucune vie à restaurer !");
+    imagesAnimated[lostLifeIndex] = false;
+    animationsCompleted--;
+    livesCount++;
+    startTransitionMessage("LIFE RESTORED!", "+1 HP", "#ff00ff", 2000);
   }
 }
 
 function activateNukeUp() {
-  // console.log("Activation de Nuke Up!");
+  meteorites.length = 0;
+  pauseMeteorSpawning();
+  startTransitionMessage("NUKE ACTIVATED!", "Screen Cleared", "#ffff00", 2000);
 
-  // Vider les météorites et arrêter leur spawn
-  meteorites.length = 0; // Efface toutes les météorites
-  pauseMeteorSpawning(); // Arrête temporairement le spawn
-  // console.log("Meteorites cleared and spawning paused.");
-
-  // Relancer après 8 secondes
   setTimeout(() => {
-    resumeMeteorSpawning(); // Relance le spawn
-    //  console.log("Meteor spawning resumed after Nuke.");
+    resumeMeteorSpawning();
   }, 8 * 1000);
 }
 

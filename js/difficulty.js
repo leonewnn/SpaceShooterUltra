@@ -69,6 +69,82 @@ let phaseTransition = {
   alpha: 0,
 };
 
+let messageTransition = {
+  active: false,
+  startTime: 0,
+  duration: 2000,
+  text: "",
+  subtext: "",
+  color: "#FFD700", // Default gold color
+  alpha: 0,
+};
+
+function startTransitionMessage(
+  text,
+  subtext = "",
+  color = "#FFD700",
+  duration = 2000
+) {
+  messageTransition.active = true;
+  messageTransition.startTime = Date.now();
+  messageTransition.text = text;
+  messageTransition.subtext = subtext;
+  messageTransition.color = color;
+  messageTransition.duration = duration;
+  messageTransition.alpha = 0;
+}
+
+function drawTransitionMessage() {
+  if (!messageTransition.active) return;
+
+  const currentTime = Date.now();
+  const elapsed = currentTime - messageTransition.startTime;
+  const progress = Math.min(elapsed / messageTransition.duration, 1);
+
+  // Calculate alpha for fade in/out effect
+  if (progress < 0.3) {
+    messageTransition.alpha = progress / 0.3;
+  } else if (progress > 0.7) {
+    messageTransition.alpha = (1 - progress) / 0.3;
+  } else {
+    messageTransition.alpha = 1;
+  }
+
+  // Save context state
+  ctx.save();
+
+  // Add glow effect
+  ctx.shadowBlur = 20;
+  ctx.shadowColor = messageTransition.color;
+
+  // Draw main text
+  ctx.globalAlpha = messageTransition.alpha;
+  ctx.font = "48px SpaceMan";
+  ctx.fillStyle = messageTransition.color;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(messageTransition.text, canvas.width / 2, canvas.height / 2);
+
+  // Draw subtitle if present
+  if (messageTransition.subtext) {
+    ctx.font = "24px SpaceMan";
+    ctx.fillText(
+      messageTransition.subtext,
+      canvas.width / 2,
+      canvas.height / 2 + 50
+    );
+  }
+
+  // Reset context
+  ctx.restore();
+
+  // End transition when complete
+  if (progress >= 1) {
+    messageTransition.active = false;
+    messageTransition.alpha = 0;
+  }
+}
+
 function updateDifficulty(score) {
   const previousLevel = gameDifficulty.level;
 
@@ -88,7 +164,8 @@ function updateDifficulty(score) {
     gameDifficulty.current.meteorHealth = newValues.meteorHealth;
     gameDifficulty.current.maxMeteors = newValues.maxMeteors;
     gameDifficulty.current.powerupSpeed = newValues.powerupSpeed;
-    gameDifficulty.current.powerupSpawnInterval = newValues.powerupSpawnInterval;
+    gameDifficulty.current.powerupSpawnInterval =
+      newValues.powerupSpawnInterval;
     gameDifficulty.current.fireRate = newValues.fireRate; // Update fire rate
     gameDifficulty.current.missileSpeed = newValues.missileSpeed; // Update missile speed
 
@@ -142,10 +219,12 @@ function showLevelUpMessage() {
 }
 
 function startPhaseTransition(level) {
-  phaseTransition.active = true;
-  phaseTransition.startTime = Date.now();
-  phaseTransition.text = `PHASE ${level}`;
-  phaseTransition.alpha = 0;
+  startTransitionMessage(
+    `PHASE ${level}`,
+    "DIFFICULTY INCREASED",
+    "#FFD700",
+    2000
+  );
 }
 
 // Add to difficulty.js
