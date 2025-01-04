@@ -16,7 +16,7 @@ let frameDelay = 3; // Ajustement du délai pour une animation plus fluide
 function impactAnimation(x, y) {
   console.log("Animation d'impact à la position (", x, ",", y, ")");
   impactAnimations.push({ x, y, impactFrames: 0, delayCounter: 0 });
-  triggerShake(5, 5); // Trigger shake when impact occurs
+  triggerShake(10, 5); // Trigger shake when impact occurs
 }
 
 function drawImpacts() {
@@ -122,12 +122,18 @@ function handleCollisions() {
       if (checkCollision(missile, meteor)) {
         increaseScore(10);
         meteor.life = meteor.life - 1;
-        // console.log(meteor.life);
         missiles.splice(i, 1);
 
         if (meteor.life < 1) {
-          impactAnimation(missile.x, missile.y);
-          createExplosion(missile.x, missile.y); // Add explosion effect
+          // Only create impact and explosion when meteor is destroyed
+          impactAnimation(
+            meteor.x + meteor.size / 2,
+            meteor.y + meteor.size / 2
+          );
+          createExplosion(
+            meteor.x + meteor.size / 2,
+            meteor.y + meteor.size / 2
+          );
           meteorites.splice(j, 1);
           break;
         }

@@ -55,27 +55,27 @@ function drawSpaceShip(pos) {
 }
 
 function addMissile(adjustementLeftx, adjustementRightx, adjustementy) {
+  // Only create missiles and play sound if in playScreen state
+  if (gameState !== "playScreen") return;
+
   // Play shoot sound if not muted
   if (!isMuted) {
-    shootSound.currentTime = 0; // Reset sound to start
+    shootSound.currentTime = 0;
     shootSound.play();
   }
 
-  // Crée le premier missile légèrement décalé à gauche
   let missileLeft = {
-    x: spaceshipPos + adjustementLeftx, // Décalé légèrement vers la gauche
-    y: spaceshipY - adjustementy, // Utilise spaceshipY pour la position verticale
+    x: spaceshipPos + adjustementLeftx,
+    y: spaceshipY - adjustementy,
     img: missileImg,
   };
 
-  // Crée le deuxième missile légèrement décalé à droite
   let missileRight = {
-    x: spaceshipPos + adjustementRightx, // Décalé légèrement vers la droite
-    y: spaceshipY - adjustementy, // Utilise spaceshipY pour la position verticale
+    x: spaceshipPos + adjustementRightx,
+    y: spaceshipY - adjustementy,
     img: missileImg,
   };
 
-  // Ajoute les deux missiles au tableau
   missiles.push(missileLeft, missileRight);
 }
 
