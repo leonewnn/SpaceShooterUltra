@@ -2,13 +2,22 @@
 let powerups = [];
 let powerupItems = [];
 let powerupSpawnInterval;
-let powerupSpawnFrequency = 5000; // Fréquence de spawn des power-ups en millisecondes
+let powerupSpawnFrequency = 2000; // Fréquence de spawn des power-ups en millisecondes
 let powerupSpeed = 100;
 let powerupspawnproccessing = true;
 let minmalSpawnInterval = 15000;
-let timespanspawntime = 15000;
+let timespanspawntime = 1500;
 let powerUpTime = 10;
 let recoveringLifeIndex = null; // Indice de la vie en cours de récupération
+
+// Charger le son du bonus
+const bonusSound = new Audio('audio/bonus.flac');
+bonusSound.volume = 0.05;
+
+// Fonction pour jouer le son du bonus
+function playBonusSound() {
+  bonusSound.play();
+}
 
 // Indicateur unique pour afficher les power-ups actifs
 let activeIndicator = null;
@@ -39,7 +48,7 @@ function nextPowerUpSpawn() {
   powerupspawnproccessing = false;
   // Attendre un intervalle aléatoire, puis spawn le power-up
   let nextMoment =
-    Math.floor(Math.random() * timespanspawntime) + minmalSpawnInterval;
+    Math.floor(Math.random() * timespanspawntime) + gameDifficulty.current.powerupSpawnInterval;
   setTimeout(() => {
     spawnPowerup(); // Appel de la fonction pour faire apparaître un power-up
     powerupspawnproccessing = true; // Réactiver le spawn pour le prochain
@@ -81,7 +90,7 @@ function drawPowerups(delta) {
 
     ctx.shadowBlur = 0;
 
-    powerup.y += powerupSpeed * delta;
+    powerup.y += gameDifficulty.current.powerupSpeed * delta; // Utiliser la vitesse spécifique à la phase
 
     if (powerup.y > canvas.height) {
       powerupItems.splice(i, 1);
@@ -93,7 +102,7 @@ function drawPowerups(delta) {
 // Gestion des power-ups actifs
 function activePowerup(powerup) {
   const powerupName = getImageName(powerup);
-  //  console.log(powerupName + " activé");
+  playBonusSound();
 
   switch (powerupName) {
     case "armor_up":
@@ -142,18 +151,23 @@ function activateFireRateUp() {
 }
 
 function activateHpUp() {
-  // console.log("Activation de HP Up!");
+  console.log("Activation de HP Up!");
 
-  // Chercher la dernière vie perdue (la plus à droite)
-  const lostLifeIndex = imagesAnimated.lastIndexOf(true);
+  if (livesCount >= 3) {
+    console.log("Toutes les vies sont déjà restaurées !");
+    return;
+  }
+
+  // Chercher la première vie perdue (la plus à gauche)
+  const lostLifeIndex = imagesAnimated.indexOf(true);
 
   if (lostLifeIndex !== -1) {
     imagesAnimated[lostLifeIndex] = false; // Réactive la vie perdue
     animationsCompleted--; // Réduit le compteur d'animations terminées
-    recoveringLifeIndex = lostLifeIndex; // Marque la vie comme en cours de récupération
-    // console.log(`Vie restaurée : cœur ${lostLifeIndex + 1}`);
+    livesCount++; // Incrémente le compteur de vies
+    console.log(`Vie restaurée : cœur ${lostLifeIndex + 1}`);
   } else {
-    //  console.log("Toutes les vies sont déjà restaurées !");
+    console.log("Aucune vie à restaurer !");
   }
 }
 
@@ -223,4 +237,14 @@ function pausePowerupSpawning() {
 function resumePowerupSpawning() {
   powerupspawnproccessing = true; // Redémarre le processus de génération
   nextPowerUpSpawn(); // Relance la génération du prochain power-up
+}
+
+function updatePowerupSpawnInterval() {
+  if (powerupSpawnInterval) {
+    clearInterval(powerupSpawnInterval);
+  }
+  powerupSpawnInterval = setInterval(
+    spawnPowerup,
+    gameDifficulty.current.powerupSpawnInterval
+  );
 }

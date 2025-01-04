@@ -18,6 +18,7 @@ canvas {
   display: block;
   width: 100vw;
   height: 100vh;
+  cursor: url('../images/custom-cursor.png'), pointer;
 }
 
 body {
@@ -26,7 +27,7 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background: url('images/scoreboard_background.png') no-repeat center center fixed;
+  background: url('../images/scoreboard_background.png') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Press Start 2P', cursive;
   color: white;
@@ -128,4 +129,227 @@ body {
 
 .hidden {
   visibility: hidden;
+}
+
+
+/*rocketSelect*/
+
+body {
+  display: flex;
+  flex-direction: column; /* Aligne les enfants verticalement */
+  justify-content: center; /* Centre verticalement */
+  align-items: center; /* Centre horizontalement */
+  height: 100vh;
+  margin: 0;
+  background: url('../images/scoreboard_background.png') no-repeat center center fixed; /* Image de fond */
+  background-size: cover; /* Couvre toute la page */
+  color: black;
+  overflow: hidden;
+  cursor: url('../images/custom-cursor.png'), pointer;
+}
+
+canvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  cursor: url('../images/custom-cursor.png'), pointer;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px; /* Espacement sous le titre */
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Effet d'ombre */
+}
+
+.rocket-grid {
+  display: flex;
+  justify-content: center; /* Centre les rockets horizontalement */
+  gap: 20px; /* Espacement entre les rockets */
+  margin: 20px;
+}
+
+.rocket {
+  padding: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background-color: black;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.rocket:hover {
+  transform: scale(1.05);
+}
+
+.rocket.selected {
+  border-color: cyan;
+}
+
+.rocket img {
+  width: 50px;
+  display: block;
+  margin: auto;
+  cursor: url('../images/custom-cursor.png'), pointer;
+}
+
+.back-button {
+  display: block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid white;
+  border-radius: 5px;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s;
+  margin-top: 20px; /* Espacement par rapport aux rockets */
+  cursor: url('../images/custom-cursor.png'), pointer;
+}
+
+.back-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/*scoreboard*/
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: url('../images/scoreboard_background.png') no-repeat center center fixed; /* Image de fond */
+  background-size: cover; /* Couvre toute la page */
+  font-family: 'Press Start 2P', cursive;
+  color: white;
+  overflow: hidden;
+  cursor: url('../images/custom-cursor.png'), pointer;
+}
+
+canvas {
+display: block;
+width: 100vw;
+height: 100vh;
+cursor: url('../images/custom-cursor.png'), pointer;
+}
+
+.scoreboard {
+  background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+  padding: 20px;
+  border-radius: 15px;
+  color: white;
+  width: 80%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); /* Effet lumineux */
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.scoreboard h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Effet néon */
+}
+
+.scoreboard table {
+  width: 100%;
+  border-spacing: 10px;
+  color: white;
+  font-size: 18px;
+}
+
+.scoreboard th, .scoreboard td {
+  padding: 12px;
+  text-align: center;
+}
+
+.scoreboard img {
+  border-radius: 50%; /* Style arrondi */
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Lueur sur les images */
+}
+
+.centered-button {
+  display: block;
+  margin: 20px auto;
+  background: linear-gradient(90deg, rgba(255, 0, 150, 0.8), rgba(0, 153, 255, 0.8));
+  border: none;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(255, 0, 150, 0.8);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Style global des boutons */
+.game-button {
+display: block;
+margin: 20px auto;
+padding: 10px 20px;
+font-size: 18px;
+text-align: center;
+color: white;
+background: linear-gradient(90deg, rgba(255, 0, 150, 0.8), rgba(0, 153, 255, 0.8));
+border: none;
+border-radius: 8px;
+cursor: pointer;
+box-shadow: 0 0 15px rgba(255, 0, 150, 0.8);
+transition: transform 0.2s, box-shadow 0.2s;
+cursor: url('../images/custom-cursor.png'), pointer;
+}
+
+/* Effet au survol des boutons */
+.game-button:hover {
+transform: scale(1.1);
+box-shadow: 0 0 25px rgba(255, 255, 255, 1);
+}
+
+/* Masquer un bouton sans altérer son style */
+.hidden {
+visibility: hidden;
+}
+
+.centered-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 1);
+}
+
+.drop-zone {
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: background-color 0.3s;
+}
+
+.drop-zone:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.blinking-cursor {
+  display: inline-block;
+  width: 10px;
+  height: 30px;
+  background-color: white;
+  animation: blink 0.5s step-end infinite;
+}
+
+@keyframes blink {
+  from, to {
+      background-color: transparent;
+  }
+  50% {
+      background-color: white;
+  }
 }

@@ -1,8 +1,11 @@
+//life.js
+
 // Chargement de l'image du sprite avec 5 états
 let spriteSheet = new Image();
 spriteSheet.src = "images/Hearts/animated/border/hearts_animated_2.png";
 
-let animationsCompleted = 0; //Compteur d'animations terminées
+let animationsCompleted = 0; // Compteur d'animations terminées
+let livesCount = 3; // Compteur de vies
 
 // Largeur et hauteur d'un état dans le sprite sheet
 let spriteWidth, spriteHeight;
@@ -20,9 +23,15 @@ let imagesAnimated = [false, false, false]; // Initialisé pour 3 images
 let currentImageIndex = 2; // On commence par l'image la plus à droite
 
 // Fonction pour démarrer l'animation
+// Fonction pour démarrer l'animation
 function startLifeAnimation() {
   console.log("Début de l'animation pour la perte de vie");
-  if (animationStarted || imagesAnimated[currentImageIndex]) return;
+  if (animationStarted) return;
+
+  // Trouver la vie la plus à droite qui n'est pas déjà animée
+  currentImageIndex = imagesAnimated.lastIndexOf(false);
+
+  if (currentImageIndex === -1) return; // Si toutes les vies sont déjà animées, ne rien faire
 
   animationStarted = true;
   animationCompleted = false;
@@ -39,7 +48,7 @@ function startLifeAnimation() {
       animationStarted = false;
 
       animationsCompleted++;
-      currentImageIndex = imagesAnimated.lastIndexOf(false);
+      livesCount--; // Décrémenter le compteur de vies
       checkGameOver();
     }
   }, 200);
@@ -47,7 +56,7 @@ function startLifeAnimation() {
 
 // Vérifie si toutes les animations sont terminées
 function checkGameOver() {
-  if (animationsCompleted >= imagesAnimated.length) {
+  if (livesCount <= 0) {
     gameOver = true;
 
     // Stocker le score et rediriger vers le scoreboard
@@ -58,15 +67,6 @@ function checkGameOver() {
       window.location.href = "scoreboard.html";
     }, 3000);
   }
-}
-
-// Fonction pour sauvegarder le score dans localStorage (dans scoreboard.html)
-function saveHighScore(name, score) {
-  const highScores = JSON.parse(localStorage.getItem("highScores")) || [];
-  highScores.push({ name, score });
-  highScores.sort((a, b) => b.score - a.score);
-  highScores.splice(10); // Garde uniquement les 10 meilleurs scores
-  localStorage.setItem("highScores", JSON.stringify(highScores));
 }
 
 // Fonction pour dessiner un état spécifique du sprite

@@ -1,11 +1,10 @@
 // spaceship.js
-let spaceshipY = canvas.height + 300; // Position initiale du vaisseau
+let spaceshipY = canvas.height + 500; // Position initiale du vaisseau
 let spaceships = []; // Tableau pour stocker les images du vaisseau
 let currentFrame = 0; // Indice de l'image actuelle
 let frameInterval = 8; // Intervalle pour ralentir l'animation
 let frameCount = 0; // Compteur pour contrôler la vitesse de changement d'image
 let missiles = [];
-let missileSpeed = 750;
 let shieldActive = false;
 let shield = new Image();
 shield.src = `images/spaceship/shield.png`;
@@ -78,7 +77,7 @@ function drawMissile(delta) {
     let missile = missiles[i];
 
     ctx.drawImage(missile.img, missile.x, missile.y); // Dessine le missile
-    missile.y -= missileSpeed * delta; // Déplace le missile vers le haut
+    missile.y -= gameDifficulty.current.missileSpeed * delta; // Utiliser la vitesse des missiles spécifique à la phase
 
     // Vérifie si le missile est sorti de l'écran
     if (missile.y < -56) {
@@ -87,3 +86,18 @@ function drawMissile(delta) {
     }
   }
 }
+
+//fonction pour sélectionner les rockets du vaisseau
+function selectRocket(type) {
+  localStorage.setItem("selectedRocket", type);
+  document
+    .querySelectorAll(".rocket")
+    .forEach((r) => r.classList.remove("selected"));
+  event.currentTarget.classList.add("selected");
+}
+
+// Affiche la sélection actuelle
+const current = localStorage.getItem("selectedRocket") || "default";
+document
+  .querySelector(`[onclick="selectRocket('${current}')"]`)
+  .classList.add("selected");

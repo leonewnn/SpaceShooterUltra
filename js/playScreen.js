@@ -1,5 +1,5 @@
 let psBgReady = false;
-let spaceshipPos = canvas.width / 2;
+let spaceshipPos = canvas.width + 600;
 let playScreenBackground = new Image();
 playScreenBackground.onload = function () {
   psBgReady = true;
