@@ -16,6 +16,7 @@ function renderPlayScreen(delta) {
     drawMeteors(delta);
     drawSpaceShip(spaceshipPos);
     drawMissile(delta);
+    drawImpacts(); // Add this line to render impact animations
 
     handleCollisions();
     handleCollisionsPowerUp();
