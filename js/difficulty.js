@@ -123,6 +123,9 @@ function updateDifficulty(score) {
     // Play music for the new phase
     playMusicForPhase(gameDifficulty.level - 1);
   }
+
+  // Check for rocket unlocks
+  checkRocketUnlocks(score);
 }
 
 function showLevelUpMessage() {

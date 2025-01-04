@@ -154,6 +154,7 @@ function main(currentTime) {
       resumeCurrentMusic();
     }
   }
+  
 
   // Ajuste delta pour ignorer le temps passé en pause
   const delta = (currentTime - lastTime) / 1000; // Convertir le delta en secondes
